@@ -25,6 +25,8 @@ export default {
   Rejected: 'REJECTED',
   OperationNotSupported: 'OPERATION_NOT_SUPPORTED',
   GraphQLError: 'GRAPHQL_ERROR',
+  OperationLimitExceeded: 'OPERATION_LIMIT_EXCEEDED',
+  InvalidTransactionDate: 'INVALID_TRANSACTION_DATE',
   // endregion
 
   _valueToKey(value: string) {
