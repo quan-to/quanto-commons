@@ -1,5 +1,5 @@
 /**
- * Created by Lucas Teske on 02/05/17.
+ * Last update: 02/02/2018
  * @flow
  */
 
@@ -11,28 +11,29 @@ import {
 
 QuantoColors();
 
-export default class ErrorObject {
+export default class ErrorObject extends Error {
 
   errorCode: string;
-  stackTrace: string|void;
   errorField: string|void;
   message: string;
   errorData: string;
 
   constructor(data: Object) {
-    if (data !== undefined) {
-      this.errorCode = data.errorCode;
-      this.stackTrace = data.stackTrace;
-      this.errorField = data.errorField;
-      this.errorData = JSON.stringify(data.errorData) || '';
-      this.message = data.message || data.stackTrace || data.errorCode;
+    super(data.message);
+    this.constructor = ErrorObject;   // Nasty fix for Babel Bug https://github.com/babel/babel/issues/4485#issuecomment-315569892
+    this.name = this.constructor.name;
+    this.__proto__ = ErrorObject.prototype; // Nasty fix for Babel Bug https://github.com/babel/babel/issues/4485#issuecomment-315569892
+    Error.captureStackTrace(this, ErrorObject);
 
-      if (ErrorCodes._valueToKey(data.errorCode) === null) {
-        // $FlowFixMe
-        console.log(`ErrorObject -- Warning: ErrorCode "${data.errorCode.warn.bold}" not in list of error codes!`.warn);
-      }
-    } else {
-      throw ErrorCodes.NoDataAvailable;
+
+    this.errorCode = data.errorCode || ErrorCodes.InternalServerError;
+    this.errorField = data.errorField || '';
+    this.errorData = JSON.stringify(data.errorData) || '';
+    this.message = data.message || this.stack || data.errorCode;
+
+    if (ErrorCodes._valueToKey(data.errorCode) === null) {
+      //$FlowFixMe
+      console.log(`ErrorObject -- Warning: ErrorCode "${data.errorCode.warn.bold}" not in list of error codes!`.warn);
     }
   }
 
@@ -49,8 +50,8 @@ export default class ErrorObject {
       me += `on field ${this.errorField.warn.bold}`;
     }
 
-    if (this.stackTrace !== undefined && this.stackTrace !== null) {
-      me += `\nStackTrace: ${this.stackTrace}`;
+    if (this.stack !== undefined && this.stack !== null) {
+      me += `\nStackTrace: ${this.stack}`;
     }
 
     return me;
@@ -65,6 +66,9 @@ export default class ErrorObject {
       },
       stackTrace: {
         type: GraphQLString,
+        resolve(parent) {
+          return parent.stack;
+        }
       },
       errorField: {
         type: GraphQLString,
