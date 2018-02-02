@@ -1,5 +1,5 @@
 /**
- * Created by Lucas Teske on 02/05/17.
+ * Last update: 02/02/2018
  * @flow
  */
 
@@ -19,6 +19,10 @@ export default {
   AlreadyPaid: 'ALREADY_PAID',
   PaymentError: 'PAYMENT_ERROR',
   InsufficientFunds: 'INSUFFICIENT_FUNDS',
+  BankingSystemOffline: 'BANKING_SYSTEM_OFFLINE',
+  OutdatedAPI: 'OUTDATED_API',
+  BankNotSupported: 'BANK_NOT_SUPPORTED',
+  VaultSystemOffline: 'VAULT_SYSTEM_OFFLINE',
   ServerIsBusy: 'SERVER_IS_BUSY',
   Revoked: 'REVOKED',
   AlreadySigned: 'ALREADY_SIGNED',
@@ -28,7 +32,18 @@ export default {
   OperationLimitExceeded: 'OPERATION_LIMIT_EXCEEDED',
   InvalidTransactionDate: 'INVALID_TRANSACTION_DATE',
   // endregion
-
+  
+  // region Internal Use - Don't worry about these if you're a partner.
+  EverythingIsTerrible: 'EVERYTHING_IS_TERRIBLE',
+  QuantoInternalError: 'QUANTO_INTERNAL_ERROR',
+  RoutingSystemOffline: 'ROUTING_SYSTEM_OFFLINE',
+  QITSystemOffline: 'QIT_SYSTEM_OFFLINE',
+  TargetConnectionError: 'CONNECTION_ERROR',
+  VaulterIsDead: 'VAULTER_IS_DEAD',
+  SynchronizationError: 'SYNCHRONIZATION_ERROR',
+  RoutingError: 'ROUTING_ERROR',
+  // endregion
+  
   _valueToKey(value: string) {
     const keys = Object.keys(this);
     for (let i = 0; i < keys.length; i++) {
