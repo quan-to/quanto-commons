@@ -6,10 +6,7 @@ Object.defineProperty(exports, "__esModule", {
 
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }(); /**
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * Created by Lucas Teske on 02/05/17.
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * 
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      */
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 var _graphql = require('graphql');
 
@@ -23,9 +20,18 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } /**
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * Last update: 02/02/2018
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * 
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                */
+
 (0, _tools.QuantoColors)();
 
-var ErrorObject = function () {
+var ErrorObject = function (_Error) {
+  _inherits(ErrorObject, _Error);
+
   function ErrorObject(data) {
     _classCallCheck(this, ErrorObject);
 
@@ -33,44 +39,47 @@ var ErrorObject = function () {
       throw new TypeError('Value of argument "data" violates contract.\n\nExpected:\nObject\n\nGot:\n' + _inspect(data));
     }
 
-    if (data !== undefined) {
-      this.errorCode = data.errorCode;
+    var _this = _possibleConstructorReturn(this, (ErrorObject.__proto__ || Object.getPrototypeOf(ErrorObject)).call(this, data.message));
 
-      if (!(typeof this.errorCode === 'string')) {
-        throw new TypeError('Value of "this.errorCode" violates contract.\n\nExpected:\nstring\n\nGot:\n' + _inspect(this.errorCode));
-      }
+    _this.constructor = ErrorObject; // Nasty fix for Babel Bug https://github.com/babel/babel/issues/4485#issuecomment-315569892
 
-      this.stackTrace = data.stackTrace;
-
-      if (!(typeof this.stackTrace === 'string' || this.stackTrace == null)) {
-        throw new TypeError('Value of "this.stackTrace" violates contract.\n\nExpected:\nstring | void\n\nGot:\n' + _inspect(this.stackTrace));
-      }
-
-      this.errorField = data.errorField;
-
-      if (!(typeof this.errorField === 'string' || this.errorField == null)) {
-        throw new TypeError('Value of "this.errorField" violates contract.\n\nExpected:\nstring | void\n\nGot:\n' + _inspect(this.errorField));
-      }
-
-      this.errorData = JSON.stringify(data.errorData) || '';
-
-      if (!(typeof this.errorData === 'string')) {
-        throw new TypeError('Value of "this.errorData" violates contract.\n\nExpected:\nstring\n\nGot:\n' + _inspect(this.errorData));
-      }
-
-      this.message = data.message || data.stackTrace || data.errorCode;
-
-      if (!(typeof this.message === 'string')) {
-        throw new TypeError('Value of "this.message" violates contract.\n\nExpected:\nstring\n\nGot:\n' + _inspect(this.message));
-      }
-
-      if (_ErrorCodes2.default._valueToKey(data.errorCode) === null) {
-        // $FlowFixMe
-        console.log(('ErrorObject -- Warning: ErrorCode "' + data.errorCode.warn.bold + '" not in list of error codes!').warn);
-      }
-    } else {
-      throw _ErrorCodes2.default.NoDataAvailable;
+    if (!(typeof _this.constructor === 'function')) {
+      throw new TypeError('Value of "this.constructor" violates contract.\n\nExpected:\n(Object) => any\n\nGot:\n' + _inspect(_this.constructor));
     }
+
+    _this.name = _this.constructor.name;
+    _this.__proto__ = ErrorObject.prototype; // Nasty fix for Babel Bug https://github.com/babel/babel/issues/4485#issuecomment-315569892
+    Error.captureStackTrace(_this, ErrorObject);
+
+    _this.errorCode = data.errorCode || _ErrorCodes2.default.InternalServerError;
+
+    if (!(typeof _this.errorCode === 'string')) {
+      throw new TypeError('Value of "this.errorCode" violates contract.\n\nExpected:\nstring\n\nGot:\n' + _inspect(_this.errorCode));
+    }
+
+    _this.errorField = data.errorField || '';
+
+    if (!(typeof _this.errorField === 'string' || _this.errorField == null)) {
+      throw new TypeError('Value of "this.errorField" violates contract.\n\nExpected:\nstring | void\n\nGot:\n' + _inspect(_this.errorField));
+    }
+
+    _this.errorData = JSON.stringify(data.errorData) || '';
+
+    if (!(typeof _this.errorData === 'string')) {
+      throw new TypeError('Value of "this.errorData" violates contract.\n\nExpected:\nstring\n\nGot:\n' + _inspect(_this.errorData));
+    }
+
+    _this.message = data.message || _this.stack || data.errorCode;
+
+    if (!(typeof _this.message === 'string')) {
+      throw new TypeError('Value of "this.message" violates contract.\n\nExpected:\nstring\n\nGot:\n' + _inspect(_this.message));
+    }
+
+    if (_ErrorCodes2.default._valueToKey(data.errorCode) === null) {
+      //$FlowFixMe
+      console.log(('ErrorObject -- Warning: ErrorCode "' + data.errorCode.warn.bold + '" not in list of error codes!').warn);
+    }
+    return _this;
   }
 
   _createClass(ErrorObject, [{
@@ -89,8 +98,8 @@ var ErrorObject = function () {
         me += 'on field ' + this.errorField.warn.bold;
       }
 
-      if (this.stackTrace !== undefined && this.stackTrace !== null) {
-        me += '\nStackTrace: ' + this.stackTrace;
+      if (this.stack !== undefined && this.stack !== null) {
+        me += '\nStackTrace: ' + this.stack;
       }
 
       return me;
@@ -98,7 +107,7 @@ var ErrorObject = function () {
   }]);
 
   return ErrorObject;
-}();
+}(Error);
 
 ErrorObject.GraphQL = new _graphql.GraphQLObjectType({
   name: 'ErrorObject',
@@ -109,7 +118,10 @@ ErrorObject.GraphQL = new _graphql.GraphQLObjectType({
         type: _graphql.GraphQLString
       },
       stackTrace: {
-        type: _graphql.GraphQLString
+        type: _graphql.GraphQLString,
+        resolve: function resolve(parent) {
+          return parent.stack;
+        }
       },
       errorField: {
         type: _graphql.GraphQLString
@@ -187,4 +199,4 @@ function _inspect(input, depth) {
     }
   }
 }
-//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi4uLy4uL3NyYy9tb2RlbHMvRXJyb3JPYmplY3QuanMiXSwibmFtZXMiOlsiRXJyb3JPYmplY3QiLCJkYXRhIiwiT2JqZWN0IiwidW5kZWZpbmVkIiwiZXJyb3JDb2RlIiwic3RhY2tUcmFjZSIsImVycm9yRmllbGQiLCJlcnJvckRhdGEiLCJKU09OIiwic3RyaW5naWZ5IiwibWVzc2FnZSIsIl92YWx1ZVRvS2V5IiwiY29uc29sZSIsImxvZyIsIndhcm4iLCJib2xkIiwiTm9EYXRhQXZhaWxhYmxlIiwicGFyc2UiLCJtZSIsIkdyYXBoUUwiLCJuYW1lIiwiZGVzY3JpcHRpb24iLCJmaWVsZHMiLCJ0eXBlIl0sIm1hcHBpbmdzIjoiOzs7Ozs7OztxakJBQUE7Ozs7O0FBS0E7O0FBQ0E7Ozs7QUFDQTs7Ozs7O0FBSUE7O0lBRXFCQSxXO0FBUW5CLHVCQUFZQyxJQUFaLEVBQTBCO0FBQUE7O0FBQUEsVUFBZEEsSUFBYyxZQUFSQyxNQUFRO0FBQUEsa0hBQWRELElBQWM7QUFBQTs7QUFDeEIsUUFBSUEsU0FBU0UsU0FBYixFQUF3QjtBQUN0QixXQUFLQyxTQUFMLEdBQWlCSCxLQUFLRyxTQUF0Qjs7QUFEc0IsbUJBQ3RCLEtBQUtBLFNBRGlCO0FBQUEscUhBQ3RCLEtBQUtBLFNBRGlCO0FBQUE7O0FBRXRCLFdBQUtDLFVBQUwsR0FBa0JKLEtBQUtJLFVBQXZCOztBQUZzQixtQkFFdEIsS0FBS0EsVUFGaUIsaUJBRXRCLEtBQUtBLFVBRmlCO0FBQUEsNkhBRXRCLEtBQUtBLFVBRmlCO0FBQUE7O0FBR3RCLFdBQUtDLFVBQUwsR0FBa0JMLEtBQUtLLFVBQXZCOztBQUhzQixtQkFHdEIsS0FBS0EsVUFIaUIsaUJBR3RCLEtBQUtBLFVBSGlCO0FBQUEsNkhBR3RCLEtBQUtBLFVBSGlCO0FBQUE7O0FBSXRCLFdBQUtDLFNBQUwsR0FBaUJDLEtBQUtDLFNBQUwsQ0FBZVIsS0FBS00sU0FBcEIsS0FBa0MsRUFBbkQ7O0FBSnNCLG1CQUl0QixLQUFLQSxTQUppQjtBQUFBLHFIQUl0QixLQUFLQSxTQUppQjtBQUFBOztBQUt0QixXQUFLRyxPQUFMLEdBQWVULEtBQUtTLE9BQUwsSUFBZ0JULEtBQUtJLFVBQXJCLElBQW1DSixLQUFLRyxTQUF2RDs7QUFMc0IsbUJBS3RCLEtBQUtNLE9BTGlCO0FBQUEsbUhBS3RCLEtBQUtBLE9BTGlCO0FBQUE7O0FBT3RCLFVBQUkscUJBQVdDLFdBQVgsQ0FBdUJWLEtBQUtHLFNBQTVCLE1BQTJDLElBQS9DLEVBQXFEO0FBQ25EO0FBQ0FRLGdCQUFRQyxHQUFSLENBQVkseUNBQXNDWixLQUFLRyxTQUFMLENBQWVVLElBQWYsQ0FBb0JDLElBQTFELG9DQUE4RkQsSUFBMUc7QUFDRDtBQUNGLEtBWEQsTUFXTztBQUNMLFlBQU0scUJBQVdFLGVBQWpCO0FBQ0Q7QUFDRjs7OzsrQkFFVTtBQUNULGFBQU9SLEtBQUtTLEtBQUwsQ0FBV1QsS0FBS0MsU0FBTCxDQUFlLElBQWYsQ0FBWCxDQUFQO0FBQ0Q7OzsrQkFFVTtBQUNUO0FBQ0EsVUFBSVMsc0JBQW9CLEtBQUtkLFNBQUwsQ0FBZVUsSUFBZixDQUFvQkMsSUFBeEMsV0FBa0QsS0FBS0wsT0FBdkQsTUFBSjs7QUFFQSxVQUFJLEtBQUtKLFVBQUwsS0FBb0JILFNBQXBCLElBQWlDLEtBQUtHLFVBQUwsS0FBb0IsSUFBekQsRUFBK0Q7QUFDN0Q7QUFDQVksNEJBQWtCLEtBQUtaLFVBQUwsQ0FBZ0JRLElBQWhCLENBQXFCQyxJQUF2QztBQUNEOztBQUVELFVBQUksS0FBS1YsVUFBTCxLQUFvQkYsU0FBcEIsSUFBaUMsS0FBS0UsVUFBTCxLQUFvQixJQUF6RCxFQUErRDtBQUM3RGEsaUNBQXVCLEtBQUtiLFVBQTVCO0FBQ0Q7O0FBRUQsYUFBT2EsRUFBUDtBQUNEOzs7Ozs7QUEzQ2tCbEIsVyxDQTZDWm1CLE8sR0FBVSwrQkFBc0I7QUFDckNDLFFBQU0sYUFEK0I7QUFFckNDLGVBQWEscUNBRndCO0FBR3JDQyxVQUFRO0FBQUEsV0FBTztBQUNibEIsaUJBQVc7QUFDVG1CO0FBRFMsT0FERTtBQUlibEIsa0JBQVk7QUFDVmtCO0FBRFUsT0FKQztBQU9iakIsa0JBQVk7QUFDVmlCO0FBRFUsT0FQQztBQVViaEIsaUJBQVc7QUFDVGdCO0FBRFMsT0FWRTtBQWFiYixlQUFTO0FBQ1BhO0FBRE87QUFiSSxLQUFQO0FBQUE7QUFINkIsQ0FBdEIsQztrQkE3Q0V2QixXIiwiZmlsZSI6IkVycm9yT2JqZWN0LmpzIiwic291cmNlc0NvbnRlbnQiOlsiLyoqXG4gKiBDcmVhdGVkIGJ5IEx1Y2FzIFRlc2tlIG9uIDAyLzA1LzE3LlxuICogQGZsb3dcbiAqL1xuXG5pbXBvcnQgeyBHcmFwaFFMT2JqZWN0VHlwZSwgR3JhcGhRTFN0cmluZyB9IGZyb20gJ2dyYXBocWwnO1xuaW1wb3J0IEVycm9yQ29kZXMgZnJvbSAnLi9FcnJvckNvZGVzJztcbmltcG9ydCB7XG4gIFF1YW50b0NvbG9ycyxcbn0gZnJvbSAnLi4vdG9vbHMnO1xuXG5RdWFudG9Db2xvcnMoKTtcblxuZXhwb3J0IGRlZmF1bHQgY2xhc3MgRXJyb3JPYmplY3Qge1xuXG4gIGVycm9yQ29kZTogc3RyaW5nO1xuICBzdGFja1RyYWNlOiBzdHJpbmd8dm9pZDtcbiAgZXJyb3JGaWVsZDogc3RyaW5nfHZvaWQ7XG4gIG1lc3NhZ2U6IHN0cmluZztcbiAgZXJyb3JEYXRhOiBzdHJpbmc7XG5cbiAgY29uc3RydWN0b3IoZGF0YTogT2JqZWN0KSB7XG4gICAgaWYgKGRhdGEgIT09IHVuZGVmaW5lZCkge1xuICAgICAgdGhpcy5lcnJvckNvZGUgPSBkYXRhLmVycm9yQ29kZTtcbiAgICAgIHRoaXMuc3RhY2tUcmFjZSA9IGRhdGEuc3RhY2tUcmFjZTtcbiAgICAgIHRoaXMuZXJyb3JGaWVsZCA9IGRhdGEuZXJyb3JGaWVsZDtcbiAgICAgIHRoaXMuZXJyb3JEYXRhID0gSlNPTi5zdHJpbmdpZnkoZGF0YS5lcnJvckRhdGEpIHx8ICcnO1xuICAgICAgdGhpcy5tZXNzYWdlID0gZGF0YS5tZXNzYWdlIHx8IGRhdGEuc3RhY2tUcmFjZSB8fCBkYXRhLmVycm9yQ29kZTtcblxuICAgICAgaWYgKEVycm9yQ29kZXMuX3ZhbHVlVG9LZXkoZGF0YS5lcnJvckNvZGUpID09PSBudWxsKSB7XG4gICAgICAgIC8vICRGbG93Rml4TWVcbiAgICAgICAgY29uc29sZS5sb2coYEVycm9yT2JqZWN0IC0tIFdhcm5pbmc6IEVycm9yQ29kZSBcIiR7ZGF0YS5lcnJvckNvZGUud2Fybi5ib2xkfVwiIG5vdCBpbiBsaXN0IG9mIGVycm9yIGNvZGVzIWAud2Fybik7XG4gICAgICB9XG4gICAgfSBlbHNlIHtcbiAgICAgIHRocm93IEVycm9yQ29kZXMuTm9EYXRhQXZhaWxhYmxlO1xuICAgIH1cbiAgfVxuXG4gIHRvT2JqZWN0KCkge1xuICAgIHJldHVybiBKU09OLnBhcnNlKEpTT04uc3RyaW5naWZ5KHRoaXMpKTtcbiAgfVxuXG4gIHRvU3RyaW5nKCkge1xuICAgIC8vICRGbG93Rml4TWVcbiAgICBsZXQgbWUgPSBgRXJyb3JPYmplY3QoJHt0aGlzLmVycm9yQ29kZS53YXJuLmJvbGR9KTogJHt0aGlzLm1lc3NhZ2V9KWA7XG5cbiAgICBpZiAodGhpcy5lcnJvckZpZWxkICE9PSB1bmRlZmluZWQgJiYgdGhpcy5lcnJvckZpZWxkICE9PSBudWxsKSB7XG4gICAgICAvLyAkRmxvd0ZpeE1lXG4gICAgICBtZSArPSBgb24gZmllbGQgJHt0aGlzLmVycm9yRmllbGQud2Fybi5ib2xkfWA7XG4gICAgfVxuXG4gICAgaWYgKHRoaXMuc3RhY2tUcmFjZSAhPT0gdW5kZWZpbmVkICYmIHRoaXMuc3RhY2tUcmFjZSAhPT0gbnVsbCkge1xuICAgICAgbWUgKz0gYFxcblN0YWNrVHJhY2U6ICR7dGhpcy5zdGFja1RyYWNlfWA7XG4gICAgfVxuXG4gICAgcmV0dXJuIG1lO1xuICB9XG5cbiAgc3RhdGljIEdyYXBoUUwgPSBuZXcgR3JhcGhRTE9iamVjdFR5cGUoe1xuICAgIG5hbWU6ICdFcnJvck9iamVjdCcsXG4gICAgZGVzY3JpcHRpb246ICdBbiBvYmplY3QgY29udGFpbmluZyB0aGUgZXJyb3IgZGF0YScsXG4gICAgZmllbGRzOiAoKSA9PiAoe1xuICAgICAgZXJyb3JDb2RlOiB7XG4gICAgICAgIHR5cGU6IEdyYXBoUUxTdHJpbmcsXG4gICAgICB9LFxuICAgICAgc3RhY2tUcmFjZToge1xuICAgICAgICB0eXBlOiBHcmFwaFFMU3RyaW5nLFxuICAgICAgfSxcbiAgICAgIGVycm9yRmllbGQ6IHtcbiAgICAgICAgdHlwZTogR3JhcGhRTFN0cmluZyxcbiAgICAgIH0sXG4gICAgICBlcnJvckRhdGE6IHtcbiAgICAgICAgdHlwZTogR3JhcGhRTFN0cmluZyxcbiAgICAgIH0sXG4gICAgICBtZXNzYWdlOiB7XG4gICAgICAgIHR5cGU6IEdyYXBoUUxTdHJpbmcsXG4gICAgICB9LFxuICAgIH0pLFxuICB9KTtcbn1cbiJdfQ==
+//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi4uLy4uL3NyYy9tb2RlbHMvRXJyb3JPYmplY3QuanMiXSwibmFtZXMiOlsiRXJyb3JPYmplY3QiLCJkYXRhIiwiT2JqZWN0IiwibWVzc2FnZSIsImNvbnN0cnVjdG9yIiwibmFtZSIsIl9fcHJvdG9fXyIsInByb3RvdHlwZSIsIkVycm9yIiwiY2FwdHVyZVN0YWNrVHJhY2UiLCJlcnJvckNvZGUiLCJJbnRlcm5hbFNlcnZlckVycm9yIiwiZXJyb3JGaWVsZCIsImVycm9yRGF0YSIsIkpTT04iLCJzdHJpbmdpZnkiLCJzdGFjayIsIl92YWx1ZVRvS2V5IiwiY29uc29sZSIsImxvZyIsIndhcm4iLCJib2xkIiwicGFyc2UiLCJtZSIsInVuZGVmaW5lZCIsIkdyYXBoUUwiLCJkZXNjcmlwdGlvbiIsImZpZWxkcyIsInR5cGUiLCJzdGFja1RyYWNlIiwicmVzb2x2ZSIsInBhcmVudCJdLCJtYXBwaW5ncyI6Ijs7Ozs7Ozs7OztBQUtBOztBQUNBOzs7O0FBQ0E7Ozs7Ozs7OytlQVBBOzs7OztBQVdBOztJQUVxQkEsVzs7O0FBT25CLHVCQUFZQyxJQUFaLEVBQTBCO0FBQUE7O0FBQUEsVUFBZEEsSUFBYyxZQUFSQyxNQUFRO0FBQUEsa0hBQWRELElBQWM7QUFBQTs7QUFBQSwwSEFDbEJBLEtBQUtFLE9BRGE7O0FBRXhCLFVBQUtDLFdBQUwsR0FBbUJKLFdBQW5CLENBRndCLENBRVU7O0FBRlYsaUJBRXhCLE1BQUtJLFdBRm1CO0FBQUEsOEhBRXhCLE1BQUtBLFdBRm1CO0FBQUE7O0FBR3hCLFVBQUtDLElBQUwsR0FBWSxNQUFLRCxXQUFMLENBQWlCQyxJQUE3QjtBQUNBLFVBQUtDLFNBQUwsR0FBaUJOLFlBQVlPLFNBQTdCLENBSndCLENBSWdCO0FBQ3hDQyxVQUFNQyxpQkFBTixRQUE4QlQsV0FBOUI7O0FBR0EsVUFBS1UsU0FBTCxHQUFpQlQsS0FBS1MsU0FBTCxJQUFrQixxQkFBV0MsbUJBQTlDOztBQVJ3QixpQkFReEIsTUFBS0QsU0FSbUI7QUFBQSxtSEFReEIsTUFBS0EsU0FSbUI7QUFBQTs7QUFTeEIsVUFBS0UsVUFBTCxHQUFrQlgsS0FBS1csVUFBTCxJQUFtQixFQUFyQzs7QUFUd0IsaUJBU3hCLE1BQUtBLFVBVG1CLGlCQVN4QixNQUFLQSxVQVRtQjtBQUFBLDJIQVN4QixNQUFLQSxVQVRtQjtBQUFBOztBQVV4QixVQUFLQyxTQUFMLEdBQWlCQyxLQUFLQyxTQUFMLENBQWVkLEtBQUtZLFNBQXBCLEtBQWtDLEVBQW5EOztBQVZ3QixpQkFVeEIsTUFBS0EsU0FWbUI7QUFBQSxtSEFVeEIsTUFBS0EsU0FWbUI7QUFBQTs7QUFXeEIsVUFBS1YsT0FBTCxHQUFlRixLQUFLRSxPQUFMLElBQWdCLE1BQUthLEtBQXJCLElBQThCZixLQUFLUyxTQUFsRDs7QUFYd0IsaUJBV3hCLE1BQUtQLE9BWG1CO0FBQUEsaUhBV3hCLE1BQUtBLE9BWG1CO0FBQUE7O0FBYXhCLFFBQUkscUJBQVdjLFdBQVgsQ0FBdUJoQixLQUFLUyxTQUE1QixNQUEyQyxJQUEvQyxFQUFxRDtBQUNuRDtBQUNBUSxjQUFRQyxHQUFSLENBQVkseUNBQXNDbEIsS0FBS1MsU0FBTCxDQUFlVSxJQUFmLENBQW9CQyxJQUExRCxvQ0FBOEZELElBQTFHO0FBQ0Q7QUFoQnVCO0FBaUJ6Qjs7OzsrQkFFVTtBQUNULGFBQU9OLEtBQUtRLEtBQUwsQ0FBV1IsS0FBS0MsU0FBTCxDQUFlLElBQWYsQ0FBWCxDQUFQO0FBQ0Q7OzsrQkFFVTtBQUNUO0FBQ0EsVUFBSVEsc0JBQW9CLEtBQUtiLFNBQUwsQ0FBZVUsSUFBZixDQUFvQkMsSUFBeEMsV0FBa0QsS0FBS2xCLE9BQXZELE1BQUo7O0FBRUEsVUFBSSxLQUFLUyxVQUFMLEtBQW9CWSxTQUFwQixJQUFpQyxLQUFLWixVQUFMLEtBQW9CLElBQXpELEVBQStEO0FBQzdEO0FBQ0FXLDRCQUFrQixLQUFLWCxVQUFMLENBQWdCUSxJQUFoQixDQUFxQkMsSUFBdkM7QUFDRDs7QUFFRCxVQUFJLEtBQUtMLEtBQUwsS0FBZVEsU0FBZixJQUE0QixLQUFLUixLQUFMLEtBQWUsSUFBL0MsRUFBcUQ7QUFDbkRPLGlDQUF1QixLQUFLUCxLQUE1QjtBQUNEOztBQUVELGFBQU9PLEVBQVA7QUFDRDs7OztFQTVDc0NmLEs7O0FBQXBCUixXLENBOENaeUIsTyxHQUFVLCtCQUFzQjtBQUNyQ3BCLFFBQU0sYUFEK0I7QUFFckNxQixlQUFhLHFDQUZ3QjtBQUdyQ0MsVUFBUTtBQUFBLFdBQU87QUFDYmpCLGlCQUFXO0FBQ1RrQjtBQURTLE9BREU7QUFJYkMsa0JBQVk7QUFDVkQsb0NBRFU7QUFFVkUsZUFGVSxtQkFFRkMsTUFGRSxFQUVNO0FBQ2QsaUJBQU9BLE9BQU9mLEtBQWQ7QUFDRDtBQUpTLE9BSkM7QUFVYkosa0JBQVk7QUFDVmdCO0FBRFUsT0FWQztBQWFiZixpQkFBVztBQUNUZTtBQURTLE9BYkU7QUFnQmJ6QixlQUFTO0FBQ1B5QjtBQURPO0FBaEJJLEtBQVA7QUFBQTtBQUg2QixDQUF0QixDO2tCQTlDRTVCLFciLCJmaWxlIjoiRXJyb3JPYmplY3QuanMiLCJzb3VyY2VzQ29udGVudCI6WyIvKipcbiAqIExhc3QgdXBkYXRlOiAwMi8wMi8yMDE4XG4gKiBAZmxvd1xuICovXG5cbmltcG9ydCB7IEdyYXBoUUxPYmplY3RUeXBlLCBHcmFwaFFMU3RyaW5nIH0gZnJvbSAnZ3JhcGhxbCc7XG5pbXBvcnQgRXJyb3JDb2RlcyBmcm9tICcuL0Vycm9yQ29kZXMnO1xuaW1wb3J0IHtcbiAgUXVhbnRvQ29sb3JzLFxufSBmcm9tICcuLi90b29scyc7XG5cblF1YW50b0NvbG9ycygpO1xuXG5leHBvcnQgZGVmYXVsdCBjbGFzcyBFcnJvck9iamVjdCBleHRlbmRzIEVycm9yIHtcblxuICBlcnJvckNvZGU6IHN0cmluZztcbiAgZXJyb3JGaWVsZDogc3RyaW5nfHZvaWQ7XG4gIG1lc3NhZ2U6IHN0cmluZztcbiAgZXJyb3JEYXRhOiBzdHJpbmc7XG5cbiAgY29uc3RydWN0b3IoZGF0YTogT2JqZWN0KSB7XG4gICAgc3VwZXIoZGF0YS5tZXNzYWdlKTtcbiAgICB0aGlzLmNvbnN0cnVjdG9yID0gRXJyb3JPYmplY3Q7ICAgLy8gTmFzdHkgZml4IGZvciBCYWJlbCBCdWcgaHR0cHM6Ly9naXRodWIuY29tL2JhYmVsL2JhYmVsL2lzc3Vlcy80NDg1I2lzc3VlY29tbWVudC0zMTU1Njk4OTJcbiAgICB0aGlzLm5hbWUgPSB0aGlzLmNvbnN0cnVjdG9yLm5hbWU7XG4gICAgdGhpcy5fX3Byb3RvX18gPSBFcnJvck9iamVjdC5wcm90b3R5cGU7IC8vIE5hc3R5IGZpeCBmb3IgQmFiZWwgQnVnIGh0dHBzOi8vZ2l0aHViLmNvbS9iYWJlbC9iYWJlbC9pc3N1ZXMvNDQ4NSNpc3N1ZWNvbW1lbnQtMzE1NTY5ODkyXG4gICAgRXJyb3IuY2FwdHVyZVN0YWNrVHJhY2UodGhpcywgRXJyb3JPYmplY3QpO1xuXG5cbiAgICB0aGlzLmVycm9yQ29kZSA9IGRhdGEuZXJyb3JDb2RlIHx8IEVycm9yQ29kZXMuSW50ZXJuYWxTZXJ2ZXJFcnJvcjtcbiAgICB0aGlzLmVycm9yRmllbGQgPSBkYXRhLmVycm9yRmllbGQgfHwgJyc7XG4gICAgdGhpcy5lcnJvckRhdGEgPSBKU09OLnN0cmluZ2lmeShkYXRhLmVycm9yRGF0YSkgfHwgJyc7XG4gICAgdGhpcy5tZXNzYWdlID0gZGF0YS5tZXNzYWdlIHx8IHRoaXMuc3RhY2sgfHwgZGF0YS5lcnJvckNvZGU7XG5cbiAgICBpZiAoRXJyb3JDb2Rlcy5fdmFsdWVUb0tleShkYXRhLmVycm9yQ29kZSkgPT09IG51bGwpIHtcbiAgICAgIC8vJEZsb3dGaXhNZVxuICAgICAgY29uc29sZS5sb2coYEVycm9yT2JqZWN0IC0tIFdhcm5pbmc6IEVycm9yQ29kZSBcIiR7ZGF0YS5lcnJvckNvZGUud2Fybi5ib2xkfVwiIG5vdCBpbiBsaXN0IG9mIGVycm9yIGNvZGVzIWAud2Fybik7XG4gICAgfVxuICB9XG5cbiAgdG9PYmplY3QoKSB7XG4gICAgcmV0dXJuIEpTT04ucGFyc2UoSlNPTi5zdHJpbmdpZnkodGhpcykpO1xuICB9XG5cbiAgdG9TdHJpbmcoKSB7XG4gICAgLy8gJEZsb3dGaXhNZVxuICAgIGxldCBtZSA9IGBFcnJvck9iamVjdCgke3RoaXMuZXJyb3JDb2RlLndhcm4uYm9sZH0pOiAke3RoaXMubWVzc2FnZX0pYDtcblxuICAgIGlmICh0aGlzLmVycm9yRmllbGQgIT09IHVuZGVmaW5lZCAmJiB0aGlzLmVycm9yRmllbGQgIT09IG51bGwpIHtcbiAgICAgIC8vICRGbG93Rml4TWVcbiAgICAgIG1lICs9IGBvbiBmaWVsZCAke3RoaXMuZXJyb3JGaWVsZC53YXJuLmJvbGR9YDtcbiAgICB9XG5cbiAgICBpZiAodGhpcy5zdGFjayAhPT0gdW5kZWZpbmVkICYmIHRoaXMuc3RhY2sgIT09IG51bGwpIHtcbiAgICAgIG1lICs9IGBcXG5TdGFja1RyYWNlOiAke3RoaXMuc3RhY2t9YDtcbiAgICB9XG5cbiAgICByZXR1cm4gbWU7XG4gIH1cblxuICBzdGF0aWMgR3JhcGhRTCA9IG5ldyBHcmFwaFFMT2JqZWN0VHlwZSh7XG4gICAgbmFtZTogJ0Vycm9yT2JqZWN0JyxcbiAgICBkZXNjcmlwdGlvbjogJ0FuIG9iamVjdCBjb250YWluaW5nIHRoZSBlcnJvciBkYXRhJyxcbiAgICBmaWVsZHM6ICgpID0+ICh7XG4gICAgICBlcnJvckNvZGU6IHtcbiAgICAgICAgdHlwZTogR3JhcGhRTFN0cmluZyxcbiAgICAgIH0sXG4gICAgICBzdGFja1RyYWNlOiB7XG4gICAgICAgIHR5cGU6IEdyYXBoUUxTdHJpbmcsXG4gICAgICAgIHJlc29sdmUocGFyZW50KSB7XG4gICAgICAgICAgcmV0dXJuIHBhcmVudC5zdGFjaztcbiAgICAgICAgfVxuICAgICAgfSxcbiAgICAgIGVycm9yRmllbGQ6IHtcbiAgICAgICAgdHlwZTogR3JhcGhRTFN0cmluZyxcbiAgICAgIH0sXG4gICAgICBlcnJvckRhdGE6IHtcbiAgICAgICAgdHlwZTogR3JhcGhRTFN0cmluZyxcbiAgICAgIH0sXG4gICAgICBtZXNzYWdlOiB7XG4gICAgICAgIHR5cGU6IEdyYXBoUUxTdHJpbmcsXG4gICAgICB9LFxuICAgIH0pLFxuICB9KTtcbn1cbiJdfQ==
