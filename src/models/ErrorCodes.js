@@ -31,6 +31,8 @@ export default {
   GraphQLError: 'GRAPHQL_ERROR',
   OperationLimitExceeded: 'OPERATION_LIMIT_EXCEEDED',
   InvalidTransactionDate: 'INVALID_TRANSACTION_DATE',
+  BoletoCreationNotEnabled: 'BOLETO_CREATION_NOT_ENABLED',
+  BoletoOurNumberExausted: 'BOLETO_OUR_NUMBER_EXAUSTED',
   // endregion
   
   // region Internal Use - Don't worry about these if you're a partner.
