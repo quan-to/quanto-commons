@@ -1,5 +1,5 @@
 /**
- * Last update: 02/02/2018
+ * Created by Lucas Teske on 02/05/17.
  * @flow
  */
 
@@ -34,7 +34,7 @@ export default {
   BoletoCreationNotEnabled: 'BOLETO_CREATION_NOT_ENABLED',
   BoletoOurNumberExausted: 'BOLETO_OUR_NUMBER_EXAUSTED',
   // endregion
-  
+
   // region Internal Use - Don't worry about these if you're a partner.
   EverythingIsTerrible: 'EVERYTHING_IS_TERRIBLE',
   QuantoInternalError: 'QUANTO_INTERNAL_ERROR',
@@ -45,7 +45,7 @@ export default {
   SynchronizationError: 'SYNCHRONIZATION_ERROR',
   RoutingError: 'ROUTING_ERROR',
   // endregion
-  
+
   _valueToKey(value: string) {
     const keys = Object.keys(this);
     for (let i = 0; i < keys.length; i++) {

@@ -7,6 +7,10 @@ import {
 } from 'graphql';
 
 import {
+  undefinedOrNull,
+} from '../tools';
+
+import {
   StatementHistoryCodeEnum,
 } from './StatementHistoryCode';
 
@@ -71,6 +75,10 @@ StatementHistoryCategoryGroup[StatementHistoryCategoryEnum.PaymentAndBilling.val
   StatementHistoryCodeEnum.CronOut.value,
 ];
 
+StatementHistoryCategoryGroup[StatementHistoryCategoryEnum.ATM.value] = [
+  StatementHistoryCodeEnum.AtmOut.value,
+];
+
 StatementHistoryCategoryGroup[StatementHistoryCategoryEnum.Escrow.value] = [
   StatementHistoryCodeEnum.EscrowLock.value,
   StatementHistoryCodeEnum.EscrowUnlock.value,
@@ -83,8 +91,22 @@ StatementHistoryCategoryGroup[StatementHistoryCategoryEnum.Fee.value] = [
   StatementHistoryCodeEnum.FeeRefund.value,
 ];
 
+const codeToCategory = (code: number) => {
+  let category = StatementHistoryCategoryEnum.Other.value;
+
+  Object.keys(StatementHistoryCategoryEnum).forEach((catName) => {
+    const cat = StatementHistoryCategoryEnum[catName];
+    if (!undefinedOrNull(StatementHistoryCategoryGroup[cat.value]) && StatementHistoryCategoryGroup[cat.value].indexOf(code) !== -1) {
+      category = cat.value;
+    }
+  });
+
+  return category;
+};
+
 export {
   StatementHistoryCategoryGroup,
   StatementHistoryCategoryEnum,
   StatementHistoryCategoryEnumGraphQL,
+  codeToCategory,
 };
