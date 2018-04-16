@@ -1,6 +1,6 @@
 {
   "name": "quanto-commons",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Quanto Common Tools",
   "main": "dist/index.js",
   "scripts": {
@@ -54,7 +54,7 @@
   },
   "dependencies": {
     "colors": "^1.1.2",
-    "graphql": "^0.13.1",
+    "graphql": "^0.11.7",
     "graphql-relay": "^0.5.5",
     "moment": "^2.18.1"
   }
