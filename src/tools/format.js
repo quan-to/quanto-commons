@@ -124,4 +124,12 @@ Number.prototype.padLeft = function (n, chr) {
   return (this < 0 ? '-' : '') + new Array(n-String(Math.abs(this)).length+1) .join(chr||'0') + (Math.abs(this));
 };
 
+/**
+ * Left Pads a number with representing character.
+ * @param n the number
+ * @param chr the representing character, defaults to '0'
+ * @returns {string}
+ */
+String.prototype.padLeft = String.prototype.padStart;
+
 export default format;

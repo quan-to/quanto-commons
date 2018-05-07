@@ -75,7 +75,6 @@ export function validateCPF(cpfO: string) : boolean {
 }
 
 export function validateCNPJ(cnpjO: string) : boolean {
-
   if (cnpjO === undefined || cnpjO === null || cnpjO.length !== 14) {
     return false;
   }
@@ -144,5 +143,41 @@ export function validateDateFormat(field: string, format: string) {
 }
 
 export function validateStringLength(field: string, max: number, min: number | void) {
-  return (field.length < max) && ( (min !== undefined && field.length > min) || min === undefined);
+  return (field.length < max) && ((min !== undefined && field.length > min) || min === undefined);
+}
+
+export function calcDvMod11(data: string) {
+  let sum = 0;
+  for (let i = 0; i < data.length; i++) {
+    sum += (parseInt(data[i], 10) * (data.length - i + 1));
+  }
+  return sum % 11;
+}
+
+export function calcDvMod11Sub11(data: string) {
+  const c = calcDvMod11(data);
+  return c > 0 ? 11 - c : 0;
+}
+
+export function calcDvAgencia(branchNumber: number|string) {
+  return calcDvMod11(branchNumber.padLeft(4, '0'));
+}
+
+export function calcDvConta(accountNumber: number|string) {
+  return calcDvMod11(accountNumber.toString());
+}
+
+export function calcDvMod10(data: string) {
+  let sum = 0;
+  for (let i = 0; i < data.length; i++) {
+    let partial = (parseInt(data[i], 10) * (i % 2 + 1));
+    if (partial > 9) {
+      partial = partial.toString().split('').map(c => parseInt(c, 10)).reduce((a, b) => a + b);
+    }
+    sum += partial;
+  }
+  sum %= 10;
+  sum = sum !== 0 ? 10 - sum : sum;
+
+  return sum;
 }
