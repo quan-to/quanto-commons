@@ -160,7 +160,7 @@ export function calcDvMod11Sub11(data: string) {
 }
 
 export function calcDvAgencia(branchNumber: number|string) {
-  return calcDvMod11(branchNumber.padLeft(4, '0'));
+  return calcDvMod11Sub11(branchNumber.padLeft(4, '0'));
 }
 
 export function calcDvConta(accountNumber: number|string) {
