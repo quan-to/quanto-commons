@@ -33,6 +33,7 @@ export default {
   InvalidTransactionDate: 'INVALID_TRANSACTION_DATE',
   BoletoCreationNotEnabled: 'BOLETO_CREATION_NOT_ENABLED',
   BoletoOurNumberExausted: 'BOLETO_OUR_NUMBER_EXAUSTED',
+  NotImplemented: 'NOT_IMPLEMENTED',
   // endregion
 
   // region Internal Use - Don't worry about these if you're a partner.
