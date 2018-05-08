@@ -84,6 +84,14 @@ export const StatementHistoryCodeEnum = {
     value: 18,
     description: 'Fee for creating boletos',
   },
+  BankCredit: {
+    value: 19,
+    description: 'Bank Credit',
+  },
+  BankDebit: {
+    value: 20,
+    description: 'Bank Debit',
+  },
 };
 
 export const StatementHistoryCodeEnumGraphQL = new GraphQLEnumType({
