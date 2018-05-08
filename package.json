@@ -1,6 +1,6 @@
 {
   "name": "quanto-commons",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "description": "Quanto Common Tools",
   "main": "dist/index.js",
   "scripts": {
@@ -15,7 +15,7 @@
   "private": false,
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/quant-to/quanto-commons.git"
+    "url": "git+https://github.com/quan-to/quanto-commons.git"
   },
   "author": "Quanto",
   "license": "MIT",
