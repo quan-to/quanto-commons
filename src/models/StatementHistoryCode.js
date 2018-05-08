@@ -79,7 +79,11 @@ export const StatementHistoryCodeEnum = {
   CronOut: {
     value: 17,
     description: 'Scheduled automatic debit',
-  }
+  },
+  BoletoFee: {
+    value: 18,
+    description: 'Fee for creating boletos',
+  },
 };
 
 export const StatementHistoryCodeEnumGraphQL = new GraphQLEnumType({
