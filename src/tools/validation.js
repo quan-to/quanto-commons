@@ -1,9 +1,12 @@
+/* eslint-disable no-plusplus */
 /**
  * Created by Lucas Teske on 20/04/17.
  * @flow
  */
 
 import moment from 'moment';
+
+export function isRunningInNodeJS() { return typeof module !== 'undefined' && module.exports; }
 
 export function normalizeXMLJSObjectProperties(obj: Object) : Object {
   const keys = Object.keys(obj);
@@ -110,7 +113,7 @@ export function validateCNPJ(cnpjO: string) : boolean {
     }
   }
 
-  let resultado = sum % 11 < 2 ? 0 : 11 - sum % 11;
+  let resultado = sum % 11 < 2 ? 0 : 11 - (sum % 11);
   if (resultado !== parseInt(digits.charAt(0), 10)) {
     return false;
   }
@@ -126,7 +129,7 @@ export function validateCNPJ(cnpjO: string) : boolean {
       pos = 9;
     }
   }
-  resultado = sum % 11 < 2 ? 0 : 11 - sum % 11;
+  resultado = sum % 11 < 2 ? 0 : 11 - (sum % 11);
   return resultado === parseInt(digits.charAt(1), 10);
 }
 
@@ -149,7 +152,7 @@ export function validateStringLength(field: string, max: number, min: number | v
 export function calcDvMod11(data: string) {
   let sum = 0;
   for (let i = 0; i < data.length; i++) {
-    sum += (parseInt(data[i], 10) * (data.length - i + 1));
+    sum += (parseInt(data[i], 10) * ((data.length - i) + 1));
   }
   return sum % 11;
 }
@@ -170,7 +173,7 @@ export function calcDvConta(accountNumber: number|string) {
 export function calcDvMod10(data: string) {
   let sum = 0;
   for (let i = 0; i < data.length; i++) {
-    let partial = (parseInt(data[i], 10) * (i % 2 + 1));
+    let partial = (parseInt(data[i], 10) * ((i % 2) + 1));
     if (partial > 9) {
       partial = partial.toString().split('').map(c => parseInt(c, 10)).reduce((a, b) => a + b);
     }

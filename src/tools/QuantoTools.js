@@ -2,20 +2,7 @@
  * Created by Lucas Teske on 02/05/17.
  */
 
-import Colors from 'colors';
-
-Colors.setTheme({
-  silly: 'rainbow',
-  input: 'grey',
-  verbose: 'cyan',
-  prompt: 'grey',
-  info: 'green',
-  data: 'grey',
-  help: 'cyan',
-  warn: 'yellow',
-  debug: 'blue',
-  error: 'red',
-});
+import '../colors';
 
 const lineLength = '                                                                    '.length;
 
@@ -50,15 +37,6 @@ export const printQuantoHeader = (app, app2) => {
   console.log('');
 };
 
-export const QuantoColors = () => Colors.setTheme({
-  silly: 'rainbow',
-  input: 'grey',
-  verbose: 'cyan',
-  prompt: 'grey',
-  info: 'green',
-  data: 'grey',
-  help: 'cyan',
-  warn: 'yellow',
-  debug: 'blue',
-  error: 'red',
-});
+export const QuantoColors = () => {
+  console.log(`${'QuantoColors()'.warn} is now deprecated and does nothing now.`.verbose.bold);
+}; // Stub

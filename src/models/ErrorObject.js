@@ -5,14 +5,8 @@
 
 import { GraphQLObjectType, GraphQLString } from 'graphql';
 import ErrorCodes from './ErrorCodes';
-import {
-  QuantoColors,
-} from '../tools';
-
-QuantoColors();
 
 export default class ErrorObject extends Error {
-
   errorCode: string;
   errorField: string|void;
   message: string;
@@ -20,8 +14,9 @@ export default class ErrorObject extends Error {
 
   constructor(data: Object) {
     super(data.message);
-    this.constructor = ErrorObject;   // Nasty fix for Babel Bug https://github.com/babel/babel/issues/4485#issuecomment-315569892
+    this.constructor = ErrorObject; // Nasty fix for Babel Bug https://github.com/babel/babel/issues/4485#issuecomment-315569892
     this.name = this.constructor.name;
+    // eslint-disable-next-line no-proto
     this.__proto__ = ErrorObject.prototype; // Nasty fix for Babel Bug https://github.com/babel/babel/issues/4485#issuecomment-315569892
     Error.captureStackTrace(this, ErrorObject);
 
@@ -32,8 +27,7 @@ export default class ErrorObject extends Error {
     this.message = data.message || this.stack || data.errorCode;
 
     if (ErrorCodes._valueToKey(data.errorCode) === null) {
-      //$FlowFixMe
-      console.log(`ErrorObject -- Warning: ErrorCode "${data.errorCode.warn.bold}" not in list of error codes!`.warn);
+      console.log(`ErrorObject -- Warning: ErrorCode "${data.errorCode}" not in list of error codes!`);
     }
   }
 
@@ -42,12 +36,10 @@ export default class ErrorObject extends Error {
   }
 
   toString() {
-    // $FlowFixMe
-    let me = `ErrorObject(${this.errorCode.warn.bold}): ${this.message})`;
+    let me = `ErrorObject(${this.errorCode}): ${this.message})`;
 
     if (this.errorField !== undefined && this.errorField !== null) {
-      // $FlowFixMe
-      me += `on field ${this.errorField.warn.bold}`;
+      me += `on field ${this.errorField}`;
     }
 
     if (this.stack !== undefined && this.stack !== null) {
@@ -68,7 +60,7 @@ export default class ErrorObject extends Error {
         type: GraphQLString,
         resolve(parent) {
           return parent.stack;
-        }
+        },
       },
       errorField: {
         type: GraphQLString,
