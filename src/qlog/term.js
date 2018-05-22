@@ -12,6 +12,10 @@ import {
   getCallerFilename,
 } from '../tools';
 
+import {
+  stripColors,
+} from '../colors/tools';
+
 import styles from './styles';
 
 
@@ -53,6 +57,15 @@ const buildTerminal = (parent, type, ...args) => {
 
   if (additional.prefix) {
     msgBase.push(`:${additional.prefix.white.dim}:`);
+  }
+
+  if (!undefinedOrNull(parent.__config__.headPadding)) {
+    const base = msgBase.join(' ');
+    const totalLen = base.length;
+    const strippedLen = stripColors(base).length;
+    const nonPrintableLen = totalLen - strippedLen;
+    msgBase.length = 0;
+    msgBase.push(base.padEnd(parent.__config__.headPadding + nonPrintableLen));
   }
 
   if (msgBase.length !== 0) {

@@ -15,6 +15,7 @@ import {
 import './dist/colors';
 
 QLog.enableLogs(['debug', 'warn']);
+QLog.headPadding = 40;
 
 QLog.log('All logs enabled!');
 
@@ -71,10 +72,14 @@ QLog.error(new ErrorObject({
 QLog.slash();
 QLog.error(new Error('HUEBR'));
 
-const scopedLog = QLog.scope('A', 'B');
 
-scopedLog.showFilename = false;
-scopedLog.start('huebrbrbr');
+const scopedLog0 = QLog.scope('A', 'B');
+const scopedLog1 = QLog.scope('A', 'Bcas');
+const scopedLog2 = QLog.scope('A', 'Basdasdasdasd');
+
+scopedLog0.start('huebrbrbr');
+scopedLog1.start('huebrbrbr');
+scopedLog2.start('huebrbrbr');
 
 QLog.start({ prefix: 'Process 1', message: 'Process 1 call' });
 

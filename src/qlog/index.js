@@ -19,6 +19,7 @@ class QLog {
       showFilename: false,
       showScope: true,
       scope: null,
+      headPadding: null,
     };
 
     this.__cache__ = {
@@ -60,6 +61,14 @@ class QLog {
     if (idx === -1) {
       this.__disabledLogs__.push(logName);
     }
+  }
+
+  set headPadding(value) {
+    this.__config__.headPadding = value;
+  }
+
+  get headPadding() {
+    return this.__config__.headPadding;
   }
 
   enableLogs(...args) {
