@@ -48,10 +48,14 @@ const buildTerminal = (parent, type, ...args) => {
 
   if (parent.__config__.scope) {
     if (Array.isArray(parent.__config__.scope)) {
-      const scopes = parent.__config__.scope.filter(x => x.length !== 0);
-      msgBase.push(`[${scopes.reduce((a, b) => `${a.white.dim} ➡ ${b.white.dim}`)}]`);
+      if (parent.__config__.scope.length === 1) {
+        msgBase.push(`[${parent.__config__.scope[0].white}]`);
+      } else {
+        const scopes = parent.__config__.scope.filter(x => x.length !== 0);
+        msgBase.push(`[${scopes.reduce((a, b) => `${a.white} ➡ ${b.white}`)}]`);
+      }
     } else {
-      msgBase.push(`[${parent.__config__.scope.white.dim}]`);
+      msgBase.push(`[${parent.__config__.scope.white}]`);
     }
   }
 

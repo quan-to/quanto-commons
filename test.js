@@ -73,7 +73,7 @@ QLog.slash();
 QLog.error(new Error('HUEBR'));
 
 
-const scopedLog0 = QLog.scope('A', 'B');
+const scopedLog0 = QLog.scope('A');
 const scopedLog1 = QLog.scope('A', 'Bcas');
 const scopedLog2 = QLog.scope('A', 'Basdasdasdasd');
 
