@@ -95,7 +95,7 @@ console.log(`calcDvConta(12345) === 6 ${calcDvConta(12345) === 6}`);
 
 console.log('hue'.verbose);
 
-console.log(`hue${'a'.warn.bold.bgCyan} bbababa ${'abcdefg'.error.bold}
+QLog.start(`hue${'a'.warn.bold.bgCyan} bbababa ${'abcdefg'.error.bold}
 huebr
 hurbaba
 ${'abc'.warn.bold.bgBlue}

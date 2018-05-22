@@ -100,10 +100,10 @@ const buildTerminal = (parent, type, ...args) => {
     const [name, ...rest] = msg.stack.split('\n');
     msgBase.push(getStrColor(name, type.color));
     msgBase.push(rest.map(l => l.replace(/^/, '\n')).join('').grey);
+  } else {
+    msgBase.push(getStrColor(msg, type.color)
+      .replace(/\n/g, '\n    '));
   }
-
-  msgBase.push(getStrColor(msg, type.color));
-
   if (!undefinedOrNull(additional.suffix)) {
     msgBase.push(additional.suffix);
   }
