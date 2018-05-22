@@ -8,11 +8,73 @@ import {
   printQuantoHeader,
   calcDvAgencia,
   calcDvConta,
+  ErrorObject,
+  QLog,
+  ErrorCodes,
 } from './dist';
 
 import './dist/colors';
 
-QuantoColors();
+QLog.enableLogs(['debug', 'warn']);
+
+QLog.log('All logs enabled!');
+
+QLog.error('Error Tag');
+QLog.fatal('Fatal Tag');
+QLog.fav('Favorite Tag');
+QLog.info('Information Tag');
+QLog.star('Star Tag');
+QLog.success('Success Tag');
+QLog.warn('Warning Tag');
+QLog.complete('Complete Tag');
+QLog.pending('Pending Tag');
+QLog.note('Note Tag');
+QLog.start('Start Tag');
+QLog.pause('Pause Tag');
+QLog.debug('Debug Tag');
+QLog.await('Await Tag');
+QLog.watch('Watch Tag');
+QLog.log('Log Tag');
+
+QLog.slash();
+const toDisable = ['debug', 'warn', 'info', 'pause'];
+QLog.disableLogs(toDisable);
+QLog.log('Disabled ', toDisable, ' logs!');
+
+QLog.error('Error Tag');
+QLog.fatal('Fatal Tag');
+QLog.fav('Favorite Tag');
+QLog.info('Information Tag');
+QLog.star('Star Tag');
+QLog.success('Success Tag');
+QLog.warn('Warning Tag');
+QLog.complete('Complete Tag');
+QLog.pending('Pending Tag');
+QLog.note('Note Tag');
+QLog.start('Start Tag');
+QLog.pause('Pause Tag');
+QLog.debug('Debug Tag');
+QLog.await('Await Tag');
+QLog.watch('Watch Tag');
+QLog.log('Log Tag');
+
+QLog.slash();
+QLog.error(new ErrorObject({
+  errorCode: ErrorCodes.NotFound,
+  errorField: 'Test',
+  message: 'Test for ErrorObject',
+  errorData: {
+    a: 'b',
+    hue: 'br',
+    z: 3,
+  },
+}));
+QLog.slash();
+QLog.error(new Error('HUEBR'));
+
+const scopedLog = QLog.scope('hue br');
+
+scopedLog.start('huebrbrbr');
 
 console.log('Color Test'.rainbow.bold);
 
@@ -31,4 +93,3 @@ huebr
 hurbaba
 ${'abc'.warn.bold.bgBlue}
 `.warn);
-

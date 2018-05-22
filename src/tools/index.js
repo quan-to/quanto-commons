@@ -4,6 +4,7 @@
 
 export * from './QuantoTools';
 export * from './validation';
+export * from './format';
+export * from './manageTools';
 
 export TemplateProcess from './template';
-export FormatValue from './format';

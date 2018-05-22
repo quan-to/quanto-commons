@@ -1,3 +1,4 @@
+/* eslint-disable no-extend-native,no-plusplus */
 /**
  * Created by Lucas Teske on 02/05/17.
  */
@@ -13,13 +14,14 @@ const maskStartRegExp = /^([^#ANX]+)/;
  * Simple format function borrowed from PureMask.js
  * {@link https://github.com/romulobrasil/PureMask.js}
  *
- * @param {String} data String to mask (input value)
+ * @param {String} str String to mask (input value)
  * @param {String} [mask] Mask format, like `####-##`
  * @returns {string} Formatted text
  */
-const format = (data: string, mask: string) => {
+const format = (str: string, mask: string) => {
+  let data = str;
   // don't do anything if mask is undefined/null/etc
-  if(undefinedOrNull(mask) || typeof mask !== "string") {
+  if (undefinedOrNull(mask) || typeof mask !== 'string') {
     return data;
   }
 
@@ -34,31 +36,31 @@ const format = (data: string, mask: string) => {
 
   // Cleans data to  avoid value loss on dynamic mask changing
   for (let i = 0; i < mask.length; i++) {
-    let m = mask.charAt(i);
-    switch(m) {
-      case '#' : break;
-      case 'A' : break;
-      case '?' : break;
-      case 'N' : break;
-      case 'X' : break;
-      default : data = data.replace(m, '')
+    const m = mask.charAt(i);
+    switch (m) {
+      case '#': break;
+      case 'A': break;
+      case '?': break;
+      case 'N': break;
+      case 'X': break;
+      default: data = data.replace(m, '');
     }
   }
 
   for (let i = 0, x = 1; x && i < mask.length; ++i) {
-    let c = data.charAt(i - cOffset);
-    let m = mask.charAt(i);
+    const c = data.charAt(i - cOffset);
+    const m = mask.charAt(i);
 
     switch (m) {
-      case '#' : if (/\d/.test(c))        { text += c } else { x = 0 } break;
-      case 'A' : if (/[a-z]/i.test(c))    { text += c } else { x = 0 } break;
-      case 'N' : if (/[a-z0-9]/i.test(c)) { text += c } else { x = 0 } break;
-      case '?' : cOffset++; break;
-      case 'X' : text += c; break;
-      default  :
+      case '#': if (/\d/.test(c)) { text += c; } else { x = 0; } break;
+      case 'A': if (/[a-z]/i.test(c)) { text += c; } else { x = 0; } break;
+      case 'N': if (/[a-z0-9]/i.test(c)) { text += c; } else { x = 0; } break;
+      case '?': cOffset++; break;
+      case 'X': text += c; break;
+      default:
         text += m;
         if (c && c !== m) {
-          data = ' ' + data;
+          data = ` ${data}`;
         }
         break;
     }
@@ -71,7 +73,7 @@ const format = (data: string, mask: string) => {
  * @param strFormat [mask] Mask format, like `####-##`
  * @returns {string}
  */
-Number.prototype.format = function (strFormat) {
+Number.prototype.format = function formatNumber(strFormat) {
   return format(this.toString(), strFormat);
 };
 
@@ -80,14 +82,14 @@ Number.prototype.format = function (strFormat) {
  * @param strFormat [mask] Mask format, like `####-##`
  * @returns {string}
  */
-String.prototype.format = function (strFormat) {
+String.prototype.format = function formatStr(strFormat) {
   return format(this, strFormat);
 };
 
 /**
  * Normalize the string by removing non ASCII chars
  */
-String.prototype.removeDiactrics = function () {
+String.prototype.removeDiactrics = function removeDiactricsStr() {
   return removeDiactrics(this);
 };
 
@@ -98,20 +100,20 @@ String.prototype.removeDiactrics = function () {
  * @param separator Mils Separator Character (optional, default '.')
  * @returns {string} Formatted money string
  */
-Number.prototype.toMoney = function (decimals, decimalSeparator, separator) {
-  const c = isNaN(Math.abs(decimals)) ? 2 : Math.abs(decimals);
-  const d = undefinedOrNull(decimalSeparator) ? "," : decimalSeparator;
-  const t = undefinedOrNull(separator) ? "." : separator;
+Number.prototype.toMoney = function toMoney(decimals, decimalSeparator, separator) {
+  const c = Number.isNaN(Math.abs(decimals)) ? 2 : Math.abs(decimals);
+  const d = undefinedOrNull(decimalSeparator) ? ',' : decimalSeparator;
+  const t = undefinedOrNull(separator) ? '.' : separator;
 
-  const s = this < 0 ? "-" : "";
-  const iN = parseInt(Math.abs(Number(this) || 0).toFixed(c));
+  const s = this < 0 ? '-' : '';
+  const iN = parseInt(Math.abs(Number(this) || 0).toFixed(c), 10);
   console.log(this, s);
   const i = String(iN);
   const j = i.length > 3 ? i.length % 3 : 0;
   return s +
-    (j ? i.substr(0, j) + t : "") +
-    i.substr(j).replace(/(\d{3})(?=\d)/g, "$1" + t) +
-    (c ? d + Math.abs(Math.abs(this) - iN).toFixed(c).slice(2) : "");
+    (j ? i.substr(0, j) + t : '') +
+    i.substr(j).replace(/(\d{3})(?=\d)/g, `$1${t}`) +
+    (c ? d + Math.abs(Math.abs(this) - iN).toFixed(c).slice(2) : '');
 };
 
 /**
@@ -120,8 +122,8 @@ Number.prototype.toMoney = function (decimals, decimalSeparator, separator) {
  * @param chr the representing character, defaults to '0'
  * @returns {string}
  */
-Number.prototype.padLeft = function (n, chr) {
-  return (this < 0 ? '-' : '') + new Array(n-String(Math.abs(this)).length+1) .join(chr||'0') + (Math.abs(this));
+Number.prototype.padLeft = function padLeft(n, chr) {
+  return (this < 0 ? '-' : '') + new Array((n - String(Math.abs(this)).length) + 1).join(chr || '0') + (Math.abs(this));
 };
 
 /**
@@ -132,4 +134,14 @@ Number.prototype.padLeft = function (n, chr) {
  */
 String.prototype.padLeft = String.prototype.padStart;
 
-export default format;
+function basename(str, sep) {
+  const bSep = sep || '\\/';
+  return str.split(new RegExp(`[${bSep}]`)).pop();
+}
+
+const FormatValue = format;
+
+export {
+  FormatValue,
+  basename,
+};

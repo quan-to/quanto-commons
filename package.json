@@ -1,6 +1,6 @@
 {
   "name": "quanto-commons",
-  "version": "1.0.14",
+  "version": "1.0.15",
   "description": "Quanto Common Tools",
   "main": "dist/index.js",
   "scripts": {
@@ -53,6 +53,7 @@
     "rimraf": "^2.5.4"
   },
   "dependencies": {
+    "figures": "^2.0.0",
     "graphql": "^0.11.7",
     "graphql-relay": "^0.5.5",
     "moment": "^2.18.1"

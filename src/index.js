@@ -4,3 +4,4 @@
 
 export * from './tools';
 export * from './models';
+export QLog from './qlog';

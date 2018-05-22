@@ -3,7 +3,6 @@
  * @flow
  */
 
-// Colors based off colors.js https://github.com/Marak/colors.js/blob/master/lib/styles.js
 const codes = {
   reset: [0, 0],
 
@@ -26,6 +25,14 @@ const codes = {
   gray: [90, 39],
   grey: [90, 39],
 
+  redBright: [91, 39],
+  greenBright: [92, 39],
+  yellowBright: [93, 39],
+  blueBright: [94, 39],
+  magentaBright: [95, 39],
+  cyanBright: [96, 39],
+  whiteBright: [97, 39],
+
   bgBlack: [40, 49],
   bgRed: [41, 49],
   bgGreen: [42, 49],
@@ -34,6 +41,15 @@ const codes = {
   bgMagenta: [45, 49],
   bgCyan: [46, 49],
   bgWhite: [47, 49],
+
+  bgBlackBright: [100, 49],
+  bgRedBright: [101, 49],
+  bgGreenBright: [102, 49],
+  bgYellowBright: [103, 49],
+  bgBlueBright: [104, 49],
+  bgMagentaBright: [105, 49],
+  bgCyanBright: [106, 49],
+  bgWhiteBright: [107, 49],
 };
 
 const ansiColors = {};
