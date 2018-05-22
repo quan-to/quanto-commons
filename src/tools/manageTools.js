@@ -3,6 +3,8 @@
  * @flow
  */
 
+import dayjs from 'dayjs';
+
 import { basename } from './format';
 
 export function getCallerFilename(level) {
@@ -29,5 +31,5 @@ export function getLocaleNowDate() {
 }
 
 export function getLocaleNow() {
-  return new Date().toLocaleString();
+  return dayjs().format('YYYY-MM-DD HH:mm:ss ZZ');
 }

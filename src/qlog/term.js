@@ -51,6 +51,10 @@ const buildTerminal = (parent, type, ...args) => {
     }
   }
 
+  if (additional.prefix) {
+    msgBase.push(`:${additional.prefix.white.dim}:`);
+  }
+
   if (msgBase.length !== 0) {
     msgBase.push(figures.pointer);
     msgBase = msgBase.map(i => i.info);

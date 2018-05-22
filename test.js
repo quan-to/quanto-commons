@@ -72,9 +72,12 @@ QLog.error(new ErrorObject({
 QLog.slash();
 QLog.error(new Error('HUEBR'));
 
-const scopedLog = QLog.scope('hue br');
+const scopedLog = QLog.scope('A', 'B');
 
+scopedLog.showFilename = false;
 scopedLog.start('huebrbrbr');
+
+QLog.start({ prefix: 'Process 1', message: 'Process 1 call' });
 
 console.log('Color Test'.rainbow.bold);
 

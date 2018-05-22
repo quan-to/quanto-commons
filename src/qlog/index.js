@@ -84,8 +84,8 @@ class QLog {
 
   scope(...name) {
     const newQLogScope = new QLog();
-    newQLogScope.__config__ = this.__config__;
-    newQLogScope.__cache__ = this.__cache__;
+    newQLogScope.__config__ = JSON.parse(JSON.stringify(this.__config__));
+    newQLogScope.__cache__ = JSON.parse(JSON.stringify(this.__cache__));
     newQLogScope.__disabledLogs__ = this.__disabledLogs__;
     newQLogScope.__config__.scope = name;
 
