@@ -4,7 +4,6 @@
  */
 
 import {
-  QuantoColors,
   printQuantoHeader,
   calcDvAgencia,
   calcDvConta,

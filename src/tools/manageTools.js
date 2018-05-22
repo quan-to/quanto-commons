@@ -30,6 +30,6 @@ export function getLocaleNowDate() {
   return new Date().toLocaleDateString();
 }
 
-export function getLocaleNow() {
-  return dayjs().format('YYYY-MM-DD HH:mm:ss ZZ');
+export function getUTCNow() {
+  return dayjs(new Date().toISOString().substr(0, 23)).format('YYYYMMDD-HHmmss');
 }

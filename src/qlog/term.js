@@ -8,7 +8,7 @@ import figures from 'figures';
 import { ErrorObject } from '../models';
 import {
   undefinedOrNull,
-  getLocaleNow,
+  getUTCNow,
   getCallerFilename,
 } from '../tools';
 
@@ -35,7 +35,7 @@ const buildTerminal = (parent, type, ...args) => {
 
   let msgBase = [];
   if (parent.__config__.showDateTime) {
-    msgBase.push(`[${getLocaleNow().white.dim}]`);
+    msgBase.push(`[${getUTCNow().white.dim}]`);
   }
 
   if (parent.__config__.showFilename) {

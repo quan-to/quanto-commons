@@ -14,9 +14,9 @@ class QLog {
     this.__config__ = {
       showDateTime: true,
       showBadge: true,
-      showLabel: true,
+      showLabel: false,
       showErrorCodeErrorData: true,
-      showFilename: true,
+      showFilename: false,
       showScope: true,
       scope: null,
     };
