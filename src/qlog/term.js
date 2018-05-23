@@ -92,21 +92,71 @@ const buildTerminal = (parent, type, ...args) => {
       message,
       errorData,
     } = msg;
-    msgBase.push(getStrColor(`(${(errorCode || '').warn.bold}) ${message}`, type.color));
-    msgBase.push(`\n    ${'ErrorField'.white.bold}: ${(errorField || '')}`.gray);
+    const base = msgBase.join(' ');
+    const strippedLen = stripColors(base).length;
+    msgBase.push(`${'╔'.white} ${getStrColor(`(${(errorCode || '').warn.bold}) ${message}`, type.color)}\n`);
+
+    const nextLineChar = parent.__config__.showErrorCodeErrorData ? '╠'.white : '╚'.white;
+
+    msgBase.push(`${''.padStart(strippedLen - 1)} ${nextLineChar}    ${'Error Field'.white.bold}: ${(errorField || '')}\n`.gray);
     if (parent.__config__.showErrorCodeErrorData) {
       const errorDataString = !undefinedOrNull(errorData) && errorData.trim().length !== 0 ?
-        `\n        ${JSON.stringify(JSON.parse(errorData), null, 2).replace(/\n/g, '\n        ')}` :
+        `${JSON.stringify(JSON.parse(errorData), null, 2)}` :
         'null'.warn.bold;
-      msgBase.push(`\n    ${'ErrorData'.white.bold}: ${errorDataString}`.gray);
+      const lines = errorDataString.split('\n').filter(r => r.length > 0);
+      // msgBase.push(`\n    ${'ErrorData'.white.bold}: ${errorDataString}`.gray);
+      msgBase.push(`${''.padStart(strippedLen - 1)} ${'╠'.white}    ${'Error Data'.white.bold}: \n`);
+      for (let i = 0; i < lines.length; i++) {
+        const line = lines[i];
+        msgBase.push(''.padStart(strippedLen - 1));
+        const preChar = i === lines.length - 1 ? '╚'.white : '╠'.white;
+        msgBase.push(`${preChar}        ${line.gray}\n`);
+      }
     }
   } else if (msg instanceof Error) {
     const [name, ...rest] = msg.stack.split('\n');
-    msgBase.push(getStrColor(name, type.color));
-    msgBase.push(rest.map(l => l.replace(/^/, '\n')).join('').grey);
+    const lines = [getStrColor(name, type.color)];
+    rest.forEach((l) => { lines.push(l.grey); });
+    const base = msgBase.join(' ');
+    const strippedLen = stripColors(base).length;
+
+    if (lines[lines.length - 1] === '\u001b[39m') {
+      lines[lines.length - 2] += '\u001b[39m';
+      lines.splice(lines.length - 1, 1);
+    }
+
+    for (let i = 0; i < lines.length; i++) {
+      const line = lines[i];
+      if (i > 0) {
+        const preChar = i === lines.length - 1 ? '╚'.white : '╠'.white;
+        msgBase.push(''.padStart(strippedLen - 1));
+        msgBase.push(`${preChar} ${line}\n`);
+      } else {
+        msgBase.push(`${'╔'.white} ${line}\n`);
+      }
+    }
+  } else if (msg.indexOf('\n') > -1) {
+    const base = msgBase.join(' ');
+    const strippedLen = stripColors(base).length;
+    const lines = msg.split('\n').filter(r => r.length > 0);
+
+    if (lines[lines.length - 1] === '\u001b[39m') {
+      lines[lines.length - 2] += '\u001b[39m';
+      lines.splice(lines.length - 1, 1);
+    }
+
+    for (let i = 0; i < lines.length; i++) {
+      const line = lines[i];
+      if (i > 0) {
+        const preChar = i === lines.length - 1 ? '╚'.white : '╠'.white;
+        msgBase.push(''.padStart(strippedLen - 1));
+        msgBase.push(`${preChar} ${getStrColor(line, type.color)}\n`);
+      } else {
+        msgBase.push(`${'╔'.white} ${getStrColor(line, type.color)}\n`);
+      }
+    }
   } else {
-    msgBase.push(getStrColor(msg, type.color)
-      .replace(/\n/g, '\n    '));
+    msgBase.push(getStrColor(msg, type.color));
   }
   if (!undefinedOrNull(additional.suffix)) {
     msgBase.push(additional.suffix);
