@@ -6,5 +6,5 @@ export * from './QuantoTools';
 export * from './validation';
 export * from './format';
 export * from './manageTools';
-
+export removeDiactrics from './removeDiactrics';
 export TemplateProcess from './template';
