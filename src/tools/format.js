@@ -134,6 +134,14 @@ Number.prototype.padLeft = function padLeft(n, chr) {
  */
 String.prototype.padLeft = String.prototype.padStart;
 
+/**
+ * Makes every first character of every word upper case.
+ * @returns {string}
+ */
+String.prototype.titleCase = function titleCase() {
+  return this.toLowerCase().split(' ').map(s => `${s.charAt(0).toUpperCase()}${s.substr(1)}`).join(' ');
+};
+
 function basename(str, sep) {
   const bSep = sep || '\\/';
   return str.split(new RegExp(`[${bSep}]`)).pop();

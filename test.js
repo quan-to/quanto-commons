@@ -83,7 +83,7 @@ scopedLog2.start('huebrbrbr');
 
 QLog.start({ prefix: 'Process 1', message: 'Process 1 call' });
 
-console.log('Color Test'.rainbow.bold);
+console.log('color title case test'.titleCase().rainbow.bold);
 
 printQuantoHeader('Quanto Commons', 'Test');
 
