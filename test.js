@@ -10,6 +10,10 @@ import {
   ErrorObject,
   QLog,
   ErrorCodes,
+  toFullSize,
+  bclipMessage,
+  boxMessage,
+  bclipError,
 } from './dist';
 
 import './dist/colors';
@@ -100,3 +104,13 @@ huebr
 hurbaba
 ${'abc'.warn.bold.bgBlue}
 `.warn);
+
+const bclipm = bclipMessage('Hmm, something doesn\'t look right' , 'Looks like your app is crash.\nDo you need any help?\n');
+
+const bmx = boxMessage(bclipm);
+
+QLog.fatal(bmx);
+
+QLog.fatal(boxMessage(bclipError(new Error('Fatal Exception Test'))));
+
+console.log(toFullSize('hueheu brbr??'));

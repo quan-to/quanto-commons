@@ -1,9 +1,9 @@
-      ____            _         ___                    _        
-     / ___|___  _ __ | |_ __ _ / _ \ _   _  __ _ _ __ | |_ ___  
-    | |   / _ \| '_ \| __/ _` | | | | | | |/ _` | '_ \| __/ _ \ 
+      ____            _         ___                    _
+     / ___|___  _ __ | |_ __ _ / _ \ _   _  __ _ _ __ | |_ ___
+    | |   / _ \| '_ \| __/ _` | | | | | | |/ _` | '_ \| __/ _ \
     | |__| (_) | | | | || (_| | |_| | |_| | (_| | | | | || (_) |
-     \____\___/|_| |_|\__\__,_|\__\_\\__,_|\__,_|_| |_|\__\___/ 
-                                                                
+     \____\___/|_| |_|\__\__,_|\__\_\\__,_|\__,_|_| |_|\__\___/
+
 
 Welcome to the Quanto Commons repository!
 These are tools / constants / models that are shared among
@@ -13,7 +13,7 @@ our projects. Feel free to contribute / make it better.
 ## QuantoColors
 
 `QuantoColors` uses the `node-colors` package and makes a standard color
-display over our applications. To use it just import `QuantoColors` from 
+display over our applications. To use it just import `QuantoColors` from
 `quanto-commons` and run it:
 
 ```javascript
@@ -64,7 +64,7 @@ The second parameter is optional and denotes the second line.
 
 ## ErrorObject / ErrorCodes
 
-The `ErrorObject` model is used across our applications to denote an 
+The `ErrorObject` model is used across our applications to denote an
 error when returning or throwing an exception. It has five fields:
 
 *   `errorCode` => A string from `ErrorCodes`
@@ -73,5 +73,21 @@ error when returning or throwing an exception. It has five fields:
 *   `message` => A brief message saying why the error ocurred
 *   `errorDat` => An optional object that can contain extra data related to the error
 
-The `ErrorCodes` is a type of enum that contains a map from a standard errorCode string to 
+The `ErrorCodes` is a type of enum that contains a map from a standard errorCode string to
 a good name to be used on `ErrorObject` (or other places).
+
+
+## Fatal "Clip" Exception Message
+
+For the most waited feature of quanto-commons, here it is. Your master helper for fatal exceptions:
+
+![Rainbow String](pics/fatal-exception.png)
+
+Just use:
+```javascript
+import { boxMessage, bclipError } from 'quanto-commons';
+const myFatalHelperMessage = boxMessage(bclipError(new Error('Fatal Exception Test')));
+console.log(myFatalHelperMessage);
+```
+
+Have fun!
