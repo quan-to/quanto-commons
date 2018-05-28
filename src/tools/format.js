@@ -107,7 +107,6 @@ Number.prototype.toMoney = function toMoney(decimals, decimalSeparator, separato
 
   const s = this < 0 ? '-' : '';
   const iN = parseInt(Math.abs(Number(this) || 0).toFixed(c), 10);
-  console.log(this, s);
   const i = String(iN);
   const j = i.length > 3 ? i.length % 3 : 0;
   return s +
