@@ -38,5 +38,5 @@ jspm_packages
 
 .idea
 
-yarn.lock
-package-lock.json
+#yarn.lock
+#package-lock.json
