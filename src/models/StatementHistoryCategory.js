@@ -43,6 +43,10 @@ const StatementHistoryCategoryEnum = {
     value: 6,
     description: 'Fee Transactions',
   },
+  Invest: {
+    value: 7,
+    description: 'Investment Transactions',
+  },
 };
 
 const StatementHistoryCategoryEnumGraphQL = new GraphQLEnumType({
@@ -92,6 +96,11 @@ StatementHistoryCategoryGroup[StatementHistoryCategoryEnum.Fee.value] = [
   StatementHistoryCodeEnum.OtherFees.value,
   StatementHistoryCodeEnum.FeeRefund.value,
   StatementHistoryCodeEnum.BoletoFee.value,
+];
+
+StatementHistoryCategoryGroup[StatementHistoryCategoryEnum.Invest.value] = [
+  StatementHistoryCodeEnum.BankInvestment.value,
+  StatementHistoryCodeEnum.BankInvestmentReturn.value,
 ];
 
 const codeToCategory = (code: number) => {

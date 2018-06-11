@@ -92,6 +92,14 @@ export const StatementHistoryCodeEnum = {
     value: 20,
     description: 'Bank Debit',
   },
+  BankInvestment: {
+    value: 21,
+    description: 'Bank Investment',
+  },
+  BankInvestmentReturn: {
+    value: 22,
+    description: 'Bank Investment Return',
+  },
 };
 
 export const StatementHistoryCodeEnumGraphQL = new GraphQLEnumType({
