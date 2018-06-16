@@ -184,3 +184,15 @@ export function calcDvMod10(data: string) {
 
   return sum;
 }
+
+export function cleanUndefinedMembers(obj) {
+  Object.keys(obj).forEach((key) => {
+    if (obj[key] && typeof obj[key] === 'object') {
+      cleanUndefinedMembers(obj[key]);
+    } else if (obj[key] === undefined) {
+      delete obj[key];
+    }
+  });
+
+  return obj;
+}
