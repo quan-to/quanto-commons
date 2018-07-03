@@ -84,7 +84,7 @@ const styles = {
     label: 'Watching',
   },
   log: {
-    badge: '🖹',
+    badge: '📰',
     color: '',
     label: 'Log',
   },
