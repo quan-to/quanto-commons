@@ -1,11 +1,11 @@
 {
   "name": "quanto-commons",
-  "version": "1.0.29",
+  "version": "1.0.30",
   "description": "Quanto Common Tools",
   "main": "dist/index.js",
   "scripts": {
     "build": "npm run clear && babel src --ignore *.spec.js --out-dir dist --copy-files",
-    "clear": "rimraf ./dist",
+    "clear": "rimraf ./dist/*",
     "flow": "flow; test $? -eq 0 -o $? -eq 2",
     "lint": "eslint src/**",
     "repl": "nodemon --config ./repl/nodemon.json ./repl.js --exec babel-node",

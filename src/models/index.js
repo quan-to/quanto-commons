@@ -6,3 +6,5 @@ export ErrorCodes from './ErrorCodes';
 export ErrorObject from './ErrorObject';
 export * from './StatementHistoryCode';
 export * from './StatementHistoryCategory';
+export * from './Notification';
+export * from './QIT';

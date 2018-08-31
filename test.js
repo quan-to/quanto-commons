@@ -14,12 +14,14 @@ import {
   bclipMessage,
   boxMessage,
   bclipError,
+  DefaultQITArgs,
 } from './dist';
 
 import './dist/colors';
 
 QLog.enableLogs(['debug', 'warn']);
 QLog.headPadding = 40;
+QLog.showFilename = true;
 
 QLog.log('All logs enabled!');
 
@@ -114,3 +116,5 @@ QLog.fatal(bmx);
 QLog.fatal(boxMessage(bclipError(new Error('Fatal Exception Test'))));
 
 console.log(toFullSize('hueheu brbr??'));
+
+console.log(DefaultQITArgs);
