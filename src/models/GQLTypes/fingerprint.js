@@ -27,7 +27,7 @@ const serializeFingerPrint = (value: mixed) => {
   }
 
   if (typeof result === 'string') {
-    if (!validateHex.text(result)) {
+    if (!validateHex.test(result)) {
       throw new TypeError(`Fingerprint cannot represent value: ${value}`);
     }
     return result.toUpperCase();

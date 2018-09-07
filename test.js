@@ -17,6 +17,10 @@ import {
   DefaultQITArgs,
 } from './dist';
 
+import {
+  validateHex,
+} from './dist/models/GQLTypes/helpers';
+
 import './dist/colors';
 
 QLog.enableLogs(['debug', 'warn']);
@@ -118,3 +122,8 @@ QLog.fatal(boxMessage(bclipError(new Error('Fatal Exception Test'))));
 console.log(toFullSize('hueheu brbr??'));
 
 console.log(DefaultQITArgs);
+
+console.log(validateHex.test('6C39C1C16A9DA7BE'));
+console.log(validateHex.test('6C39C1C16A9DA7BE'));
+console.log(validateHex.test('6C39C1C16A9DA7BE'));
+console.log(validateHex.test('6C39C1C16A9DA7BE'));
