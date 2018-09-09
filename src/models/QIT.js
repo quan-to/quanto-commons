@@ -21,6 +21,28 @@ export const DefaultQITArgs = {
   },
 };
 
+export const DefaultSourceQITArgs = {
+  srcRoutingType: {
+    type: new GraphQLNonNull(GraphQLString),
+    description: 'Source Routing Type',
+  },
+  srcRoutingNumber: {
+    type: new GraphQLNonNull(GraphQLString),
+    description: 'Source Routing Number',
+  },
+};
+
+export const DefaultDestinationQITArgs = {
+  dstRoutingType: {
+    type: new GraphQLNonNull(GraphQLString),
+    description: 'Destination Routing Type',
+  },
+  dstRoutingNumber: {
+    type: new GraphQLNonNull(GraphQLString),
+    description: 'Destination Routing Number',
+  },
+};
+
 export const DefaultNotificationArgs = {
   notification: {
     type: new GraphQLList(NotificationInput),
