@@ -3,9 +3,7 @@
  * @flow
  */
 
-import {
-  GraphQLEnumType,
-} from 'graphql';
+import { GraphQLEnumType } from 'graphql';
 
 export const StatementHistoryCodeEnum = {
   Other: {
@@ -48,17 +46,13 @@ export const StatementHistoryCodeEnum = {
     value: 9,
     description: 'ATM Cash Out',
   },
-  PresentDeposit: {
+  CashIn: {
     value: 10,
     description: 'Deposit in person at the bank',
   },
-  EscrowLock: {
-    value: 11,
-    description: 'Locked amount for an Escrow',
-  },
-  EscrowUnlock: {
+  EscrowRollback: {
     value: 12,
-    description: 'Unlocked amount for an Escrow',
+    description: 'Rollback amount for an Escrow',
   },
   EscrowOut: {
     value: 13,
