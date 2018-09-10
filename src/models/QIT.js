@@ -43,6 +43,21 @@ export const DefaultDestinationQITArgs = {
   },
 };
 
+export const ExtractDefaultQITArgs = data => ({
+  routingType: data.routingType,
+  routingNumber: data.routingNumber,
+});
+
+export const ExtractDefaultSourceQITArgs = data => ({
+  srcRoutingType: data.srcRoutingType,
+  srcRoutingNumber: data.srcRoutingNumber,
+});
+
+export const ExtractDefaultDestinationQITArgs = data => ({
+  dstRoutingType: data.dstRoutingType,
+  dstRoutingNumber: data.dstRoutingNumber,
+});
+
 export const DefaultNotificationArgs = {
   notification: {
     type: new GraphQLList(NotificationInput),
