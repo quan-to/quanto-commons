@@ -47,7 +47,7 @@ const coerceFingerPrint = (value: mixed) : string => {
 
   if (typeof value !== 'string') {
     throw new TypeError(`String cannot represent a non string / hexadecimal / integer value: ${JSON.stringify(value)}`);
-  } else if (!validateHex(value)) {
+  } else if (!validateHex.test(value)) {
     throw new TypeError(`String cannot represent a non string / hexadecimal / integer value: ${value}`);
   }
 
