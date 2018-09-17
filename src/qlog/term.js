@@ -12,9 +12,7 @@ import {
   getCallerFilename,
 } from '../tools';
 
-import {
-  stripColors,
-} from '../colors/tools';
+import { stripColors } from '../colors/tools';
 
 import styles from './styles';
 

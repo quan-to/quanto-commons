@@ -2,17 +2,11 @@
  * Created by Lucas Teske on 29/03/18.
  * @flow
  */
-import {
-  GraphQLEnumType,
-} from 'graphql';
+import { GraphQLEnumType } from 'graphql';
 
-import {
-  undefinedOrNull,
-} from '../tools';
+import { undefinedOrNull } from '../tools';
 
-import {
-  StatementHistoryCodeEnum,
-} from './StatementHistoryCode';
+import { StatementHistoryCodeEnum } from './StatementHistoryCode';
 
 const StatementHistoryCategoryEnum = {
   Other: {
@@ -86,8 +80,7 @@ StatementHistoryCategoryGroup[StatementHistoryCategoryEnum.ATM.value] = [
 ];
 
 StatementHistoryCategoryGroup[StatementHistoryCategoryEnum.Escrow.value] = [
-  StatementHistoryCodeEnum.EscrowLock.value,
-  StatementHistoryCodeEnum.EscrowUnlock.value,
+  StatementHistoryCodeEnum.EscrowRollback.value,
   StatementHistoryCodeEnum.EscrowIn.value,
   StatementHistoryCodeEnum.EscrowOut.value,
 ];
