@@ -28,7 +28,7 @@ const buildTerminal = (parent, type, ...args) => {
       [msg] = args;
     } else {
       const [{ prefix, message, suffix }] = args;
-      msg = message;
+      msg = message || '';
       additional = { suffix, prefix };
     }
   } else {
