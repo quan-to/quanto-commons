@@ -8,6 +8,10 @@ import { GraphQLEnumType } from 'graphql';
 
 export const SupportedOperations = {
   // region Read Operations
+  getUserBoletos: {
+    value: 'getUserBoletos',
+    description: 'Read boletos created for the user (DDA)',
+  },
   getAccountBalance: {
     value: 'getAccountBalance',
     description: 'Operation to check the Account Balance',
