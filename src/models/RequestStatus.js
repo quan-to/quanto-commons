@@ -66,6 +66,10 @@ export const RequestStatusValues = {
     value: 'processed',
     description: 'The request has been processed',
   },
+  executed: {
+    value: 'executed',
+    description: 'The request has been executed',
+  },
 };
 
 const RS = {};
