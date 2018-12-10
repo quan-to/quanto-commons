@@ -70,6 +70,10 @@ export const RequestStatusValues = {
     value: 'executed',
     description: 'The request has been executed',
   },
+  signed: {
+    value: 'signed',
+    description: 'The request has been signed',
+  },
 };
 
 const RS = {};
