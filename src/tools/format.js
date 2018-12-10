@@ -3,9 +3,7 @@
  * Created by Lucas Teske on 02/05/17.
  */
 
-import {
-  undefinedOrNull,
-} from './validation';
+import { undefinedOrNull } from './validation';
 
 import removeDiactrics from './removeDiactrics';
 
