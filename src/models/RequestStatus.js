@@ -68,11 +68,13 @@ export const RequestStatusValues = {
   },
 };
 
-const RequestStatus = {};
+const RS = {};
 
 Object.keys(RequestStatusValues)
   .map(r => RequestStatusValues[r].value)
-  .forEach((r) => { RequestStatus[r] = r; });
+  .forEach((r) => { RS[r] = r; });
+
+export const RequestStatus = RS;
 
 export const RequestStatusEnum = new GraphQLEnumType({
   name: 'RequestStatusEnum',
