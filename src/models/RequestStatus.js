@@ -26,6 +26,10 @@ export const RequestStatusValues = {
     value: 'rejected',
     description: 'Request is rejected',
   },
+  revoked: {
+    value: 'revoked',
+    description: 'Request is revoked',
+  },
   failed: {
     value: 'failed',
     description: 'Request failed',
