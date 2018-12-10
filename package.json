@@ -1,6 +1,6 @@
 {
   "name": "quanto-commons",
-  "version": "1.0.41",
+  "version": "1.0.42",
   "description": "Quanto Common Tools",
   "main": "dist/index.js",
   "scripts": {
