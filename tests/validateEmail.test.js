@@ -1,23 +1,8 @@
-
 /* Unit tests for validateEmail written based on RFC-1034, RFC-1035, RFC-2821, RFC-2822 and RFC-3696.*/
 
 import {
     validateEmail,
-    // isRunningInNodeJS,
-    // validateCPF,
-    // validateCNPJ,
-    // undefinedOrNull,
-    // validateField,
-    // validateDateFormat,
-    // validateStringLength,
-    // calcDvMod11,
-    // calcDvMod11Sub11,
-    // calcDvAgencia,
-    // calcDvConta,
-    // calcDvMod10,
-    // cleanUndefinedMembers,
 } from '../src/tools';
-
 
 test('Validate that email string is not empty.', () => {
     expect(validateEmail('')).toBe(false);
