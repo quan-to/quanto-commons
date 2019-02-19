@@ -1,5 +1,6 @@
 /**
  * Created by Nemo on 13/02/19.
+ * Using code by Lucas Teske
  * @flow
  *
  * Fontes de documentacao sobre boletos:
@@ -11,7 +12,7 @@
  *
  */
 
-export function calcDvMod11(data: string) {
+function calcDvMod11(data) {
   let sum = 0;
   for (let i = 0; i < data.length; i++) {
     sum += (parseInt(data[i], 10) * ((data.length - i) + 1));
@@ -19,20 +20,20 @@ export function calcDvMod11(data: string) {
   return sum % 11;
 }
 
-export function calcDvMod11Sub11(data: string) {
+function calcDvMod11Sub11(data) {
   const c = calcDvMod11(data);
   return c > 0 ? 11 - c : 0;
 }
 
-export function calcDvAgencia(branchNumber: number|string) {
+function calcDvAgencia(branchNumber) {
   return calcDvMod11Sub11(branchNumber.padLeft(4, '0'));
 }
 
-export function calcDvConta(accountNumber: number|string) {
+function calcDvConta(accountNumber) {
   return calcDvMod11(accountNumber.toString()) % 10;
 }
 
-export function calcDvMod10(data: string) {
+function calcDvMod10(data) {
   let sum = 0;
   for (let i = 0; i < data.length; i++) {
     let partial = (parseInt(data[i], 10) * ((i % 2) + 1));
@@ -59,7 +60,29 @@ const currencies = {
   9: 'real',
 };
 
+const boletoBaseDate = new Date(1997, 10, 7);
+
+function defineDate(dateCode) {
+  const days = parseInt(dateCode);
+  if (days === 0) {
+    return undefined;
+  }
+  return new Date(boletoBaseDate.getTime() + days * 86400000);
+}
+
+function defineAmount(amountCode) {
+  return parseInt(amountCode);
+}
+
 function parseBoleto(code, valueIsGreaterThan999999999 = false) {
+  if (code.length < 36) {
+    return undefined;
+  }
+
+  if (code < 47) {
+    code.padEnd(47, '0');
+  }
+
   const boleto = {
     bank: undefined,
     currency: undefined,
@@ -105,8 +128,16 @@ function parseBoleto(code, valueIsGreaterThan999999999 = false) {
    *   caso de moeda variável, informar zeros)
    */
 
+  if (valueIsGreaterThan999999999) {
+    boleto.expiryDate = null;
+    boleto.amount = defineAmount(code.substring(33, 47));
+  } else {
+    boleto.expiryDate = defineDate(code.substring(33, 37));
+    boleto.amount = defineAmount(code.substring(37, 47));
+  }
+
   boleto.bank = banks[code.substring(0, 3)];
-  boleto.currency= code.substring(3, 4);
+  boleto.currency = currencies[code.substring(3, 4)];
   boleto.verifDigits.field20to24.code = code.substring(4, 9);
   boleto.verifDigits.field20to24.verifDigit = code.substring(9, 10);
   boleto.verifDigits.field25to34.code = code.substring(10, 20);
@@ -114,13 +145,5 @@ function parseBoleto(code, valueIsGreaterThan999999999 = false) {
   boleto.verifDigits.field35to44.code = code.substring(21, 31);
   boleto.verifDigits.field35to44.verifDigit = code.substring(31, 33);
 
-  if (valueIsGreaterThan999999999) {
-    boleto.amount = code.substring(33, 47);
-  } else {
-    boleto.expiryDate = code.substring(33, 37);
-    boleto.amount = code.substring(37, 47);
-  }
-
   return boleto;
 }
-
