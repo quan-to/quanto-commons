@@ -1,6 +1,5 @@
-import { parseBoleto } from '../src/parseBoleto.js';
-
-
+// import { parseBoleto } from '../src/tools/parseBoleto.js';
+const { parseBoleto }= require('../src/tools/parseBoleto.js');
 // function getVerifDigit(cpfString) {
 //   if (!/^[0-9]{9,10}$/.test(cpfString)) {
 //     return undefined;
@@ -14,18 +13,19 @@ import { parseBoleto } from '../src/parseBoleto.js';
 //   return ((sum * 10) % 11) % 10;
 // }
 
-test('Parse boleto', () => {
-  // expect(validateCPF("77565852200")).toBe(false);
-});
+// test('Parse boleto', () => {
+//
+// });
 
 function tests() {
-  const nemoNubank0 = '23793381286000374362647000063306678000000066666';
+  const nemoNubank0 =  '23793381286000374362647000063306678000000066666';
   console.log(parseBoleto(nemoNubank0));
-  const nemoNubank1 = '23793381286000375806168000063302978130000024507';
+  const nemoNubank1 =  '23793381286000375806168000063302978130000024507';
   console.log(parseBoleto(nemoNubank1));
-  const boletoAbad = '23793114069000552895671018289307978780000003000';
+  const boletoAbad =   '2379311406900055289567101828930797878 0000003000';
   console.log(parseBoleto(boletoAbad));
-  const boletoDoBeto = '34191755383314459252550451630003200000000000000';
+  const boletoDoBeto = '341917553833144592525504516300032 (000 | 0) (0000000000)';
   console.log(parseBoleto(boletoDoBeto));
 }
-  
+
+tests();

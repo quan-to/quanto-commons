@@ -30,7 +30,7 @@
  *   caso de moeda variável, informar zeros)
  */
 
-export function calcDvMod11(data: string) {
+function calcDvMod11(data) {
   let sum = 0;
   for (let i = 0; i < data.length; i++) {
     sum += (parseInt(data[i], 10) * ((data.length - i) + 1));
@@ -38,20 +38,20 @@ export function calcDvMod11(data: string) {
   return sum % 11;
 }
 
-export function calcDvMod11Sub11(data: string) {
+function calcDvMod11Sub11(data) {
   const c = calcDvMod11(data);
   return c > 0 ? 11 - c : 0;
 }
 
-export function calcDvAgencia(branchNumber: number|string) {
+function calcDvAgencia(branchNumber) {
   return calcDvMod11Sub11(branchNumber.padLeft(4, '0'));
 }
 
-export function calcDvConta(accountNumber: number|string) {
+function calcDvConta(accountNumber) {
   return calcDvMod11(accountNumber.toString()) % 10;
 }
 
-export function calcDvMod10(data: string) {
+function calcDvMod10(data) {
   let sum = 0;
   for (let i = 0; i < data.length; i++) {
     let partial = (parseInt(data[i], 10) * ((i % 2) + 1));
@@ -67,9 +67,9 @@ export function calcDvMod10(data: string) {
 }
 
 const banks = {
-  237: 'BANCO BRADESCO S.A.',
-  33: 'BANCO SANTANDER (BRASIL) S.A.',
   1: 'BANCO DO BRASIL S.A.',
+  33: 'BANCO SANTANDER (BRASIL) S.A.',
+  237: 'BANCO BRADESCO S.A.',
   341: 'ITAÚ UNIBANCO S.A.',
   633: 'BANCO RENDIMENTO S.A.',
 };
@@ -78,40 +78,59 @@ const currencies = {
   9: 'real',
 };
 
+function getExpiryDate(dateCode) {
+  const febrabanBaseDate = new Date(1997, 10, 7);
+  return new Date((febrabanBaseDate / 1) + (dateCode * 86400000));
+}
+
 function parseBoleto(code, valueIsGreaterThan999999999 = false) {
+  if (code < 36) {
+    return undefined;
+  }
+  if (code.length < 47) {
+    code.padEnd(47, '0');
+  }
   const boleto = {
     bank: undefined,
     currency: undefined,
-    verifDigits: {
-      field1: undefined,
-      field2: undefined,
-      field3: undefined,
+    verifiableFields: {
+      field20to24: {
+        value: undefined,
+        verifDigit: undefined,
+        verified: undefined,
+      },
+      field25to34: {
+        value: undefined,
+        verifDigit: undefined,
+        verified: undefined,
+      },
+      field35to44: {
+        value: undefined,
+        verifDigit: undefined,
+        verified: undefined,
+      },
     },
     expiryDate: undefined,
     amount: undefined,
   };
 
   boleto.bank = banks[code.substring(0, 3)];
-  banks.code.substring(12312);
-
-  boleto.currency = code.substring(3, 4);
-
-  boleto.codBarras20a24 = code.substring(4, 9);
-  boleto.verifDigit1 = code.substring(9, 10);
-
-  boleto.codBarras25a34 = code.substring(10, 20);
-  boleto.verifDigit2 = code.substring(20, 21);
-
-  boleto.codBarras35a44 = code.substring(21, 31);
-  boleto.verifDigit3 = code.substring(31, 33);
+  boleto.currency = currencies[code.substring(3, 4)];
+  boleto.verifiableFields.field20to24.value  = code.substring(4, 9);
+  boleto.verifiableFields.field20to24.verifDigit = code.substring(9, 10);
+  boleto.verifiableFields.field25to34.value  = code.substring(10, 20);
+  boleto.verifiableFields.field25to34.verifDigit = code.substring(20, 21);
+  boleto.verifiableFields.field35to44.value  = code.substring(21, 31);
+  boleto.verifiableFields.field35to44.verifDigit= code.substring(31, 33);
 
   if (valueIsGreaterThan999999999) {
-    boleto.amount = code.substring(33, 47);
+    boleto.amount = code.substring(33, 47) / 100;
   } else {
-    boleto.expiryDate = code.substring(33, 37);
-    boleto.amount = code.substring(37, 47);
+    boleto.expiryDate = getExpiryDate(code.substring(33, 37));
+    boleto.amount = code.substring(37, 47) / 100;
   }
 
   return boleto;
 }
 
+module.exports = { parseBoleto };
