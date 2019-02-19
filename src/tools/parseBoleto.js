@@ -9,25 +9,6 @@
  * Este código valida a representação numérica do código de barras. Note que os dados da linha digitável não
  * se apresentam na mesma sequência do código de barras.
  *
- * Estrutura do campo digitável:
- *   AAABCCCCCX.DDDDDDDDDDY.EEEEEEEEEEZK.UUUUVVVVVVVVVV
- * a) Campo 1: AAABC.CCCCX
- *   A = Código do BB na COMPE ( 001)
- *   B = Código da moeda ( 9) -Real
- *   C = Posições 20 a 24 do código de barras
- *   X = DV do Campo 1 (Módulo 10, cálculo conforme anexo 7)
- * b) Campo 2: DDDDD.DDDDDY
- *   D = Posições 25 a 34 do código de barras
- *   Y = DV do Campo 2 (Módulo 10, cálculo conforme anexo 7)
- * c) Campo 3: EEEEE.EEEEEZ
- *   F = Posições 35 a 44 do código de barras
- *   Z =DV do Campo 3 (Módulo 10, cálculo conforme anexo 7)
- * Campo 4: K
- *   K = DV do código de barras (Módulo 10, cálculo conforme anexo 107)
- * Campo 5: UUUUVVVVVVVVVV
- *   U = Fator de Vencimento (Módulo 10, cálculo conforme anexo 8)
- *   V = Valor do título (com duas casas decimais, sem ponto e vírgula. Em
- *   caso de moeda variável, informar zeros)
  */
 
 export function calcDvMod11(data: string) {
@@ -82,28 +63,56 @@ function parseBoleto(code, valueIsGreaterThan999999999 = false) {
   const boleto = {
     bank: undefined,
     currency: undefined,
-    verifDigits: {
-      field1: undefined,
-      field2: undefined,
-      field3: undefined,
-    },
-    expiryDate: undefined,
     amount: undefined,
+    expiryDate: undefined,
+    verifDigits: {
+      field20to24: {
+        code: undefined,
+        verifDigit: undefined,
+        verified: undefined,
+      },
+      field25to34: {
+        code: undefined,
+        verifDigit: undefined,
+        verified: undefined,
+      },
+      field35to44: {
+        code: undefined,
+        verifDigit: undefined,
+        verified: undefined,
+      },
+    },
   };
 
+  /** Estrutura do campo digitável:
+   *   AAABCCCCCX.DDDDDDDDDDY.EEEEEEEEEEZK.UUUUVVVVVVVVVV
+   * a) Campo 1: AAABC.CCCCX
+   *   A = Código do BB na COMPE ( 001)
+   *   B = Código da moeda ( 9) -Real
+   *   C = Posições 20 a 24 do código de barras
+   *   X = DV do Campo 1 (Módulo 10, cálculo conforme anexo 7)
+   * b) Campo 2: DDDDD.DDDDDY
+   *   D = Posições 25 a 34 do código de barras
+   *   Y = DV do Campo 2 (Módulo 10, cálculo conforme anexo 7)
+   * c) Campo 3: EEEEE.EEEEEZ
+   *   F = Posições 35 a 44 do código de barras
+   *   Z =DV do Campo 3 (Módulo 10, cálculo conforme anexo 7)
+   * Campo 4: K
+   *   K = DV do código de barras (Módulo 10, cálculo conforme anexo 107)
+   * Campo 5: UUUUVVVVVVVVVV
+   *   U = Fator de Vencimento (Módulo 10, cálculo conforme anexo 8)
+   *   V = Valor do título (com duas casas decimais, sem ponto e vírgula. Em
+   *   caso de moeda variável, informar zeros)
+   */
+
   boleto.bank = banks[code.substring(0, 3)];
-  banks.code.substring(12312);
-
-  boleto.currency = code.substring(3, 4);
-
-  boleto.codBarras20a24 = code.substring(4, 9);
-  boleto.verifDigit1 = code.substring(9, 10);
-
-  boleto.codBarras25a34 = code.substring(10, 20);
-  boleto.verifDigit2 = code.substring(20, 21);
-
-  boleto.codBarras35a44 = code.substring(21, 31);
-  boleto.verifDigit3 = code.substring(31, 33);
+  boleto.currency= code.substring(3, 4);
+  boleto.verifDigits.field20to24.code = code.substring(4, 9);
+  boleto.verifDigits.field20to24.verifDigit = code.substring(9, 10);
+  boleto.verifDigits.field25to34.code = code.substring(10, 20);
+  boleto.verifDigits.field25to34.verifDigit = code.substring(20, 21);
+  boleto.verifDigits.field35to44.code = code.substring(21, 31);
+  boleto.verifDigits.field35to44.verifDigit = code.substring(31, 33);
 
   if (valueIsGreaterThan999999999) {
     boleto.amount = code.substring(33, 47);
