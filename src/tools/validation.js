@@ -130,7 +130,28 @@ export function validateCNPJ(cnpjO: string) : boolean {
     }
   }
   resultado = sum % 11 < 2 ? 0 : 11 - (sum % 11);
-  return resultado === parseInt(digits.charAt(1), 10);
+
+  if (resultado !== parseInt(digits.charAt(1), 10)) {
+    return false;
+  }
+
+  // According to:
+  // - http://www.receita.fazenda.gov.br/publico/Legislacao/atos/AtosConjuntos/AnexoIADEConjuntoCoratCotec0012002.doc
+  // There are few edge cases.
+  // If the starting is 000.000.00, then all cases are valid, but if not:
+  // The branch number of the company cannot be higher than 0300.
+  const branchNumber = parseInt(cnpj.substr(8, 4), 10);
+  const baseNumber = parseInt(cnpj.substr(0, 8), 10);
+
+  if (branchNumber === 0) { // The branch number starts with 1
+    return false;
+  }
+
+  if (baseNumber !== 0) { // Base Number != the branch Number cannot be higher than 300.
+    return branchNumber <= 300;
+  }
+
+  return true;
 }
 
 export function undefinedOrNull(field: any) {
