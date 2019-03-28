@@ -15,7 +15,7 @@
 function calcDvMod11(data) {
   let sum = 0;
   for (let i = 0; i < data.length; i++) {
-    sum += (parseInt(data[i], 10) * ((data.length - i) + 1));
+    sum += (parseInt(data[i]) * ((data.length - i) + 1));
   }
   return sum % 11;
 }
@@ -49,9 +49,9 @@ function calcDvMod10(data) {
 }
 
 const banks = {
-  237: 'BANCO BRADESCO S.A.',
-  33: 'BANCO SANTANDER (BRASIL) S.A.',
   1: 'BANCO DO BRASIL S.A.',
+  33: 'BANCO SANTANDER (BRASIL) S.A.',
+  237: 'BANCO BRADESCO S.A.',
   341: 'ITAÚ UNIBANCO S.A.',
   633: 'BANCO RENDIMENTO S.A.',
 };
@@ -67,11 +67,12 @@ function defineDate(dateCode) {
   if (days === 0) {
     return undefined;
   }
-  return new Date(boletoBaseDate.getTime() + days * 86400000);
+  return new Date(boletoBaseDate.getTime() + days * 172800000);
 }
 
 function defineAmount(amountCode) {
-  return parseInt(amountCode);
+  // Todo pretty format "R$ 99,99"
+  return amountCode;
 }
 
 function parseBoleto(code, valueIsGreaterThan999999999 = false) {
