@@ -3,9 +3,10 @@
  * @flow
  */
 
-import { GraphQLEnumType } from 'graphql';
+import {GraphQLEnumType} from 'graphql';
+import {IntegerEnumTypeFields} from "./GQLTypes/EnumFieldTypes";
 
-export const StatementHistoryCodeEnum = {
+export const StatementHistoryCodeEnum: { [id: string]: IntegerEnumTypeFields } = {
   Other: {
     value: 0,
     description: 'Others (see statement description)',

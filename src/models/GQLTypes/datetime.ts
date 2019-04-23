@@ -8,9 +8,9 @@ import {
   Kind,
 } from 'graphql';
 
-import { isInteger } from './helpers';
+import {isInteger} from './helpers';
 
-const parseDateTime = (value: mixed) => {
+const parseDateTime = (value: any) => {
   let num = value;
 
   if (typeof num === 'string' && value !== '') {
@@ -30,9 +30,9 @@ const parseDateTime = (value: mixed) => {
   return num;
 };
 
-const serializeDateTime = (value: mixed): string => parseDateTime(value).toISOString();
+const serializeDateTime = (value: any): string => parseDateTime(value).toISOString();
 
-const parseAstDateTime = (ast) => {
+const parseAstDateTime = (ast: any) => {
   if (ast.kind === Kind.INT || ast.kind === Kind.STRING) {
     return ast.value;
   }

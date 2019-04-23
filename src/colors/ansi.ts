@@ -3,7 +3,7 @@
  * @flow
  */
 
-const codes = {
+const codes: { [id: string]: [number, number] } = {
   reset: [0, 0],
 
   bold: [1, 22],
@@ -52,9 +52,17 @@ const codes = {
   bgWhiteBright: [107, 49],
 };
 
-const ansiColors = {};
+export type AnsiColor = {
+  name: string,
+  value: [number, number],
+  openTag: string,
+  closeTag: string,
+  closeRegex: RegExp,
+}
 
-const escapeString = str => str.replace(/[|\\{}()[\]^$+*?.]/g, '\\$&');
+const ansiColors: { [id: string]: AnsiColor } = {};
+
+const escapeString = (str: string) => str.replace(/[|\\{}()[\]^$+*?.]/g, '\\$&');
 
 Object.keys(codes).forEach((k) => {
   const closeTag = `\u001b[${codes[k][1]}m`;
@@ -67,13 +75,13 @@ Object.keys(codes).forEach((k) => {
   };
 });
 
-const getColor = name => ansiColors[name] || {
+const getColor = (name: string) => ansiColors[name] || {
   name: 'unknown', value: 'unknown', openTag: '', closeTag: '',
 };
 
 const getColorsName = () => Object.keys(ansiColors);
 const rainbowColors = ['red', 'yellow', 'green', 'blue', 'magenta'];
-const getRainbowColor = n => getColor(rainbowColors[n % rainbowColors.length]);
+const getRainbowColor = (n: number) => getColor(rainbowColors[n % rainbowColors.length]);
 
 export {
   getColor,

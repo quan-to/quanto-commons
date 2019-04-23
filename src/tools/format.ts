@@ -19,12 +19,15 @@ const maskStartRegExp = /^([^#ANX]+)/;
 const format = (str: string, mask: string) => {
   let data = str;
   // don't do anything if mask is undefined/null/etc
-  if (undefinedOrNull(mask) || typeof mask !== 'string') {
+  if (undefinedOrNull(mask)) {
     return data;
   }
 
   if (data.length === 1 && maskStartRegExp.test(mask)) {
-    data = maskStartRegExp.exec(mask)[0] + data;
+    const e = maskStartRegExp.exec(mask);
+    if (e) {
+        data = e[0] + data;
+    }
   }
 
   let text = '';
@@ -71,7 +74,7 @@ const format = (str: string, mask: string) => {
  * @param strFormat [mask] Mask format, like `####-##`
  * @returns {string}
  */
-Number.prototype.format = function formatNumber(strFormat) {
+Number.prototype.format = function formatNumber(strFormat: string) {
   return format(this.toString(), strFormat);
 };
 
@@ -80,15 +83,15 @@ Number.prototype.format = function formatNumber(strFormat) {
  * @param strFormat [mask] Mask format, like `####-##`
  * @returns {string}
  */
-String.prototype.format = function formatStr(strFormat) {
-  return format(this, strFormat);
+String.prototype.format = function formatStr(strFormat: string) {
+  return format(this.toString(), strFormat);
 };
 
 /**
  * Normalize the string by removing non ASCII chars
  */
 String.prototype.removeDiactrics = function removeDiactricsStr() {
-  return removeDiactrics(this);
+  return removeDiactrics(this.toString());
 };
 
 /**
@@ -99,7 +102,7 @@ String.prototype.removeDiactrics = function removeDiactricsStr() {
  * @returns {string} Formatted money string
  */
 Number.prototype.toMoney = function toMoney(decimals, decimalSeparator, separator) {
-  const c = Number.isNaN(Math.abs(decimals)) ? 2 : Math.abs(decimals);
+  const c = Number.isNaN(Math.abs(decimals || 2)) ? 2 : Math.abs(decimals || 2);
   const d = undefinedOrNull(decimalSeparator) ? ',' : decimalSeparator;
   const t = undefinedOrNull(separator) ? '.' : separator;
 
@@ -110,7 +113,7 @@ Number.prototype.toMoney = function toMoney(decimals, decimalSeparator, separato
   return s +
     (j ? i.substr(0, j) + t : '') +
     i.substr(j).replace(/(\d{3})(?=\d)/g, `$1${t}`) +
-    (c ? d + Math.abs(Math.abs(this) - iN).toFixed(c).slice(2) : '');
+    (c ? d + Math.abs(Math.abs(<number>this) - iN).toFixed(c).slice(2) : '');
 };
 
 /**
@@ -120,7 +123,7 @@ Number.prototype.toMoney = function toMoney(decimals, decimalSeparator, separato
  * @returns {string}
  */
 Number.prototype.padLeft = function padLeft(n, chr) {
-  return (this < 0 ? '-' : '') + new Array((n - String(Math.abs(this)).length) + 1).join(chr || '0') + (Math.abs(this));
+  return (this < 0 ? '-' : '') + new Array((n - String(Math.abs(<number>this)).length) + 1).join(chr || '0') + (Math.abs(<number>this));
 };
 
 /**
@@ -139,7 +142,7 @@ String.prototype.titleCase = function titleCase() {
   return this.toLowerCase().split(' ').map(s => `${s.charAt(0).toUpperCase()}${s.substr(1)}`).join(' ');
 };
 
-function basename(str, sep) {
+function basename(str: string, sep?: string) {
   const bSep = sep || '\\/';
   return str.split(new RegExp(`[${bSep}]`)).pop();
 }

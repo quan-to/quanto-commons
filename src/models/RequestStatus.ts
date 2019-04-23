@@ -3,9 +3,11 @@
  * @flow
  */
 
-import { GraphQLEnumType } from 'graphql';
+import {GraphQLEnumType} from 'graphql';
+import {StringEnumTypeFields} from "./GQLTypes/EnumFieldTypes";
 
-export const RequestStatusValues = {
+
+export const RequestStatusValues: { [id: string]: StringEnumTypeFields } = {
   requested: {
     value: 'requested',
     description: 'Request started',
@@ -76,11 +78,13 @@ export const RequestStatusValues = {
   },
 };
 
-const RS = {};
+const RS: { [id: string]: string } = {};
 
 Object.keys(RequestStatusValues)
   .map(r => RequestStatusValues[r].value)
-  .forEach((r) => { RS[r] = r; });
+  .forEach((r) => {
+    RS[r] = r;
+  });
 
 export const RequestStatus = RS;
 

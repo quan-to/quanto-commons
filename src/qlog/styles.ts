@@ -7,7 +7,14 @@ import figures from 'figures';
 
 // Same styles as https://github.com/klauscfhq/signale/
 
-const styles = {
+export type QLogStyle = {
+  name?: String
+  badge: String
+  color: String
+  label: String
+};
+
+const styles: { [id: string]: QLogStyle } = {
   error: {
     badge: figures.cross,
     color: 'red',
@@ -90,6 +97,8 @@ const styles = {
   },
 };
 
-Object.keys(styles).forEach((k) => { styles[k].name = k; });
+Object.keys(styles).forEach((k) => {
+  styles[k].name = k;
+});
 
 export default styles;

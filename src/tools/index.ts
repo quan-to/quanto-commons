@@ -2,6 +2,9 @@
  * Created by Lucas Teske on 02/06/17.
  */
 
+import removeDiactrics from "./removeDiactrics";
+import TemplateProcess from "./template";
+
 export {
   printQuantoHeader,
   QuantoColors,
@@ -32,5 +35,9 @@ export {
   getLocaleNowDate,
   getUTCNow,
 } from './manageTools';
-export removeDiactrics from './removeDiactrics';
-export TemplateProcess from './template';
+
+export {
+  removeDiactrics,
+  TemplateProcess,
+}
+

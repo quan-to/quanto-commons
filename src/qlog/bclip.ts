@@ -12,7 +12,7 @@ import {
   stripColors,
 } from '../colors/tools';
 
-const FullSizeLUT = {
+const FullSizeLUT: { [id: string]: string } = {
   // region Numbers
   0: '０',
   1: '１',
@@ -117,7 +117,7 @@ const FullSizeLUT = {
   // endregion
 };
 
-const BClipLut = [
+const BClipLut: string[] = [
   '                    ',
   '       ▄████▄       ',
   '      ▐▌    ▐▌      ',
@@ -141,14 +141,14 @@ const BClipLut = [
 
 const BClipEmpty = '                    ';
 
-export const toFullSize = msg => msg
+export const toFullSize = (msg: string) => msg
   .split('')
   .map(c => (!undefinedOrNull(FullSizeLUT[c]) ? FullSizeLUT[c] : c))
   .join('');
 
-export const boxMessage = (msg) => {
+export const boxMessage = (msg: string) => {
   const lines = msg.split('\n');
-  const outLines = [];
+  const outLines: string[] = [];
   const maxWidth = lines
     .map(l => stripColors(l).length)
     .reduce((a, b) => (a > b ? a : b));
@@ -157,17 +157,19 @@ export const boxMessage = (msg) => {
 
   lines
     .map(l => ` ${'║'.white} ${l}${' '.repeat(maxWidth - stripColors(l).length)} ${'║'.white}`)
-    .forEach((l) => { outLines.push(l); });
+    .forEach((l) => {
+      outLines.push(l);
+    });
 
   outLines.push(` ${'╚'.white}${'═'.repeat(maxWidth + 2).white}${'╝'.white}`);
 
   return outLines.join('\n');
 };
 
-export const bclipMessage = (title, msg) => {
+export const bclipMessage = (title: string, msg: string) => {
   const lines = msg.split('\n');
   const titleFull = title; // toFullSize(title); :(( broken on box
-  const outLines = [];
+  const outLines: string[] = [];
   let curClipLine = 0;
 
   const maxWidth = lines
@@ -195,8 +197,9 @@ export const bclipMessage = (title, msg) => {
 };
 
 export const bclipError = (excpt: Error) => {
-  const [name, ...rest] = excpt.stack.split('\n');
-  const title = name.red.bold;
+  const [name, ...rest] = (excpt.stack || '').split('\n');
+  // @ts-ignore
+  const title = <string>name.red.bold;
   const lines = rest;
 
 

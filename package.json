@@ -1,6 +1,6 @@
 {
   "name": "quanto-commons",
-  "version": "1.0.46",
+  "version": "1.0.47",
   "description": "Quanto Common Tools",
   "main": "dist/index.js",
   "scripts": {
@@ -54,9 +54,18 @@
     "rimraf": "^2.5.4"
   },
   "dependencies": {
+    "@types/figures": "^2.0.0",
+    "@types/graphql": "^14.2.0",
+    "@types/node": "^11.13.7",
     "dayjs": "^1.6.3",
     "figures": "^2.0.0",
     "graphql": "^0.11.7",
     "moment": "^2.18.1"
-  }
+  },
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not ie <= 11",
+    "not op_mini all"
+  ]
 }

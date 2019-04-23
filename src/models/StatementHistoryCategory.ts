@@ -2,13 +2,15 @@
  * Created by Lucas Teske on 29/03/18.
  * @flow
  */
-import { GraphQLEnumType } from 'graphql';
+import {GraphQLEnumType} from 'graphql';
 
-import { undefinedOrNull } from '../tools';
+import {undefinedOrNull} from '../tools';
 
-import { StatementHistoryCodeEnum } from './StatementHistoryCode';
+import {StatementHistoryCodeEnum} from './StatementHistoryCode';
+import {IntegerEnumTypeFields} from "./GQLTypes/EnumFieldTypes";
 
-const StatementHistoryCategoryEnum = {
+
+const StatementHistoryCategoryEnum: { [id: string]: IntegerEnumTypeFields } = {
   Other: {
     value: 0,
     description: 'Others (see statement description)',
@@ -49,7 +51,7 @@ const StatementHistoryCategoryEnumGraphQL = new GraphQLEnumType({
   values: StatementHistoryCategoryEnum,
 });
 
-const StatementHistoryCategoryGroup = {};
+const StatementHistoryCategoryGroup: { [id: number]: number[] } = {};
 
 StatementHistoryCategoryGroup[StatementHistoryCategoryEnum.Other.value] = [
   StatementHistoryCodeEnum.Other.value,

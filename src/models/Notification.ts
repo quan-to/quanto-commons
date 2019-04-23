@@ -12,8 +12,10 @@ import {
   GraphQLFloat,
   GraphQLInt,
 } from 'graphql';
+import {StringEnumTypeFields} from "./GQLTypes/EnumFieldTypes";
 
-export const NotificationType = {
+
+export const NotificationType: { [id: string]: StringEnumTypeFields } = {
   webhook: {
     value: 'webhook',
     description: 'Simple JSON POST',

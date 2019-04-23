@@ -15,7 +15,10 @@ import {
   validateHex,
 } from './helpers';
 
-const serializeFingerPrint = (value: mixed) => {
+// @ts-ignore
+declare const Buffer;
+
+const serializeFingerPrint = (value: any) => {
   const result = value && typeof value.valueOf === 'function' ? value.valueOf() : value;
 
   if (typeof Buffer !== 'undefined' && result instanceof Buffer) {
@@ -33,15 +36,15 @@ const serializeFingerPrint = (value: mixed) => {
     return result.toUpperCase();
   }
 
-  if (isFinite(result)) {
+  if (typeof result === 'number' && isFinite(result)) {
     return result.toString(16).toUpperCase();
   }
 
   throw new TypeError(`Fingerprint cannot represent value: ${JSON.stringify(value)}`);
 };
 
-const coerceFingerPrint = (value: mixed) : string => {
-  if (isInteger(value)) {
+const coerceFingerPrint = (value: any): string => {
+  if (typeof value === 'number') {
     return value.toString(16).toUpperCase();
   }
 
@@ -54,11 +57,14 @@ const coerceFingerPrint = (value: mixed) : string => {
   return value.toString().toUpperCase();
 };
 
-const parseAstFingerprint = (ast) => {
+const parseAstFingerprint = (ast: any) => {
   switch (ast.kind) {
-    case Kind.STRING: return ast.value;
-    case Kind.INT: return parseInt(ast.value, 10);
-    default: return undefined;
+    case Kind.STRING:
+      return ast.value;
+    case Kind.INT:
+      return parseInt(ast.value, 10);
+    default:
+      return undefined;
   }
 };
 

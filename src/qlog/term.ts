@@ -5,31 +5,34 @@
 
 import figures from 'figures';
 
-import { ErrorObject } from '../models';
+import {ErrorObject} from '../models';
 import {
   undefinedOrNull,
   getUTCNow,
   getCallerFilename,
 } from '../tools';
 
-import { stripColors } from '../colors/tools';
+import {stripColors} from '../colors/tools';
 
-import styles from './styles';
+import styles, {QLogStyle} from './styles';
 
 
-const getStrColor = (str, color) => (!undefinedOrNull(str[color]) ? str[color] : str.info);
+const getStrColor = (str: any, color: string | String) => (!undefinedOrNull(str[color.toString()]) ? str[color.toString()] : str.info);
 
-const buildTerminal = (parent, type, ...args) => {
-  let msg = {};
-  let additional = {};
+const buildTerminal = (parent: any, type: QLogStyle, ...args: any[]) => {
+  let msg: any | Error = {};
+  let additional: {
+    suffix?: string
+    prefix?: string
+  } = {};
 
   if (args.length === 1 && typeof (args[0]) === 'object' && args[0] !== null) {
     if (args[0] instanceof Error) {
       [msg] = args;
     } else {
-      const [{ prefix, message, suffix }] = args;
+      const [{prefix, message, suffix}] = args;
       msg = message || '';
-      additional = { suffix, prefix };
+      additional = {suffix, prefix};
     }
   } else {
     msg = args.join(' ');
@@ -49,8 +52,8 @@ const buildTerminal = (parent, type, ...args) => {
       if (parent.__config__.scope.length === 1) {
         msgBase.push(`[${parent.__config__.scope[0].white}]`);
       } else {
-        const scopes = parent.__config__.scope.filter(x => x.length !== 0);
-        msgBase.push(`[${scopes.reduce((a, b) => `${a.white} ➡ ${b.white}`)}]`);
+        const scopes = parent.__config__.scope.filter((x: string) => x.length !== 0);
+        msgBase.push(`[${scopes.reduce((a: String, b: string) => `${a.white} ➡ ${b.white}`)}]`);
       }
     } else {
       msgBase.push(`[${parent.__config__.scope.white}]`);
@@ -80,7 +83,7 @@ const buildTerminal = (parent, type, ...args) => {
   }
 
   if (parent.__config__.showLabel && type.label) {
-    msgBase.push(`${getStrColor(type.label.underline, type.color).padEnd(parent.__cache__.longestLabel + 22)}`);
+    msgBase.push(`${getStrColor(type.label.underline.toString(), type.color).padEnd(parent.__cache__.longestLabel + 22)}`);
   }
 
   if (msg instanceof ErrorObject) {
@@ -100,7 +103,8 @@ const buildTerminal = (parent, type, ...args) => {
     if (parent.__config__.showErrorCodeErrorData) {
       const errorDataString = !undefinedOrNull(errorData) && errorData.trim().length !== 0 ?
         `${JSON.stringify(JSON.parse(errorData), null, 2)}` :
-        'null'.warn.bold;
+        // @ts-ignore
+        <string>('null'.warn.bold);
       const lines = errorDataString.split('\n').filter(r => r.length > 0);
       // msgBase.push(`\n    ${'ErrorData'.white.bold}: ${errorDataString}`.gray);
       msgBase.push(`${''.padStart(strippedLen - 1)} ${'╠'.white}    ${'Error Data'.white.bold}: \n`);
@@ -112,9 +116,11 @@ const buildTerminal = (parent, type, ...args) => {
       }
     }
   } else if (msg instanceof Error) {
-    const [name, ...rest] = msg.stack.split('\n');
+    const [name, ...rest] = (msg.stack || '').split('\n');
     const lines = [getStrColor(name, type.color)];
-    rest.forEach((l) => { lines.push(l.grey); });
+    rest.forEach((l) => {
+      lines.push(l.grey);
+    });
     const base = msgBase.join(' ');
     const strippedLen = stripColors(base).length;
 
@@ -136,7 +142,7 @@ const buildTerminal = (parent, type, ...args) => {
   } else if (msg.indexOf('\n') > -1) {
     const base = msgBase.join(' ');
     const strippedLen = stripColors(base).length;
-    const lines = msg.split('\n').filter(r => r.length > 0);
+    const lines = msg.split('\n').filter((r: string) => r.length > 0);
 
     if (lines[lines.length - 1] === '\u001b[39m') {
       lines[lines.length - 2] += '\u001b[39m';
@@ -156,25 +162,25 @@ const buildTerminal = (parent, type, ...args) => {
   } else {
     msgBase.push(getStrColor(msg, type.color));
   }
-  if (!undefinedOrNull(additional.suffix)) {
+  if (additional.suffix) {
     msgBase.push(additional.suffix);
   }
 
   return msgBase.join(' ');
 };
 
-const _defaultLog = (type, parent, ...data) => {
+const _defaultLog = (parent: any, type: QLogStyle, ...args: any[]) => {
   if (parent.__disabledLogs__.indexOf(type.name) === -1) {
-    console.log(buildTerminal(parent, type, ...data));
+    console.log(buildTerminal(parent, type, ...args));
   }
 };
 
-const stylesLog = {};
+const stylesLog: any = {};
 
 Object.keys(styles).forEach((stl) => {
   stylesLog[stl] = _defaultLog.bind(null, styles[stl]);
 });
 
-stylesLog.__normalLog__ = (parent, ...data) => console.log(data.join(' '));
+stylesLog.__normalLog__ = (parent: any, ...data: any[]) => console.log(data.join(' '));
 
 export default stylesLog;

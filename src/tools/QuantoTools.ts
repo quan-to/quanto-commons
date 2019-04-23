@@ -6,7 +6,7 @@ import '../colors';
 
 const lineLength = '                                                                    '.length;
 
-export const printQuantoHeader = (app, app2) => {
+export const printQuantoHeader = (app: string, app2?: string) => {
   const title = (app === undefined || app === null) ? '' : app;
 
   // eslint-disable-next-line no-bitwise

@@ -7,8 +7,22 @@ import {
   GraphQLList,
   GraphQLNonNull,
 } from 'graphql';
+import {NotificationInput} from "./Notification";
 
-import { NotificationInput } from './Notification';
+export type DefaultQITArgsType = {
+  routingType: string,
+  routingNumber: string,
+}
+
+export type DefaultSourceQITArgsType = {
+  srcRoutingType: string,
+  srcRoutingNumber: string,
+}
+
+export type DefaultDestinationQITArgsType = {
+  dstRoutingType: string,
+  dstRoutingNumber: string,
+}
 
 export const DefaultQITArgs = {
   routingType: {
@@ -43,17 +57,17 @@ export const DefaultDestinationQITArgs = {
   },
 };
 
-export const ExtractDefaultQITArgs = data => ({
+export const ExtractDefaultQITArgs = (data: any) => ({
   routingType: data.routingType,
   routingNumber: data.routingNumber,
 });
 
-export const ExtractDefaultSourceQITArgs = data => ({
+export const ExtractDefaultSourceQITArgs = (data: any) => ({
   srcRoutingType: data.srcRoutingType,
   srcRoutingNumber: data.srcRoutingNumber,
 });
 
-export const ExtractDefaultDestinationQITArgs = data => ({
+export const ExtractDefaultDestinationQITArgs = (data: any) => ({
   dstRoutingType: data.dstRoutingType,
   dstRoutingNumber: data.dstRoutingNumber,
 });

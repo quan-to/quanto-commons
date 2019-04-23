@@ -17,18 +17,24 @@ import {
 
 
 // eslint-disable-next-line no-extend-native
-const setStringGetter = (name, value) => Object.defineProperty(String.prototype, name, {
+const setStringGetter = (name: string, value: any) => Object.defineProperty(String.prototype, name, {
   enumerable: false,
   configurable: false,
   get: value,
 });
 
+// @ts-ignore
 const genColorGet = colorName => (ansiSupported() ? function applyStyleString() {
+// @ts-ignore
   return applyStyleByName(getColor, colorName, this);
-} : function dummy() { return this; });
+} : function dummy() {
+// @ts-ignore
+  return this;
+});
 
 
 function rainbow() {
+// @ts-ignore
   return ansiSupported() ? applyIteratorFuncStyle(getRainbowColor, this) : this;
 }
 
@@ -44,8 +50,12 @@ const colorMap = {
   error: 'red',
 };
 
-Object.keys(colorMap).forEach(k => setStringGetter(k, genColorGet(colorMap[k])));
-getColorsName().forEach(k => setStringGetter(k, genColorGet(k)));
+Object.keys(colorMap)
+// @ts-ignore
+  .forEach(k => setStringGetter(k, genColorGet(colorMap[k])));
+getColorsName()
+// @ts-ignore
+  .forEach(k => setStringGetter(k, genColorGet(k)));
 
 setStringGetter('rainbow', rainbow);
 setStringGetter('silly', rainbow);

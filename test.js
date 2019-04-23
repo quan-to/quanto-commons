@@ -17,9 +17,7 @@ import {
   DefaultQITArgs,
 } from './dist';
 
-import {
-  validateHex,
-} from './dist/models/GQLTypes/helpers';
+import { validateHex } from './dist/models/GQLTypes/helpers';
 
 import './dist/colors';
 
@@ -111,7 +109,7 @@ hurbaba
 ${'abc'.warn.bold.bgBlue}
 `.warn);
 
-const bclipm = bclipMessage('Hmm, something doesn\'t look right' , 'Looks like your app is crash.\nDo you need any help?\n');
+const bclipm = bclipMessage('Hmm, something doesn\'t look right', 'Looks like your app is crash.\nDo you need any help?\n');
 
 const bmx = boxMessage(bclipm);
 

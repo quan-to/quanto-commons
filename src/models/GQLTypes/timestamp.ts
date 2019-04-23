@@ -9,9 +9,9 @@ import {
   Kind,
 } from 'graphql';
 
-import { isInteger } from './helpers';
+import {isInteger} from './helpers';
 
-const transformTimestamp = (value: mixed): number => {
+const transformTimestamp = (value: any): number => {
   let num = value;
 
   if (typeof num === 'string' && value !== '') {

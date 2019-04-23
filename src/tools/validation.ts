@@ -6,11 +6,12 @@
 
 import moment from 'moment';
 
+// @ts-ignore
 export function isRunningInNodeJS() { return typeof module !== 'undefined' && module.exports; }
 
-export function normalizeXMLJSObjectProperties(obj: Object) : Object {
+export function normalizeXMLJSObjectProperties(obj: any) : any {
   const keys = Object.keys(obj);
-  const nObj = {};
+  const nObj: any = {};
   for (let i = 0; i < keys.length; i += 1) {
     const k = keys[i];
     if (typeof obj[k] === 'object') {
@@ -206,7 +207,7 @@ export function calcDvMod10(data: string) {
   return sum;
 }
 
-export function cleanUndefinedMembers(obj) {
+export function cleanUndefinedMembers(obj: any) {
   Object.keys(obj).forEach((key) => {
     if (obj[key] && typeof obj[key] === 'object') {
       cleanUndefinedMembers(obj[key]);

@@ -3,7 +3,7 @@
  * @flow
  */
 
-export default {
+const ErrorCodes: { [id: string]: string } = {
   // region Public Use
   InternalServerError: 'INTERNAL_SERVER_ERROR',
   NotFound: 'NOT_FOUND',
@@ -46,16 +46,20 @@ export default {
   SynchronizationError: 'SYNCHRONIZATION_ERROR',
   RoutingError: 'ROUTING_ERROR',
   // endregion
+};
 
-  _valueToKey(value: string) {
-    const keys = Object.keys(this);
-    for (let i = 0; i < keys.length; i++) {
-      const k = keys[i];
-      if (this[k] === value) {
-        return k;
-      }
+const ErrorCodeValueToKey = (value: string) => {
+  const keys = Object.keys(ErrorCodes);
+  for (let i = 0; i < keys.length; i++) {
+    const k = keys[i];
+    if (ErrorCodes[k] === value) {
+      return k;
     }
+  }
+  return null;
+};
 
-    return null;
-  },
+export {
+  ErrorCodes,
+  ErrorCodeValueToKey,
 };

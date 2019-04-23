@@ -3,14 +3,34 @@
  * @flow
  */
 
-import { isRunningInNodeJS } from '../tools';
+import {isRunningInNodeJS} from '../tools';
 import styles from './styles';
 
 import termStyles from './term';
 
+type QLogConfig = {
+  showDateTime: boolean
+  showBadge: boolean
+  showLabel: boolean
+  showErrorCodeErrorData: boolean
+  showFilename: boolean
+  showScope: boolean
+  scope: string | null
+  headPadding: number | null
+}
+
 class QLog {
+
+  __config__: QLogConfig;
+
+  __cache__ = {
+    longestLabel: 0,
+  };
+
+  __disabledLogs__: string[];
+
   constructor() {
-    const parent = this;
+    const parent = this as any;
     this.__config__ = {
       showDateTime: true,
       showBadge: true,
@@ -20,10 +40,6 @@ class QLog {
       showScope: true,
       scope: null,
       headPadding: null,
-    };
-
-    this.__cache__ = {
-      longestLabel: 0,
     };
 
     this.__disabledLogs__ = ['debug', 'warn'];
@@ -45,22 +61,22 @@ class QLog {
     }
   }
 
-  bclip(...args) {
+  bclip(...args: any[]) {
 
   }
 
   slash() {
-    this.__normalLog__('─────────────────────────────────────────────────────────────────────────────────────────────');
+    (this as any).__normalLog__('─────────────────────────────────────────────────────────────────────────────────────────────');
   }
 
-  _enableLog(logName) {
+  _enableLog(logName: string) {
     const idx = this.__disabledLogs__.indexOf(logName);
     if (idx !== -1) {
       this.__disabledLogs__.splice(idx, 1);
     }
   }
 
-  _disableLog(logName) {
+  _disableLog(logName: string) {
     const idx = this.__disabledLogs__.indexOf(logName);
     if (idx === -1) {
       this.__disabledLogs__.push(logName);
@@ -75,32 +91,36 @@ class QLog {
     return this.__config__.headPadding;
   }
 
-  enableLogs(...args) {
+  enableLogs(...args: string[]) {
     args.forEach((arg) => {
       if (Array.isArray(arg)) {
-        arg.forEach((a) => { this._enableLog(a); });
+        arg.forEach((a) => {
+          this._enableLog(a);
+        });
       } else {
         this._enableLog(arg);
       }
     });
   }
 
-  disableLogs(...args) {
+  disableLogs(...args: string[]) {
     args.forEach((arg) => {
       if (Array.isArray(arg)) {
-        arg.forEach((a) => { this._disableLog(a); });
+        arg.forEach((a) => {
+          this._disableLog(a);
+        });
       } else {
         this._disableLog(arg);
       }
     });
   }
 
-  scope(...name) {
+  scope(...name: string[]) {
     const newQLogScope = new QLog();
     newQLogScope.__config__ = JSON.parse(JSON.stringify(this.__config__));
     newQLogScope.__cache__ = JSON.parse(JSON.stringify(this.__cache__));
     newQLogScope.__disabledLogs__ = this.__disabledLogs__;
-    newQLogScope.__config__.scope = name;
+    newQLogScope.__config__.scope = name.join(">");
 
     return newQLogScope;
   }

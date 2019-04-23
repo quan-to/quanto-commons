@@ -3,21 +3,18 @@
  * @flow
  */
 
-import { GraphQLObjectType, GraphQLString } from 'graphql';
-import ErrorCodes from './ErrorCodes';
+import {GraphQLObjectType, GraphQLString} from 'graphql';
+import {ErrorCodes, ErrorCodeValueToKey} from './ErrorCodes';
 
 export default class ErrorObject extends Error {
   errorCode: string;
-  errorField: string|void;
+  errorField?: string | void;
   message: string;
   errorData: string;
 
-  constructor(data: Object) {
+  constructor(data: any) {
     super(data.message);
-    this.constructor = ErrorObject; // Nasty fix for Babel Bug https://github.com/babel/babel/issues/4485#issuecomment-315569892
     this.name = this.constructor.name;
-    // eslint-disable-next-line no-proto
-    this.__proto__ = ErrorObject.prototype; // Nasty fix for Babel Bug https://github.com/babel/babel/issues/4485#issuecomment-315569892
     Error.captureStackTrace(this, ErrorObject);
 
 
@@ -26,7 +23,7 @@ export default class ErrorObject extends Error {
     this.errorData = JSON.stringify(data.errorData) || '';
     this.message = data.message || this.stack || data.errorCode;
 
-    if (ErrorCodes._valueToKey(data.errorCode) === null) {
+    if (ErrorCodeValueToKey(data.errorCode) === null) {
       console.log(`ErrorObject -- Warning: ErrorCode "${data.errorCode}" not in list of error codes!`);
     }
   }
