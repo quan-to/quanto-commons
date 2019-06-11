@@ -54,7 +54,6 @@
     "rimraf": "^2.5.4"
   },
   "dependencies": {
-    "dayjs": "^1.6.3",
     "figures": "^2.0.0",
     "graphql": "^0.11.7",
     "moment": "^2.18.1"

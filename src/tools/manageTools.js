@@ -3,7 +3,7 @@
  * @flow
  */
 
-import dayjs from 'dayjs';
+import moment from 'moment';
 
 import { basename } from './format';
 
@@ -31,5 +31,5 @@ export function getLocaleNowDate() {
 }
 
 export function getUTCNow() {
-  return dayjs(new Date().toISOString().substr(0, 23)).format('YYYYMMDD-HHmmss');
+  return moment.utc().format('YYYYMMDD-HHmmss');
 }
