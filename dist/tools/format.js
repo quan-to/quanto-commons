@@ -1,3 +1,7 @@
+/**
+ * Created by Lucas Teske on 02/05/17.
+ */
+
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -14,9 +18,6 @@ var _removeDiactrics2 = _interopRequireDefault(_removeDiactrics);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /* eslint-disable no-extend-native,no-plusplus */
-/**
- * Created by Lucas Teske on 02/05/17.
- */
 
 var maskStartRegExp = /^([^#ANX]+)/;
 /**

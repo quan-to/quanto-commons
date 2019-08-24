@@ -1,12 +1,13 @@
+/**
+ * Created by Lucas Teske on 09/05/17.
+ * 
+ */
+
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-/**
- * Created by Lucas Teske on 09/05/17.
- * 
- */
 
 /**
  * Applies data to a template string

@@ -1,3 +1,7 @@
+/**
+ * Created by Lucas Teske on 22/05/18.
+ */
+
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -15,11 +19,6 @@ var _dayjs2 = _interopRequireDefault(_dayjs);
 var _format = require('./format');
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-/**
- * Created by Lucas Teske on 22/05/18.
- * 
- */
 
 function getCallerFilename(level) {
   var lvl = level || 2;

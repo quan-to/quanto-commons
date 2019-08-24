@@ -1,3 +1,7 @@
+/**
+ * Created by Lucas Teske on 02/05/17.
+ */
+
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -7,9 +11,7 @@ exports.QuantoColors = exports.printQuantoHeader = undefined;
 
 require('../colors');
 
-var lineLength = '                                                                    '.length; /**
-                                                                                                 * Created by Lucas Teske on 02/05/17.
-                                                                                                 */
+var lineLength = '                                                                    '.length;
 
 var printQuantoHeader = exports.printQuantoHeader = function printQuantoHeader(app, app2) {
   var title = app === undefined || app === null ? '' : app;

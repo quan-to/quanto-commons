@@ -1,9 +1,11 @@
-'use strict';
-
 /**
  * Created by Nemo on 13/02/19.
- * 
- *
+ */
+
+'use strict';
+
+
+ /*
  * Fontes de documentacao sobre boletos:
  * - http://download.itau.com.br/bankline/SISPAG_CNAB.pdf
  * - https://www.bb.com.br/docs/pub/emp/empl/dwn/Doc5175Bloqueto.pdf
