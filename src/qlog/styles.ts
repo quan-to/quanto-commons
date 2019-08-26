@@ -3,7 +3,7 @@
  * @flow
  */
 
-import figures from 'figures';
+import * as figures from 'figures';
 
 // Same styles as https://github.com/klauscfhq/signale/
 

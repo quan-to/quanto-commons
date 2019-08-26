@@ -1,10 +1,10 @@
 {
   "name": "quanto-commons",
-  "version": "1.0.47",
+  "version": "1.0.48",
   "description": "Quanto Common Tools",
   "main": "dist/index.js",
   "scripts": {
-    "build": "npm run clear && babel src --ignore *.spec.js --out-dir dist --copy-files",
+    "build": "npm run clear && tsc",
     "clear": "rimraf ./dist/*",
     "flow": "flow; test $? -eq 0 -o $? -eq 2",
     "lint": "eslint src/**",
@@ -56,8 +56,7 @@
   "dependencies": {
     "@types/figures": "^2.0.0",
     "@types/graphql": "^14.2.0",
-    "@types/node": "^11.13.7",
-    "dayjs": "^1.6.3",
+    "@types/moment": "^2.13.0",
     "figures": "^2.0.0",
     "graphql": "^0.11.7",
     "moment": "^2.18.1"

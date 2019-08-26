@@ -139,7 +139,7 @@ String.prototype.padLeft = String.prototype.padStart;
  * @returns {string}
  */
 String.prototype.titleCase = function titleCase() {
-  return this.toLowerCase().split(' ').map(s => `${s.charAt(0).toUpperCase()}${s.substr(1)}`).join(' ');
+  return this.toLowerCase().split(' ').map((s: any) => `${s.charAt(0).toUpperCase()}${s.substr(1)}`).join(' ');
 };
 
 function basename(str: string, sep?: string) {

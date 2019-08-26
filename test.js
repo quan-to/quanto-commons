@@ -20,10 +20,10 @@ import {
 import { validateHex } from './dist/models/GQLTypes/helpers';
 
 import './dist/colors';
-
-QLog.enableLogs(['debug', 'warn']);
-QLog.headPadding = 40;
-QLog.showFilename = true;
+//
+// QLog.enableLogs(['debug', 'warn']);
+// QLog.headPadding = 40;
+// QLog.showFilename = true;
 
 QLog.log('All logs enabled!');
 

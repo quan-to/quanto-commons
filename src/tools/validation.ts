@@ -4,7 +4,7 @@
  * @flow
  */
 
-import moment from 'moment';
+import * as moment from 'moment';
 
 // @ts-ignore
 export function isRunningInNodeJS() { return typeof module !== 'undefined' && module.exports; }

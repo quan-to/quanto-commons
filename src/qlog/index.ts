@@ -51,7 +51,9 @@ class QLog {
 
     if (isRunningInNodeJS()) {
       Object.keys(termStyles).forEach((k) => {
-        parent[k] = termStyles[k].bind(null, parent);
+        parent[k] = function () {
+          return termStyles[k](parent, ...arguments);
+        }  // termStyles[k].bind(null, parent);
       });
     } else {
       console.log('Chrome version not implemented. Ignoring');
@@ -174,4 +176,4 @@ class QLog {
   }
 }
 
-export default Object.assign(new QLog(), {});
+export default new QLog();

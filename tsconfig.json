@@ -1,27 +1,22 @@
 {
   "compilerOptions": {
-    "target": "es5",
-    "lib": [
-      "dom",
-      "dom.iterable",
-      "esnext"
-    ],
-    "allowJs": true,
-    "skipLibCheck": true,
-    "esModuleInterop": true,
-    "allowSyntheticDefaultImports": true,
-    "strict": true,
-    "forceConsistentCasingInFileNames": true,
     "module": "esnext",
-    "moduleResolution": "node",
+    "target": "es2016",
+    "noImplicitAny": true,
+    "removeComments": true,
     "resolveJsonModule": true,
-    "isolatedModules": true,
-    "noEmit": true,
-    "jsx": "preserve",
-    "outDir": "dist",
-    "sourceMap": true
+    "preserveConstEnums": true,
+    "moduleResolution": "node",
+    "outDir": "./dist",
+    "typeRoots": ["./node_modules/@types", "./typings"],
+    "sourceMap": true,
+    "lib": [
+       "es2017",
+       "dom",
+       "esnext.asynciterable"
+    ]
   },
   "include": [
-    "src"
-  ]
+    "src/**/*"
+  ],
 }

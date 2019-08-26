@@ -1,54 +1,33 @@
-'use strict';
-
-var _tools = require('./tools');
-
-var _ansi = require('./ansi');
-
-// eslint-disable-next-line no-extend-native
-/**
- * Created by Lucas Teske on 18/05/18.
- * 
- */
-
-var setStringGetter = function setStringGetter(name, value) {
-  return Object.defineProperty(String.prototype, name, {
+import { ansiSupported, applyStyleByName, applyIteratorFuncStyle, } from './tools';
+import { getColor, getColorsName, getRainbowColor, } from './ansi';
+const setStringGetter = (name, value) => Object.defineProperty(String.prototype, name, {
     enumerable: false,
     configurable: false,
-    get: value
-  });
-};
-
-var genColorGet = function genColorGet(colorName) {
-  return (0, _tools.ansiSupported)() ? function applyStyleString() {
-    return (0, _tools.applyStyleByName)(_ansi.getColor, colorName, this);
-  } : function dummy() {
+    get: value,
+});
+const genColorGet = colorName => (ansiSupported() ? function applyStyleString() {
+    return applyStyleByName(getColor, colorName, this);
+} : function dummy() {
     return this;
-  };
-};
-
+});
 function rainbow() {
-  return (0, _tools.ansiSupported)() ? (0, _tools.applyIteratorFuncStyle)(_ansi.getRainbowColor, this) : this;
+    return ansiSupported() ? applyIteratorFuncStyle(getRainbowColor, this) : this;
 }
-
-var colorMap = {
-  input: 'grey',
-  verbose: 'cyan',
-  prompt: 'grey',
-  info: 'green',
-  data: 'grey',
-  help: 'cyan',
-  warn: 'yellow',
-  debug: 'blue',
-  error: 'red'
+const colorMap = {
+    input: 'grey',
+    verbose: 'cyan',
+    prompt: 'grey',
+    info: 'green',
+    data: 'grey',
+    help: 'cyan',
+    warn: 'yellow',
+    debug: 'blue',
+    error: 'red',
 };
-
-Object.keys(colorMap).forEach(function (k) {
-  return setStringGetter(k, genColorGet(colorMap[k]));
-});
-(0, _ansi.getColorsName)().forEach(function (k) {
-  return setStringGetter(k, genColorGet(k));
-});
-
+Object.keys(colorMap)
+    .forEach(k => setStringGetter(k, genColorGet(colorMap[k])));
+getColorsName()
+    .forEach(k => setStringGetter(k, genColorGet(k)));
 setStringGetter('rainbow', rainbow);
 setStringGetter('silly', rainbow);
-//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi4uLy4uL3NyYy9jb2xvcnMvaW5kZXguanMiXSwibmFtZXMiOlsic2V0U3RyaW5nR2V0dGVyIiwibmFtZSIsInZhbHVlIiwiT2JqZWN0IiwiZGVmaW5lUHJvcGVydHkiLCJTdHJpbmciLCJwcm90b3R5cGUiLCJlbnVtZXJhYmxlIiwiY29uZmlndXJhYmxlIiwiZ2V0IiwiZ2VuQ29sb3JHZXQiLCJhcHBseVN0eWxlU3RyaW5nIiwiZ2V0Q29sb3IiLCJjb2xvck5hbWUiLCJkdW1teSIsInJhaW5ib3ciLCJnZXRSYWluYm93Q29sb3IiLCJjb2xvck1hcCIsImlucHV0IiwidmVyYm9zZSIsInByb21wdCIsImluZm8iLCJkYXRhIiwiaGVscCIsIndhcm4iLCJkZWJ1ZyIsImVycm9yIiwia2V5cyIsImZvckVhY2giLCJrIl0sIm1hcHBpbmdzIjoiOztBQUtBOztBQU1BOztBQU9BO0FBbEJBOzs7OztBQW1CQSxJQUFNQSxrQkFBa0IsU0FBbEJBLGVBQWtCLENBQUNDLElBQUQsRUFBT0MsS0FBUDtBQUFBLFNBQWlCQyxPQUFPQyxjQUFQLENBQXNCQyxPQUFPQyxTQUE3QixFQUF3Q0wsSUFBeEMsRUFBOEM7QUFDckZNLGdCQUFZLEtBRHlFO0FBRXJGQyxrQkFBYyxLQUZ1RTtBQUdyRkMsU0FBS1A7QUFIZ0YsR0FBOUMsQ0FBakI7QUFBQSxDQUF4Qjs7QUFNQSxJQUFNUSxjQUFjLFNBQWRBLFdBQWM7QUFBQSxTQUFjLDhCQUFrQixTQUFTQyxnQkFBVCxHQUE0QjtBQUM5RSxXQUFPLDZCQUFpQkMsY0FBakIsRUFBMkJDLFNBQTNCLEVBQXNDLElBQXRDLENBQVA7QUFDRCxHQUZpQyxHQUU5QixTQUFTQyxLQUFULEdBQWlCO0FBQUUsV0FBTyxJQUFQO0FBQWMsR0FGakI7QUFBQSxDQUFwQjs7QUFLQSxTQUFTQyxPQUFULEdBQW1CO0FBQ2pCLFNBQU8sOEJBQWtCLG1DQUF1QkMscUJBQXZCLEVBQXdDLElBQXhDLENBQWxCLEdBQWtFLElBQXpFO0FBQ0Q7O0FBRUQsSUFBTUMsV0FBVztBQUNmQyxTQUFPLE1BRFE7QUFFZkMsV0FBUyxNQUZNO0FBR2ZDLFVBQVEsTUFITztBQUlmQyxRQUFNLE9BSlM7QUFLZkMsUUFBTSxNQUxTO0FBTWZDLFFBQU0sTUFOUztBQU9mQyxRQUFNLFFBUFM7QUFRZkMsU0FBTyxNQVJRO0FBU2ZDLFNBQU87QUFUUSxDQUFqQjs7QUFZQXZCLE9BQU93QixJQUFQLENBQVlWLFFBQVosRUFBc0JXLE9BQXRCLENBQThCO0FBQUEsU0FBSzVCLGdCQUFnQjZCLENBQWhCLEVBQW1CbkIsWUFBWU8sU0FBU1ksQ0FBVCxDQUFaLENBQW5CLENBQUw7QUFBQSxDQUE5QjtBQUNBLDJCQUFnQkQsT0FBaEIsQ0FBd0I7QUFBQSxTQUFLNUIsZ0JBQWdCNkIsQ0FBaEIsRUFBbUJuQixZQUFZbUIsQ0FBWixDQUFuQixDQUFMO0FBQUEsQ0FBeEI7O0FBRUE3QixnQkFBZ0IsU0FBaEIsRUFBMkJlLE9BQTNCO0FBQ0FmLGdCQUFnQixPQUFoQixFQUF5QmUsT0FBekIiLCJmaWxlIjoiaW5kZXguanMiLCJzb3VyY2VzQ29udGVudCI6WyIvKipcbiAqIENyZWF0ZWQgYnkgTHVjYXMgVGVza2Ugb24gMTgvMDUvMTguXG4gKiBAZmxvd1xuICovXG5cbmltcG9ydCB7XG4gIGFuc2lTdXBwb3J0ZWQsXG4gIGFwcGx5U3R5bGVCeU5hbWUsXG4gIGFwcGx5SXRlcmF0b3JGdW5jU3R5bGUsXG59IGZyb20gJy4vdG9vbHMnO1xuXG5pbXBvcnQge1xuICBnZXRDb2xvcixcbiAgZ2V0Q29sb3JzTmFtZSxcbiAgZ2V0UmFpbmJvd0NvbG9yLFxufSBmcm9tICcuL2Fuc2knO1xuXG5cbi8vIGVzbGludC1kaXNhYmxlLW5leHQtbGluZSBuby1leHRlbmQtbmF0aXZlXG5jb25zdCBzZXRTdHJpbmdHZXR0ZXIgPSAobmFtZSwgdmFsdWUpID0+IE9iamVjdC5kZWZpbmVQcm9wZXJ0eShTdHJpbmcucHJvdG90eXBlLCBuYW1lLCB7XG4gIGVudW1lcmFibGU6IGZhbHNlLFxuICBjb25maWd1cmFibGU6IGZhbHNlLFxuICBnZXQ6IHZhbHVlLFxufSk7XG5cbmNvbnN0IGdlbkNvbG9yR2V0ID0gY29sb3JOYW1lID0+IChhbnNpU3VwcG9ydGVkKCkgPyBmdW5jdGlvbiBhcHBseVN0eWxlU3RyaW5nKCkge1xuICByZXR1cm4gYXBwbHlTdHlsZUJ5TmFtZShnZXRDb2xvciwgY29sb3JOYW1lLCB0aGlzKTtcbn0gOiBmdW5jdGlvbiBkdW1teSgpIHsgcmV0dXJuIHRoaXM7IH0pO1xuXG5cbmZ1bmN0aW9uIHJhaW5ib3coKSB7XG4gIHJldHVybiBhbnNpU3VwcG9ydGVkKCkgPyBhcHBseUl0ZXJhdG9yRnVuY1N0eWxlKGdldFJhaW5ib3dDb2xvciwgdGhpcykgOiB0aGlzO1xufVxuXG5jb25zdCBjb2xvck1hcCA9IHtcbiAgaW5wdXQ6ICdncmV5JyxcbiAgdmVyYm9zZTogJ2N5YW4nLFxuICBwcm9tcHQ6ICdncmV5JyxcbiAgaW5mbzogJ2dyZWVuJyxcbiAgZGF0YTogJ2dyZXknLFxuICBoZWxwOiAnY3lhbicsXG4gIHdhcm46ICd5ZWxsb3cnLFxuICBkZWJ1ZzogJ2JsdWUnLFxuICBlcnJvcjogJ3JlZCcsXG59O1xuXG5PYmplY3Qua2V5cyhjb2xvck1hcCkuZm9yRWFjaChrID0+IHNldFN0cmluZ0dldHRlcihrLCBnZW5Db2xvckdldChjb2xvck1hcFtrXSkpKTtcbmdldENvbG9yc05hbWUoKS5mb3JFYWNoKGsgPT4gc2V0U3RyaW5nR2V0dGVyKGssIGdlbkNvbG9yR2V0KGspKSk7XG5cbnNldFN0cmluZ0dldHRlcigncmFpbmJvdycsIHJhaW5ib3cpO1xuc2V0U3RyaW5nR2V0dGVyKCdzaWxseScsIHJhaW5ib3cpO1xuIl19
+//# sourceMappingURL=index.js.map

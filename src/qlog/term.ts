@@ -3,7 +3,7 @@
  * @flow
  */
 
-import figures from 'figures';
+import * as figures from 'figures';
 
 import {ErrorObject} from '../models';
 import {
@@ -24,7 +24,7 @@ const buildTerminal = (parent: any, type: QLogStyle, ...args: any[]) => {
   let additional: {
     suffix?: string
     prefix?: string
-  } = {};
+  } = {}
 
   if (args.length === 1 && typeof (args[0]) === 'object' && args[0] !== null) {
     if (args[0] instanceof Error) {
@@ -170,6 +170,7 @@ const buildTerminal = (parent: any, type: QLogStyle, ...args: any[]) => {
 };
 
 const _defaultLog = (parent: any, type: QLogStyle, ...args: any[]) => {
+  parent.__disabledLogs__ = parent.__disabledLogs__ || [];
   if (parent.__disabledLogs__.indexOf(type.name) === -1) {
     console.log(buildTerminal(parent, type, ...args));
   }
@@ -178,7 +179,9 @@ const _defaultLog = (parent: any, type: QLogStyle, ...args: any[]) => {
 const stylesLog: any = {};
 
 Object.keys(styles).forEach((stl) => {
-  stylesLog[stl] = _defaultLog.bind(null, styles[stl]);
+  stylesLog[stl] = function() {
+    return _defaultLog(arguments[0], styles[stl], ...Array.from(arguments).slice(1));
+  }
 });
 
 stylesLog.__normalLog__ = (parent: any, ...data: any[]) => console.log(data.join(' '));

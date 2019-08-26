@@ -6,10 +6,6 @@ import removeDiactrics from "./removeDiactrics";
 import TemplateProcess from "./template";
 
 export {
-  printQuantoHeader,
-  QuantoColors,
-} from './QuantoTools';
-export {
   isRunningInNodeJS,
   validateEmail,
   validateCPF,
@@ -25,10 +21,17 @@ export {
   calcDvMod10,
   cleanUndefinedMembers,
 } from './validation';
+
+export {
+  printQuantoHeader,
+  QuantoColors,
+} from './QuantoTools';
+
 export {
   FormatValue,
   basename,
 } from './format';
+
 export {
   getCallerFilename,
   getLocaleNowTime,
