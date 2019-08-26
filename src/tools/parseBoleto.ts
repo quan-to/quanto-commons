@@ -1,7 +1,7 @@
 /**
  * Created by Nemo on 13/02/19.
  * Using code by Lucas Teske
- * @flow
+ *
  *
  * Fontes de documentacao sobre boletos:
  * - http://download.itau.com.br/bankline/SISPAG_CNAB.pdf

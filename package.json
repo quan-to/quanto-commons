@@ -6,7 +6,6 @@
   "scripts": {
     "build": "npm run clear && tsc",
     "clear": "rimraf ./dist/*",
-    "flow": "flow; test $? -eq 0 -o $? -eq 2",
     "lint": "eslint src/**",
     "repl": "nodemon --config ./repl/nodemon.json ./repl.js --exec babel-node",
     "test": "jest --coverage --forceExit --runInBand",

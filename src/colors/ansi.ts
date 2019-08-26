@@ -1,6 +1,6 @@
 /**
  * Created by Lucas Teske on 18/05/18.
- * @flow
+ *
  */
 
 const codes: { [id: string]: [number, number] } = {

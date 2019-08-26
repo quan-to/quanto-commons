@@ -1,6 +1,6 @@
 /**
  * Created by Lucas Teske on 28/09/18.
- * @flow
+ *
  */
 
 

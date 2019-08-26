@@ -1,6 +1,6 @@
 /**
  * Created by Lucas Teske on 02/05/17.
- * @flow
+ *
  */
 
 import {

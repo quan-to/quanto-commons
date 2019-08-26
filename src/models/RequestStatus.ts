@@ -1,6 +1,6 @@
 /**
  * Created by Lucas Teske on 10/12/18.
- * @flow
+ *
  */
 
 import {GraphQLEnumType} from 'graphql';

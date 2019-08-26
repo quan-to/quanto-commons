@@ -1,7 +1,7 @@
 /* eslint-disable no-plusplus */
 /**
  * Created by Lucas Teske on 20/04/17.
- * @flow
+ *
  */
 
 import * as moment from 'moment';
