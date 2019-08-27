@@ -1,7 +1,6 @@
 /* eslint-disable no-plusplus */
 /**
  * Created by Lucas Teske on 25/05/18.
- *
  */
 
 import {

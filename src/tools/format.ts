@@ -11,7 +11,6 @@ const maskStartRegExp = /^([^#ANX]+)/;
 /**
  * Simple format function borrowed from PureMask.js
  * {@link https://github.com/romulobrasil/PureMask.js}
- *
  * @param {String} str String to mask (input value)
  * @param {String} [mask] Mask format, like `####-##`
  * @returns {string} Formatted text

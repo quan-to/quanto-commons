@@ -1,6 +1,5 @@
 /**
  * Created by Lucas Teske on 29/03/18.
- *
  */
 import {GraphQLEnumType} from 'graphql';
 

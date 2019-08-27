@@ -1,6 +1,5 @@
 /**
  * Created by Lucas Teske on 31/08/18.
- *
  */
 
 import {

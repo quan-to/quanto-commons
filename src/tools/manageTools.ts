@@ -1,6 +1,5 @@
 /**
  * Created by Lucas Teske on 22/05/18.
- *
  */
 
 import * as moment from 'moment';

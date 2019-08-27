@@ -1,6 +1,5 @@
 /**
  * Created by Lucas Teske on 02/05/17.
- *
  */
 
 const ErrorCodes: { [id: string]: string } = {
