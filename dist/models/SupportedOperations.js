@@ -1,95 +1,76 @@
-'use strict';
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
+import { GraphQLEnumType } from 'graphql';
+export const SupportedOperations = {
+    getUserBoletos: {
+        value: 'getUserBoletos',
+        description: 'Read boletos created for the user (DDA)',
+    },
+    getAccountBalance: {
+        value: 'getAccountBalance',
+        description: 'Operation to check the Account Balance',
+    },
+    getAccountStatement: {
+        value: 'getAccountStatement',
+        description: 'Operation to check the Account Statement',
+    },
+    getBankSystemStatus: {
+        value: 'getBankSystemStatus',
+        description: 'Operation to check banking system status',
+    },
+    getPaymentStatus: {
+        value: 'getPaymentStatus',
+        description: 'Operation to check payment (boleto) status',
+        deprecationReason: 'Use requestStatus',
+    },
+    getRequestStatus: {
+        value: 'getRequestStatus',
+        description: 'Operation to check a request status',
+    },
+    createEscrow: {
+        value: 'createEscrow',
+        description: 'Operation to create an escrow smart contract',
+    },
+    createContract: {
+        value: 'createContract',
+        description: 'Operation to create an smart contract',
+    },
+    triggerContract: {
+        value: 'triggerContract',
+        description: 'Operation to trigger an smart contract action',
+    },
+    createAccount: {
+        value: 'createAccount',
+        description: 'Operation to create an account',
+    },
+    createBoleto: {
+        value: 'createBoleto',
+        description: 'Operation to create boletos',
+    },
+    doPayment: {
+        value: 'doPayment',
+        description: 'Operation to make payments',
+    },
+    transferMoneyInternal: {
+        value: 'transferMoneyInternal',
+        description: 'Operation to transfer money for the same bank',
+        deprecationReason: 'Use transferFunds',
+    },
+    transferMoneyExternal: {
+        value: 'transferMoneyExternal',
+        description: 'Operation to transfer money to other banks',
+        deprecationReason: 'Use transferFunds',
+    },
+    transferFunds: {
+        value: 'transferFunds',
+        description: 'Operation to transfer funds between accounts',
+    },
+    payBill: {
+        value: 'payBill',
+        description: 'Operation to pay bills',
+    },
+};
+export const SupportedOperationsGraphQL = new GraphQLEnumType({
+    name: 'SupportedOperations',
+    description: 'Supported Bank Operations',
+    values: SupportedOperations,
 });
-exports.SupportedOperationsGraphQL = exports.SupportedOperations = undefined;
-
-var _graphql = require('graphql');
-
-var SupportedOperations = exports.SupportedOperations = {
-  // region Read Operations
-  getUserBoletos: {
-    value: 'getUserBoletos',
-    description: 'Read boletos created for the user (DDA)'
-  },
-  getAccountBalance: {
-    value: 'getAccountBalance',
-    description: 'Operation to check the Account Balance'
-  },
-  getAccountStatement: {
-    value: 'getAccountStatement',
-    description: 'Operation to check the Account Statement'
-  },
-  getBankSystemStatus: {
-    value: 'getBankSystemStatus',
-    description: 'Operation to check banking system status'
-  },
-  getPaymentStatus: {
-    value: 'getPaymentStatus',
-    description: 'Operation to check payment (boleto) status',
-    deprecationReason: 'Use requestStatus'
-  },
-  getRequestStatus: {
-    value: 'getRequestStatus',
-    description: 'Operation to check a request status'
-  },
-  // endregion
-  // region Write Operations
-  createEscrow: {
-    value: 'createEscrow',
-    description: 'Operation to create an escrow smart contract'
-  },
-  createContract: {
-    value: 'createContract',
-    description: 'Operation to create an smart contract'
-  },
-  triggerContract: {
-    value: 'triggerContract',
-    description: 'Operation to trigger an smart contract action'
-  },
-  createAccount: {
-    value: 'createAccount',
-    description: 'Operation to create an account'
-  },
-  createBoleto: {
-    value: 'createBoleto',
-    description: 'Operation to create boletos'
-  },
-  // @deprecated
-  doPayment: {
-    value: 'doPayment',
-    description: 'Operation to make payments'
-  },
-  // @deprecated
-  transferMoneyInternal: {
-    value: 'transferMoneyInternal',
-    description: 'Operation to transfer money for the same bank',
-    deprecationReason: 'Use transferFunds'
-  },
-  // @deprecated
-  transferMoneyExternal: {
-    value: 'transferMoneyExternal',
-    description: 'Operation to transfer money to other banks',
-    deprecationReason: 'Use transferFunds'
-  },
-  transferFunds: {
-    value: 'transferFunds',
-    description: 'Operation to transfer funds between accounts'
-  },
-  payBill: {
-    value: 'payBill',
-    description: 'Operation to pay bills'
-  }
-  // endregion
-}; /**
-    * Created by Lucas Teske on 28/09/18.
-    * 
-    */
-
-var SupportedOperationsGraphQL = exports.SupportedOperationsGraphQL = new _graphql.GraphQLEnumType({
-  name: 'SupportedOperations',
-  description: 'Supported Bank Operations',
-  values: SupportedOperations
-});
-//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi4uLy4uL3NyYy9tb2RlbHMvU3VwcG9ydGVkT3BlcmF0aW9ucy5qcyJdLCJuYW1lcyI6WyJTdXBwb3J0ZWRPcGVyYXRpb25zIiwiZ2V0VXNlckJvbGV0b3MiLCJ2YWx1ZSIsImRlc2NyaXB0aW9uIiwiZ2V0QWNjb3VudEJhbGFuY2UiLCJnZXRBY2NvdW50U3RhdGVtZW50IiwiZ2V0QmFua1N5c3RlbVN0YXR1cyIsImdldFBheW1lbnRTdGF0dXMiLCJkZXByZWNhdGlvblJlYXNvbiIsImdldFJlcXVlc3RTdGF0dXMiLCJjcmVhdGVFc2Nyb3ciLCJjcmVhdGVDb250cmFjdCIsInRyaWdnZXJDb250cmFjdCIsImNyZWF0ZUFjY291bnQiLCJjcmVhdGVCb2xldG8iLCJkb1BheW1lbnQiLCJ0cmFuc2Zlck1vbmV5SW50ZXJuYWwiLCJ0cmFuc2Zlck1vbmV5RXh0ZXJuYWwiLCJ0cmFuc2ZlckZ1bmRzIiwicGF5QmlsbCIsIlN1cHBvcnRlZE9wZXJhdGlvbnNHcmFwaFFMIiwiR3JhcGhRTEVudW1UeXBlIiwibmFtZSIsInZhbHVlcyJdLCJtYXBwaW5ncyI6Ijs7Ozs7OztBQU1BOztBQUVPLElBQU1BLG9EQUFzQjtBQUNqQztBQUNBQyxrQkFBZ0I7QUFDZEMsV0FBTyxnQkFETztBQUVkQyxpQkFBYTtBQUZDLEdBRmlCO0FBTWpDQyxxQkFBbUI7QUFDakJGLFdBQU8sbUJBRFU7QUFFakJDLGlCQUFhO0FBRkksR0FOYztBQVVqQ0UsdUJBQXFCO0FBQ25CSCxXQUFPLHFCQURZO0FBRW5CQyxpQkFBYTtBQUZNLEdBVlk7QUFjakNHLHVCQUFxQjtBQUNuQkosV0FBTyxxQkFEWTtBQUVuQkMsaUJBQWE7QUFGTSxHQWRZO0FBa0JqQ0ksb0JBQWtCO0FBQ2hCTCxXQUFPLGtCQURTO0FBRWhCQyxpQkFBYSw0Q0FGRztBQUdoQkssdUJBQW1CO0FBSEgsR0FsQmU7QUF1QmpDQyxvQkFBa0I7QUFDaEJQLFdBQU8sa0JBRFM7QUFFaEJDLGlCQUFhO0FBRkcsR0F2QmU7QUEyQmpDO0FBQ0E7QUFDQU8sZ0JBQWM7QUFDWlIsV0FBTyxjQURLO0FBRVpDLGlCQUFhO0FBRkQsR0E3Qm1CO0FBaUNqQ1Esa0JBQWdCO0FBQ2RULFdBQU8sZ0JBRE87QUFFZEMsaUJBQWE7QUFGQyxHQWpDaUI7QUFxQ2pDUyxtQkFBaUI7QUFDZlYsV0FBTyxpQkFEUTtBQUVmQyxpQkFBYTtBQUZFLEdBckNnQjtBQXlDakNVLGlCQUFlO0FBQ2JYLFdBQU8sZUFETTtBQUViQyxpQkFBYTtBQUZBLEdBekNrQjtBQTZDakNXLGdCQUFjO0FBQ1paLFdBQU8sY0FESztBQUVaQyxpQkFBYTtBQUZELEdBN0NtQjtBQWlEakM7QUFDQVksYUFBVztBQUNUYixXQUFPLFdBREU7QUFFVEMsaUJBQWE7QUFGSixHQWxEc0I7QUFzRGpDO0FBQ0FhLHlCQUF1QjtBQUNyQmQsV0FBTyx1QkFEYztBQUVyQkMsaUJBQWEsK0NBRlE7QUFHckJLLHVCQUFtQjtBQUhFLEdBdkRVO0FBNERqQztBQUNBUyx5QkFBdUI7QUFDckJmLFdBQU8sdUJBRGM7QUFFckJDLGlCQUFhLDRDQUZRO0FBR3JCSyx1QkFBbUI7QUFIRSxHQTdEVTtBQWtFakNVLGlCQUFlO0FBQ2JoQixXQUFPLGVBRE07QUFFYkMsaUJBQWE7QUFGQSxHQWxFa0I7QUFzRWpDZ0IsV0FBUztBQUNQakIsV0FBTyxTQURBO0FBRVBDLGlCQUFhO0FBRk47QUFJVDtBQTFFaUMsQ0FBNUIsQyxDQVJQOzs7OztBQXFGTyxJQUFNaUIsa0VBQTZCLElBQUlDLHdCQUFKLENBQW9CO0FBQzVEQyxRQUFNLHFCQURzRDtBQUU1RG5CLGVBQWEsMkJBRitDO0FBRzVEb0IsVUFBUXZCO0FBSG9ELENBQXBCLENBQW5DIiwiZmlsZSI6IlN1cHBvcnRlZE9wZXJhdGlvbnMuanMiLCJzb3VyY2VzQ29udGVudCI6WyIvKipcbiAqIENyZWF0ZWQgYnkgTHVjYXMgVGVza2Ugb24gMjgvMDkvMTguXG4gKiBAZmxvd1xuICovXG5cblxuaW1wb3J0IHsgR3JhcGhRTEVudW1UeXBlIH0gZnJvbSAnZ3JhcGhxbCc7XG5cbmV4cG9ydCBjb25zdCBTdXBwb3J0ZWRPcGVyYXRpb25zID0ge1xuICAvLyByZWdpb24gUmVhZCBPcGVyYXRpb25zXG4gIGdldFVzZXJCb2xldG9zOiB7XG4gICAgdmFsdWU6ICdnZXRVc2VyQm9sZXRvcycsXG4gICAgZGVzY3JpcHRpb246ICdSZWFkIGJvbGV0b3MgY3JlYXRlZCBmb3IgdGhlIHVzZXIgKEREQSknLFxuICB9LFxuICBnZXRBY2NvdW50QmFsYW5jZToge1xuICAgIHZhbHVlOiAnZ2V0QWNjb3VudEJhbGFuY2UnLFxuICAgIGRlc2NyaXB0aW9uOiAnT3BlcmF0aW9uIHRvIGNoZWNrIHRoZSBBY2NvdW50IEJhbGFuY2UnLFxuICB9LFxuICBnZXRBY2NvdW50U3RhdGVtZW50OiB7XG4gICAgdmFsdWU6ICdnZXRBY2NvdW50U3RhdGVtZW50JyxcbiAgICBkZXNjcmlwdGlvbjogJ09wZXJhdGlvbiB0byBjaGVjayB0aGUgQWNjb3VudCBTdGF0ZW1lbnQnLFxuICB9LFxuICBnZXRCYW5rU3lzdGVtU3RhdHVzOiB7XG4gICAgdmFsdWU6ICdnZXRCYW5rU3lzdGVtU3RhdHVzJyxcbiAgICBkZXNjcmlwdGlvbjogJ09wZXJhdGlvbiB0byBjaGVjayBiYW5raW5nIHN5c3RlbSBzdGF0dXMnLFxuICB9LFxuICBnZXRQYXltZW50U3RhdHVzOiB7XG4gICAgdmFsdWU6ICdnZXRQYXltZW50U3RhdHVzJyxcbiAgICBkZXNjcmlwdGlvbjogJ09wZXJhdGlvbiB0byBjaGVjayBwYXltZW50IChib2xldG8pIHN0YXR1cycsXG4gICAgZGVwcmVjYXRpb25SZWFzb246ICdVc2UgcmVxdWVzdFN0YXR1cycsXG4gIH0sXG4gIGdldFJlcXVlc3RTdGF0dXM6IHtcbiAgICB2YWx1ZTogJ2dldFJlcXVlc3RTdGF0dXMnLFxuICAgIGRlc2NyaXB0aW9uOiAnT3BlcmF0aW9uIHRvIGNoZWNrIGEgcmVxdWVzdCBzdGF0dXMnLFxuICB9LFxuICAvLyBlbmRyZWdpb25cbiAgLy8gcmVnaW9uIFdyaXRlIE9wZXJhdGlvbnNcbiAgY3JlYXRlRXNjcm93OiB7XG4gICAgdmFsdWU6ICdjcmVhdGVFc2Nyb3cnLFxuICAgIGRlc2NyaXB0aW9uOiAnT3BlcmF0aW9uIHRvIGNyZWF0ZSBhbiBlc2Nyb3cgc21hcnQgY29udHJhY3QnLFxuICB9LFxuICBjcmVhdGVDb250cmFjdDoge1xuICAgIHZhbHVlOiAnY3JlYXRlQ29udHJhY3QnLFxuICAgIGRlc2NyaXB0aW9uOiAnT3BlcmF0aW9uIHRvIGNyZWF0ZSBhbiBzbWFydCBjb250cmFjdCcsXG4gIH0sXG4gIHRyaWdnZXJDb250cmFjdDoge1xuICAgIHZhbHVlOiAndHJpZ2dlckNvbnRyYWN0JyxcbiAgICBkZXNjcmlwdGlvbjogJ09wZXJhdGlvbiB0byB0cmlnZ2VyIGFuIHNtYXJ0IGNvbnRyYWN0IGFjdGlvbicsXG4gIH0sXG4gIGNyZWF0ZUFjY291bnQ6IHtcbiAgICB2YWx1ZTogJ2NyZWF0ZUFjY291bnQnLFxuICAgIGRlc2NyaXB0aW9uOiAnT3BlcmF0aW9uIHRvIGNyZWF0ZSBhbiBhY2NvdW50JyxcbiAgfSxcbiAgY3JlYXRlQm9sZXRvOiB7XG4gICAgdmFsdWU6ICdjcmVhdGVCb2xldG8nLFxuICAgIGRlc2NyaXB0aW9uOiAnT3BlcmF0aW9uIHRvIGNyZWF0ZSBib2xldG9zJyxcbiAgfSxcbiAgLy8gQGRlcHJlY2F0ZWRcbiAgZG9QYXltZW50OiB7XG4gICAgdmFsdWU6ICdkb1BheW1lbnQnLFxuICAgIGRlc2NyaXB0aW9uOiAnT3BlcmF0aW9uIHRvIG1ha2UgcGF5bWVudHMnLFxuICB9LFxuICAvLyBAZGVwcmVjYXRlZFxuICB0cmFuc2Zlck1vbmV5SW50ZXJuYWw6IHtcbiAgICB2YWx1ZTogJ3RyYW5zZmVyTW9uZXlJbnRlcm5hbCcsXG4gICAgZGVzY3JpcHRpb246ICdPcGVyYXRpb24gdG8gdHJhbnNmZXIgbW9uZXkgZm9yIHRoZSBzYW1lIGJhbmsnLFxuICAgIGRlcHJlY2F0aW9uUmVhc29uOiAnVXNlIHRyYW5zZmVyRnVuZHMnLFxuICB9LFxuICAvLyBAZGVwcmVjYXRlZFxuICB0cmFuc2Zlck1vbmV5RXh0ZXJuYWw6IHtcbiAgICB2YWx1ZTogJ3RyYW5zZmVyTW9uZXlFeHRlcm5hbCcsXG4gICAgZGVzY3JpcHRpb246ICdPcGVyYXRpb24gdG8gdHJhbnNmZXIgbW9uZXkgdG8gb3RoZXIgYmFua3MnLFxuICAgIGRlcHJlY2F0aW9uUmVhc29uOiAnVXNlIHRyYW5zZmVyRnVuZHMnLFxuICB9LFxuICB0cmFuc2ZlckZ1bmRzOiB7XG4gICAgdmFsdWU6ICd0cmFuc2ZlckZ1bmRzJyxcbiAgICBkZXNjcmlwdGlvbjogJ09wZXJhdGlvbiB0byB0cmFuc2ZlciBmdW5kcyBiZXR3ZWVuIGFjY291bnRzJyxcbiAgfSxcbiAgcGF5QmlsbDoge1xuICAgIHZhbHVlOiAncGF5QmlsbCcsXG4gICAgZGVzY3JpcHRpb246ICdPcGVyYXRpb24gdG8gcGF5IGJpbGxzJyxcbiAgfSxcbiAgLy8gZW5kcmVnaW9uXG59O1xuXG5leHBvcnQgY29uc3QgU3VwcG9ydGVkT3BlcmF0aW9uc0dyYXBoUUwgPSBuZXcgR3JhcGhRTEVudW1UeXBlKHtcbiAgbmFtZTogJ1N1cHBvcnRlZE9wZXJhdGlvbnMnLFxuICBkZXNjcmlwdGlvbjogJ1N1cHBvcnRlZCBCYW5rIE9wZXJhdGlvbnMnLFxuICB2YWx1ZXM6IFN1cHBvcnRlZE9wZXJhdGlvbnMsXG59KTtcbiJdfQ==
+//# sourceMappingURL=SupportedOperations.js.map

@@ -1,12 +1,11 @@
 {
   "name": "quanto-commons",
-  "version": "1.0.46",
+  "version": "1.0.48",
   "description": "Quanto Common Tools",
   "main": "dist/index.js",
   "scripts": {
-    "build": "npm run clear && babel src --ignore *.spec.js --out-dir dist --copy-files",
+    "build": "npm run clear && tsc",
     "clear": "rimraf ./dist/*",
-    "flow": "flow; test $? -eq 0 -o $? -eq 2",
     "lint": "eslint src/**",
     "repl": "nodemon --config ./repl/nodemon.json ./repl.js --exec babel-node",
     "test": "jest --coverage --forceExit --runInBand",
@@ -54,8 +53,17 @@
     "rimraf": "^2.5.4"
   },
   "dependencies": {
+    "@types/figures": "^2.0.0",
+    "@types/graphql": "^14.2.0",
+    "@types/moment": "^2.13.0",
     "figures": "^2.0.0",
     "graphql": "^0.11.7",
     "moment": "^2.18.1"
-  }
+  },
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not ie <= 11",
+    "not op_mini all"
+  ]
 }

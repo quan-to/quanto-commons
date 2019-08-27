@@ -1,6 +1,5 @@
 /**
  * Created by Lucas Teske on 02/05/17.
- * @flow
  */
 
 import {
@@ -17,15 +16,13 @@ import {
   DefaultQITArgs,
 } from './dist';
 
-import {
-  validateHex,
-} from './dist/models/GQLTypes/helpers';
+import { validateHex } from './dist/models/GQLTypes/helpers';
 
 import './dist/colors';
-
-QLog.enableLogs(['debug', 'warn']);
-QLog.headPadding = 40;
-QLog.showFilename = true;
+//
+// QLog.enableLogs(['debug', 'warn']);
+// QLog.headPadding = 40;
+// QLog.showFilename = true;
 
 QLog.log('All logs enabled!');
 
@@ -111,7 +108,7 @@ hurbaba
 ${'abc'.warn.bold.bgBlue}
 `.warn);
 
-const bclipm = bclipMessage('Hmm, something doesn\'t look right' , 'Looks like your app is crash.\nDo you need any help?\n');
+const bclipm = bclipMessage('Hmm, something doesn\'t look right', 'Looks like your app is crash.\nDo you need any help?\n');
 
 const bmx = boxMessage(bclipm);
 

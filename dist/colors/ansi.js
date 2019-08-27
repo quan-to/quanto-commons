@@ -1,94 +1,63 @@
-'use strict';
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
+const codes = {
+    reset: [0, 0],
+    bold: [1, 22],
+    dim: [2, 22],
+    italic: [3, 23],
+    underline: [4, 24],
+    inverse: [7, 27],
+    hidden: [8, 28],
+    strikethrough: [9, 29],
+    black: [30, 39],
+    red: [31, 39],
+    green: [32, 39],
+    yellow: [33, 39],
+    blue: [34, 39],
+    magenta: [35, 39],
+    cyan: [36, 39],
+    white: [37, 39],
+    gray: [90, 39],
+    grey: [90, 39],
+    redBright: [91, 39],
+    greenBright: [92, 39],
+    yellowBright: [93, 39],
+    blueBright: [94, 39],
+    magentaBright: [95, 39],
+    cyanBright: [96, 39],
+    whiteBright: [97, 39],
+    bgBlack: [40, 49],
+    bgRed: [41, 49],
+    bgGreen: [42, 49],
+    bgYellow: [43, 49],
+    bgBlue: [44, 49],
+    bgMagenta: [45, 49],
+    bgCyan: [46, 49],
+    bgWhite: [47, 49],
+    bgBlackBright: [100, 49],
+    bgRedBright: [101, 49],
+    bgGreenBright: [102, 49],
+    bgYellowBright: [103, 49],
+    bgBlueBright: [104, 49],
+    bgMagentaBright: [105, 49],
+    bgCyanBright: [106, 49],
+    bgWhiteBright: [107, 49],
+};
+const ansiColors = {};
+const escapeString = (str) => str.replace(/[|\\{}()[\]^$+*?.]/g, '\\$&');
+Object.keys(codes).forEach((k) => {
+    const closeTag = `\u001b[${codes[k][1]}m`;
+    ansiColors[k] = {
+        name: k,
+        value: codes[k],
+        openTag: `\u001b[${codes[k][0]}m`,
+        closeTag,
+        closeRegex: new RegExp(escapeString(closeTag), 'g'),
+    };
 });
-/**
- * Created by Lucas Teske on 18/05/18.
- * 
- */
-
-var codes = {
-  reset: [0, 0],
-
-  bold: [1, 22],
-  dim: [2, 22],
-  italic: [3, 23],
-  underline: [4, 24],
-  inverse: [7, 27],
-  hidden: [8, 28],
-  strikethrough: [9, 29],
-
-  black: [30, 39],
-  red: [31, 39],
-  green: [32, 39],
-  yellow: [33, 39],
-  blue: [34, 39],
-  magenta: [35, 39],
-  cyan: [36, 39],
-  white: [37, 39],
-  gray: [90, 39],
-  grey: [90, 39],
-
-  redBright: [91, 39],
-  greenBright: [92, 39],
-  yellowBright: [93, 39],
-  blueBright: [94, 39],
-  magentaBright: [95, 39],
-  cyanBright: [96, 39],
-  whiteBright: [97, 39],
-
-  bgBlack: [40, 49],
-  bgRed: [41, 49],
-  bgGreen: [42, 49],
-  bgYellow: [43, 49],
-  bgBlue: [44, 49],
-  bgMagenta: [45, 49],
-  bgCyan: [46, 49],
-  bgWhite: [47, 49],
-
-  bgBlackBright: [100, 49],
-  bgRedBright: [101, 49],
-  bgGreenBright: [102, 49],
-  bgYellowBright: [103, 49],
-  bgBlueBright: [104, 49],
-  bgMagentaBright: [105, 49],
-  bgCyanBright: [106, 49],
-  bgWhiteBright: [107, 49]
+const getColor = (name) => ansiColors[name] || {
+    name: 'unknown', value: 'unknown', openTag: '', closeTag: '',
 };
-
-var ansiColors = {};
-
-var escapeString = function escapeString(str) {
-  return str.replace(/[|\\{}()[\]^$+*?.]/g, '\\$&');
-};
-
-Object.keys(codes).forEach(function (k) {
-  var closeTag = '\x1B[' + codes[k][1] + 'm';
-  ansiColors[k] = {
-    name: k,
-    value: codes[k],
-    openTag: '\x1B[' + codes[k][0] + 'm',
-    closeTag: closeTag,
-    closeRegex: new RegExp(escapeString(closeTag), 'g')
-  };
-});
-
-var getColor = function getColor(name) {
-  return ansiColors[name] || {
-    name: 'unknown', value: 'unknown', openTag: '', closeTag: ''
-  };
-};
-
-var getColorsName = function getColorsName() {
-  return Object.keys(ansiColors);
-};
-var rainbowColors = ['red', 'yellow', 'green', 'blue', 'magenta'];
-var getRainbowColor = function getRainbowColor(n) {
-  return getColor(rainbowColors[n % rainbowColors.length]);
-};
-
-exports.getColor = getColor;
-exports.getColorsName = getColorsName;
-exports.getRainbowColor = getRainbowColor;
-//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi4uLy4uL3NyYy9jb2xvcnMvYW5zaS5qcyJdLCJuYW1lcyI6WyJjb2RlcyIsInJlc2V0IiwiYm9sZCIsImRpbSIsIml0YWxpYyIsInVuZGVybGluZSIsImludmVyc2UiLCJoaWRkZW4iLCJzdHJpa2V0aHJvdWdoIiwiYmxhY2siLCJyZWQiLCJncmVlbiIsInllbGxvdyIsImJsdWUiLCJtYWdlbnRhIiwiY3lhbiIsIndoaXRlIiwiZ3JheSIsImdyZXkiLCJyZWRCcmlnaHQiLCJncmVlbkJyaWdodCIsInllbGxvd0JyaWdodCIsImJsdWVCcmlnaHQiLCJtYWdlbnRhQnJpZ2h0IiwiY3lhbkJyaWdodCIsIndoaXRlQnJpZ2h0IiwiYmdCbGFjayIsImJnUmVkIiwiYmdHcmVlbiIsImJnWWVsbG93IiwiYmdCbHVlIiwiYmdNYWdlbnRhIiwiYmdDeWFuIiwiYmdXaGl0ZSIsImJnQmxhY2tCcmlnaHQiLCJiZ1JlZEJyaWdodCIsImJnR3JlZW5CcmlnaHQiLCJiZ1llbGxvd0JyaWdodCIsImJnQmx1ZUJyaWdodCIsImJnTWFnZW50YUJyaWdodCIsImJnQ3lhbkJyaWdodCIsImJnV2hpdGVCcmlnaHQiLCJhbnNpQ29sb3JzIiwiZXNjYXBlU3RyaW5nIiwic3RyIiwicmVwbGFjZSIsIk9iamVjdCIsImtleXMiLCJmb3JFYWNoIiwiayIsImNsb3NlVGFnIiwibmFtZSIsInZhbHVlIiwib3BlblRhZyIsImNsb3NlUmVnZXgiLCJSZWdFeHAiLCJnZXRDb2xvciIsImdldENvbG9yc05hbWUiLCJyYWluYm93Q29sb3JzIiwiZ2V0UmFpbmJvd0NvbG9yIiwibiIsImxlbmd0aCJdLCJtYXBwaW5ncyI6Ijs7Ozs7QUFBQTs7Ozs7QUFLQSxJQUFNQSxRQUFRO0FBQ1pDLFNBQU8sQ0FBQyxDQUFELEVBQUksQ0FBSixDQURLOztBQUdaQyxRQUFNLENBQUMsQ0FBRCxFQUFJLEVBQUosQ0FITTtBQUlaQyxPQUFLLENBQUMsQ0FBRCxFQUFJLEVBQUosQ0FKTztBQUtaQyxVQUFRLENBQUMs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QUFZLElBQUlDLE1BQUosQ0FBV1osYUFBYU8sUUFBYixDQUFYLEVBQW1DLEdBQW5DO0FBTEUsR0FBaEI7QUFPRCxDQVREOztBQVdBLElBQU1NLFdBQVcsU0FBWEEsUUFBVztBQUFBLFNBQVFkLFdBQVdTLElBQVgsS0FBb0I7QUFDM0NBLFVBQU0sU0FEcUMsRUFDMUJDLE9BQU8sU0FEbUIsRUFDUkMsU0FBUyxFQURELEVBQ0tILFVBQVU7QUFEZixHQUE1QjtBQUFBLENBQWpCOztBQUlBLElBQU1PLGdCQUFnQixTQUFoQkEsYUFBZ0I7QUFBQSxTQUFNWCxPQUFPQyxJQUFQLENBQVlMLFVBQVosQ0FBTjtBQUFBLENBQXRCO0FBQ0EsSUFBTWdCLGdCQUFnQixDQUFDLEtBQUQsRUFBUSxRQUFSLEVBQWtCLE9BQWxCLEVBQTJCLE1BQTNCLEVBQW1DLFNBQW5DLENBQXRCO0FBQ0EsSUFBTUMsa0JBQWtCLFNBQWxCQSxlQUFrQjtBQUFBLFNBQUtILFNBQVNFLGNBQWNFLElBQUlGLGNBQWNHLE1BQWhDLENBQVQsQ0FBTDtBQUFBLENBQXhCOztRQUdFTCxRLEdBQUFBLFE7UUFDQUMsYSxHQUFBQSxhO1FBQ0FFLGUsR0FBQUEsZSIsImZpbGUiOiJhbnNpLmpzIiwic291cmNlc0NvbnRlbnQiOlsiLyoqXG4gKiBDcmVhdGVkIGJ5IEx1Y2FzIFRlc2tlIG9uIDE4LzA1LzE4LlxuICogQGZsb3dcbiAqL1xuXG5jb25zdCBjb2RlcyA9IHtcbiAgcmVzZXQ6IFswLCAwXSxcblxuICBib2xkOiBbMSwgMjJdLFxuICBkaW06IFsyLCAyMl0sXG4gIGl0YWxpYzogWzMsIDIzXSxcbiAgdW5kZXJsaW5lOiBbNCwgMjRdLFxuICBpbnZlcnNlOiBbNywgMjddLFxuICBoaWRkZW46IFs4LCAyOF0sXG4gIHN0cmlrZXRocm91Z2g6IFs5LCAyOV0sXG5cbiAgYmxhY2s6IFszMCwgMzldLFxuICByZWQ6IFszMSwgMzldLFxuICBncmVlbjogWzMyLCAzOV0sXG4gIHllbGxvdzogWzMzLCAzOV0sXG4gIGJsdWU6IFszNCwgMzldLFxuICBtYWdlbnRhOiBbMzUsIDM5XSxcbiAgY3lhbjogWzM2LCAzOV0sXG4gIHdoaXRlOiBbMzcsIDM5XSxcbiAgZ3JheTogWzkwLCAzOV0sXG4gIGdyZXk6IFs5MCwgMzldLFxuXG4gIHJlZEJyaWdodDogWzkxLCAzOV0sXG4gIGdyZWVuQnJpZ2h0OiBbOTIsIDM5XSxcbiAgeWVsbG93QnJpZ2h0OiBbOTMsIDM5XSxcbiAgYmx1ZUJyaWdodDogWzk0LCAzOV0sXG4gIG1hZ2VudGFCcmlnaHQ6IFs5NSwgMzldLFxuICBjeWFuQnJpZ2h0OiBbOTYsIDM5XSxcbiAgd2hpdGVCcmlnaHQ6IFs5NywgMzldLFxuXG4gIGJnQmxhY2s6IFs0MCwgNDldLFxuICBiZ1JlZDogWzQxLCA0OV0sXG4gIGJnR3JlZW46IFs0MiwgNDldLFxuICBiZ1llbGxvdzogWzQzLCA0OV0sXG4gIGJnQmx1ZTogWzQ0LCA0OV0sXG4gIGJnTWFnZW50YTogWzQ1LCA0OV0sXG4gIGJnQ3lhbjogWzQ2LCA0OV0sXG4gIGJnV2hpdGU6IFs0NywgNDldLFxuXG4gIGJnQmxhY2tCcmlnaHQ6IFsxMDAsIDQ5XSxcbiAgYmdSZWRCcmlnaHQ6IFsxMDEsIDQ5XSxcbiAgYmdHcmVlbkJyaWdodDogWzEwMiwgNDldLFxuICBiZ1llbGxvd0JyaWdodDogWzEwMywgNDldLFxuICBiZ0JsdWVCcmlnaHQ6IFsxMDQsIDQ5XSxcbiAgYmdNYWdlbnRhQnJpZ2h0OiBbMTA1LCA0OV0sXG4gIGJnQ3lhbkJyaWdodDogWzEwNiwgNDldLFxuICBiZ1doaXRlQnJpZ2h0OiBbMTA3LCA0OV0sXG59O1xuXG5jb25zdCBhbnNpQ29sb3JzID0ge307XG5cbmNvbnN0IGVzY2FwZVN0cmluZyA9IHN0ciA9PiBzdHIucmVwbGFjZSgvW3xcXFxce30oKVtcXF1eJCsqPy5dL2csICdcXFxcJCYnKTtcblxuT2JqZWN0LmtleXMoY29kZXMpLmZvckVhY2goKGspID0+IHtcbiAgY29uc3QgY2xvc2VUYWcgPSBgXFx1MDAxYlske2NvZGVzW2tdWzFdfW1gO1xuICBhbnNpQ29sb3JzW2tdID0ge1xuICAgIG5hbWU6IGssXG4gICAgdmFsdWU6IGNvZGVzW2tdLFxuICAgIG9wZW5UYWc6IGBcXHUwMDFiWyR7Y29kZXNba11bMF19bWAsXG4gICAgY2xvc2VUYWcsXG4gICAgY2xvc2VSZWdleDogbmV3IFJlZ0V4cChlc2NhcGVTdHJpbmcoY2xvc2VUYWcpLCAnZycpLFxuICB9O1xufSk7XG5cbmNvbnN0IGdldENvbG9yID0gbmFtZSA9PiBhbnNpQ29sb3JzW25hbWVdIHx8IHtcbiAgbmFtZTogJ3Vua25vd24nLCB2YWx1ZTogJ3Vua25vd24nLCBvcGVuVGFnOiAnJywgY2xvc2VUYWc6ICcnLFxufTtcblxuY29uc3QgZ2V0Q29sb3JzTmFtZSA9ICgpID0+IE9iamVjdC5rZXlzKGFuc2lDb2xvcnMpO1xuY29uc3QgcmFpbmJvd0NvbG9ycyA9IFsncmVkJywgJ3llbGxvdycsICdncmVlbicsICdibHVlJywgJ21hZ2VudGEnXTtcbmNvbnN0IGdldFJhaW5ib3dDb2xvciA9IG4gPT4gZ2V0Q29sb3IocmFpbmJvd0NvbG9yc1tuICUgcmFpbmJvd0NvbG9ycy5sZW5ndGhdKTtcblxuZXhwb3J0IHtcbiAgZ2V0Q29sb3IsXG4gIGdldENvbG9yc05hbWUsXG4gIGdldFJhaW5ib3dDb2xvcixcbn07XG4iXX0=
+const getColorsName = () => Object.keys(ansiColors);
+const rainbowColors = ['red', 'yellow', 'green', 'blue', 'magenta'];
+const getRainbowColor = (n) => getColor(rainbowColors[n % rainbowColors.length]);
+export { getColor, getColorsName, getRainbowColor, };
+//# sourceMappingURL=ansi.js.map
