@@ -28,6 +28,8 @@ const ErrorCodes = {
     BoletoCreationNotEnabled: 'BOLETO_CREATION_NOT_ENABLED',
     BoletoOurNumberExausted: 'BOLETO_OUR_NUMBER_EXAUSTED',
     NotImplemented: 'NOT_IMPLEMENTED',
+    AccountInUse: "ACCOUNT_IN_USE",
+    AccountLocked: "ACCOUNT_LOCKED",
     EverythingIsTerrible: 'EVERYTHING_IS_TERRIBLE',
     QuantoInternalError: 'QUANTO_INTERNAL_ERROR',
     RoutingSystemOffline: 'ROUTING_SYSTEM_OFFLINE',
