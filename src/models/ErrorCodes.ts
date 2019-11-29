@@ -6,6 +6,7 @@ const ErrorCodes: { [id: string]: string } = {
   // region Public Use
   InternalServerError: 'INTERNAL_SERVER_ERROR',
   NotFound: 'NOT_FOUND',
+  // deprecated
   EmailAlreadyInUse: 'EMAIL_ALREADY_IN_USE',
   NoDataAvailable: 'NO_DATA_AVAILABLE',
   InvalidLoginInformation: 'INVALID_LOGIN_INFORMATION',
@@ -18,14 +19,18 @@ const ErrorCodes: { [id: string]: string } = {
   AlreadyPaid: 'ALREADY_PAID',
   PaymentError: 'PAYMENT_ERROR',
   InsufficientFunds: 'INSUFFICIENT_FUNDS',
+  // deprecated
   BankingSystemOffline: 'BANKING_SYSTEM_OFFLINE',
   OutdatedAPI: 'OUTDATED_API',
+  // deprecated
   BankNotSupported: 'BANK_NOT_SUPPORTED',
+  // deprecated
   VaultSystemOffline: 'VAULT_SYSTEM_OFFLINE',
   ServerIsBusy: 'SERVER_IS_BUSY',
   Revoked: 'REVOKED',
   AlreadySigned: 'ALREADY_SIGNED',
   Rejected: 'REJECTED',
+  // deprecated
   OperationNotSupported: 'OPERATION_NOT_SUPPORTED',
   GraphQLError: 'GRAPHQL_ERROR',
   OperationLimitExceeded: 'OPERATION_LIMIT_EXCEEDED',
@@ -33,6 +38,11 @@ const ErrorCodes: { [id: string]: string } = {
   BoletoCreationNotEnabled: 'BOLETO_CREATION_NOT_ENABLED',
   BoletoOurNumberExausted: 'BOLETO_OUR_NUMBER_EXAUSTED',
   NotImplemented: 'NOT_IMPLEMENTED',
+  // deprecated
+  AccountInUse: 'ACCOUNT_IN_USE',
+  AccountLocked: 'ACCOUNT_LOCKED',
+  NotSupported: 'NOT_SUPPORTED',
+  SystemUnavailable: 'SYSTEM_UNAVAILABLE',
   // endregion
 
   // region Internal Use - Don't worry about these if you're a partner.
