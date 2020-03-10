@@ -38,6 +38,8 @@ const ErrorCodes: { [id: string]: string } = {
   BoletoCreationNotEnabled: 'BOLETO_CREATION_NOT_ENABLED',
   BoletoOurNumberExausted: 'BOLETO_OUR_NUMBER_EXAUSTED',
   NotImplemented: 'NOT_IMPLEMENTED',
+  MaxOTPTriesExceeded: 'MAX_OTP_TRIES_EXCEEDED',
+
   // deprecated
   AccountInUse: 'ACCOUNT_IN_USE',
   AccountLocked: 'ACCOUNT_LOCKED',
