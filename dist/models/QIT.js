@@ -1,50 +1,55 @@
-import { GraphQLString, GraphQLList, GraphQLNonNull, } from 'graphql';
-import { NotificationInput } from "./Notification";
-export const DefaultQITArgs = {
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+/**
+ * Created by Lucas Teske on 31/08/18.
+ */
+const graphql_1 = require("graphql");
+const Notification_1 = require("./Notification");
+exports.DefaultQITArgs = {
     routingType: {
-        type: new GraphQLNonNull(GraphQLString),
+        type: new graphql_1.GraphQLNonNull(graphql_1.GraphQLString),
         description: 'Routing Type',
     },
     routingNumber: {
-        type: new GraphQLNonNull(GraphQLString),
+        type: new graphql_1.GraphQLNonNull(graphql_1.GraphQLString),
         description: 'Routing Number',
     },
 };
-export const DefaultSourceQITArgs = {
+exports.DefaultSourceQITArgs = {
     srcRoutingType: {
-        type: new GraphQLNonNull(GraphQLString),
+        type: new graphql_1.GraphQLNonNull(graphql_1.GraphQLString),
         description: 'Source Routing Type',
     },
     srcRoutingNumber: {
-        type: new GraphQLNonNull(GraphQLString),
+        type: new graphql_1.GraphQLNonNull(graphql_1.GraphQLString),
         description: 'Source Routing Number',
     },
 };
-export const DefaultDestinationQITArgs = {
+exports.DefaultDestinationQITArgs = {
     dstRoutingType: {
-        type: new GraphQLNonNull(GraphQLString),
+        type: new graphql_1.GraphQLNonNull(graphql_1.GraphQLString),
         description: 'Destination Routing Type',
     },
     dstRoutingNumber: {
-        type: new GraphQLNonNull(GraphQLString),
+        type: new graphql_1.GraphQLNonNull(graphql_1.GraphQLString),
         description: 'Destination Routing Number',
     },
 };
-export const ExtractDefaultQITArgs = (data) => ({
+exports.ExtractDefaultQITArgs = (data) => ({
     routingType: data.routingType,
     routingNumber: data.routingNumber,
 });
-export const ExtractDefaultSourceQITArgs = (data) => ({
+exports.ExtractDefaultSourceQITArgs = (data) => ({
     srcRoutingType: data.srcRoutingType,
     srcRoutingNumber: data.srcRoutingNumber,
 });
-export const ExtractDefaultDestinationQITArgs = (data) => ({
+exports.ExtractDefaultDestinationQITArgs = (data) => ({
     dstRoutingType: data.dstRoutingType,
     dstRoutingNumber: data.dstRoutingNumber,
 });
-export const DefaultNotificationArgs = {
+exports.DefaultNotificationArgs = {
     notification: {
-        type: new GraphQLList(NotificationInput),
+        type: new graphql_1.GraphQLList(Notification_1.NotificationInput),
         description: 'Notifications',
     },
 };

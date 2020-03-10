@@ -1,6 +1,13 @@
+"use strict";
+/**
+ * Created by Lucas Teske on 02/05/17.
+ */
+Object.defineProperty(exports, "__esModule", { value: true });
 const ErrorCodes = {
+    // region Public Use
     InternalServerError: 'INTERNAL_SERVER_ERROR',
     NotFound: 'NOT_FOUND',
+    // deprecated
     EmailAlreadyInUse: 'EMAIL_ALREADY_IN_USE',
     NoDataAvailable: 'NO_DATA_AVAILABLE',
     InvalidLoginInformation: 'INVALID_LOGIN_INFORMATION',
@@ -13,14 +20,18 @@ const ErrorCodes = {
     AlreadyPaid: 'ALREADY_PAID',
     PaymentError: 'PAYMENT_ERROR',
     InsufficientFunds: 'INSUFFICIENT_FUNDS',
+    // deprecated
     BankingSystemOffline: 'BANKING_SYSTEM_OFFLINE',
     OutdatedAPI: 'OUTDATED_API',
+    // deprecated
     BankNotSupported: 'BANK_NOT_SUPPORTED',
+    // deprecated
     VaultSystemOffline: 'VAULT_SYSTEM_OFFLINE',
     ServerIsBusy: 'SERVER_IS_BUSY',
     Revoked: 'REVOKED',
     AlreadySigned: 'ALREADY_SIGNED',
     Rejected: 'REJECTED',
+    // deprecated
     OperationNotSupported: 'OPERATION_NOT_SUPPORTED',
     GraphQLError: 'GRAPHQL_ERROR',
     OperationLimitExceeded: 'OPERATION_LIMIT_EXCEEDED',
@@ -29,10 +40,13 @@ const ErrorCodes = {
     BoletoOurNumberExausted: 'BOLETO_OUR_NUMBER_EXAUSTED',
     NotImplemented: 'NOT_IMPLEMENTED',
     MaxOTPTriesExceeded: 'MAX_OTP_TRIES_EXCEEDED',
+    // deprecated
     AccountInUse: 'ACCOUNT_IN_USE',
     AccountLocked: 'ACCOUNT_LOCKED',
     NotSupported: 'NOT_SUPPORTED',
     SystemUnavailable: 'SYSTEM_UNAVAILABLE',
+    // endregion
+    // region Internal Use - Don't worry about these if you're a partner.
     EverythingIsTerrible: 'EVERYTHING_IS_TERRIBLE',
     QuantoInternalError: 'QUANTO_INTERNAL_ERROR',
     RoutingSystemOffline: 'ROUTING_SYSTEM_OFFLINE',
@@ -42,6 +56,7 @@ const ErrorCodes = {
     SynchronizationError: 'SYNCHRONIZATION_ERROR',
     RoutingError: 'ROUTING_ERROR',
 };
+exports.ErrorCodes = ErrorCodes;
 const ErrorCodeValueToKey = (value) => {
     const keys = Object.keys(ErrorCodes);
     for (let i = 0; i < keys.length; i++) {
@@ -52,5 +67,5 @@ const ErrorCodeValueToKey = (value) => {
     }
     return null;
 };
-export { ErrorCodes, ErrorCodeValueToKey, };
+exports.ErrorCodeValueToKey = ErrorCodeValueToKey;
 //# sourceMappingURL=ErrorCodes.js.map

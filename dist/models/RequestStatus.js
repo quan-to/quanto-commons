@@ -1,5 +1,10 @@
-import { GraphQLEnumType } from 'graphql';
-export const RequestStatusValues = {
+"use strict";
+/**
+ * Created by Lucas Teske on 10/12/18.
+ */
+Object.defineProperty(exports, "__esModule", { value: true });
+const graphql_1 = require("graphql");
+exports.RequestStatusValues = {
     requested: {
         value: 'requested',
         description: 'Request started',
@@ -70,15 +75,15 @@ export const RequestStatusValues = {
     },
 };
 const RS = {};
-Object.keys(RequestStatusValues)
-    .map(r => RequestStatusValues[r].value)
+Object.keys(exports.RequestStatusValues)
+    .map(r => exports.RequestStatusValues[r].value)
     .forEach((r) => {
     RS[r] = r;
 });
-export const RequestStatus = RS;
-export const RequestStatusEnum = new GraphQLEnumType({
+exports.RequestStatus = RS;
+exports.RequestStatusEnum = new graphql_1.GraphQLEnumType({
     name: 'RequestStatusEnum',
     description: 'Request Status Enum',
-    values: RequestStatusValues,
+    values: exports.RequestStatusValues,
 });
 //# sourceMappingURL=RequestStatus.js.map

@@ -1,3 +1,14 @@
+"use strict";
+/**
+ * Created by Lucas Teske on 09/05/17.
+ */
+Object.defineProperty(exports, "__esModule", { value: true });
+/**
+ * Applies data to a template string
+ * @param templateStr
+ * @param templateData
+ * @returns {string}
+ */
 const TemplateProcess = (templateStr, templateData) => {
     let formatted = templateStr;
     if (templateData !== undefined && templateData !== null) {
@@ -8,5 +19,5 @@ const TemplateProcess = (templateStr, templateData) => {
     }
     return formatted;
 };
-export default TemplateProcess;
+exports.default = TemplateProcess;
 //# sourceMappingURL=template.js.map

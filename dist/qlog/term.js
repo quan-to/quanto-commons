@@ -1,9 +1,14 @@
-import * as figures from 'figures';
-import { ErrorObject } from '../models';
-import { undefinedOrNull, getUTCNow, getCallerFilename, } from '../tools';
-import { stripColors } from '../colors/tools';
-import styles from './styles';
-const getStrColor = (str, color) => (!undefinedOrNull(str[color.toString()]) ? str[color.toString()] : str.info);
+"use strict";
+/**
+ * Created by Lucas Teske on 22/05/18.
+ */
+Object.defineProperty(exports, "__esModule", { value: true });
+const figures = require("figures");
+const models_1 = require("../models");
+const tools_1 = require("../tools");
+const tools_2 = require("../colors/tools");
+const styles_1 = require("./styles");
+const getStrColor = (str, color) => (!tools_1.undefinedOrNull(str[color.toString()]) ? str[color.toString()] : str.info);
 const buildTerminal = (parent, type, ...args) => {
     let msg = {};
     let additional = {};
@@ -22,10 +27,10 @@ const buildTerminal = (parent, type, ...args) => {
     }
     let msgBase = [];
     if (parent.__config__.showDateTime) {
-        msgBase.push(`[${getUTCNow().white.dim}]`);
+        msgBase.push(`[${tools_1.getUTCNow().white.dim}]`);
     }
     if (parent.__config__.showFilename) {
-        msgBase.push(`[${getCallerFilename().verbose.bold}]`);
+        msgBase.push(`[${tools_1.getCallerFilename().verbose.bold}]`);
     }
     if (parent.__config__.scope) {
         if (Array.isArray(parent.__config__.scope)) {
@@ -44,10 +49,10 @@ const buildTerminal = (parent, type, ...args) => {
     if (additional.prefix) {
         msgBase.push(`:${additional.prefix.white.dim}:`);
     }
-    if (!undefinedOrNull(parent.__config__.headPadding)) {
+    if (!tools_1.undefinedOrNull(parent.__config__.headPadding)) {
         const base = msgBase.join(' ');
         const totalLen = base.length;
-        const strippedLen = stripColors(base).length;
+        const strippedLen = tools_2.stripColors(base).length;
         const nonPrintableLen = totalLen - strippedLen;
         msgBase.length = 0;
         msgBase.push(base.padEnd(parent.__config__.headPadding + nonPrintableLen));
@@ -62,18 +67,20 @@ const buildTerminal = (parent, type, ...args) => {
     if (parent.__config__.showLabel && type.label) {
         msgBase.push(`${getStrColor(type.label.underline.toString(), type.color).padEnd(parent.__cache__.longestLabel + 22)}`);
     }
-    if (msg instanceof ErrorObject) {
+    if (msg instanceof models_1.ErrorObject) {
         const { errorCode, errorField, message, errorData, } = msg;
         const base = msgBase.join(' ');
-        const strippedLen = stripColors(base).length;
+        const strippedLen = tools_2.stripColors(base).length;
         msgBase.push(`${'╔'.white} ${getStrColor(`(${(errorCode || '').warn.bold}) ${message}`, type.color)}\n`);
         const nextLineChar = parent.__config__.showErrorCodeErrorData ? '╠'.white : '╚'.white;
         msgBase.push(`${''.padStart(strippedLen - 1)} ${nextLineChar}    ${'Error Field'.white.bold}: ${(errorField || '')}\n`.gray);
         if (parent.__config__.showErrorCodeErrorData) {
-            const errorDataString = !undefinedOrNull(errorData) && errorData.trim().length !== 0 ?
+            const errorDataString = !tools_1.undefinedOrNull(errorData) && errorData.trim().length !== 0 ?
                 `${JSON.stringify(JSON.parse(errorData), null, 2)}` :
+                // @ts-ignore
                 ('null'.warn.bold);
             const lines = errorDataString.split('\n').filter(r => r.length > 0);
+            // msgBase.push(`\n    ${'ErrorData'.white.bold}: ${errorDataString}`.gray);
             msgBase.push(`${''.padStart(strippedLen - 1)} ${'╠'.white}    ${'Error Data'.white.bold}: \n`);
             for (let i = 0; i < lines.length; i++) {
                 const line = lines[i];
@@ -90,7 +97,7 @@ const buildTerminal = (parent, type, ...args) => {
             lines.push(l.grey);
         });
         const base = msgBase.join(' ');
-        const strippedLen = stripColors(base).length;
+        const strippedLen = tools_2.stripColors(base).length;
         if (lines[lines.length - 1] === '\u001b[39m') {
             lines[lines.length - 2] += '\u001b[39m';
             lines.splice(lines.length - 1, 1);
@@ -109,7 +116,7 @@ const buildTerminal = (parent, type, ...args) => {
     }
     else if (msg.indexOf('\n') > -1) {
         const base = msgBase.join(' ');
-        const strippedLen = stripColors(base).length;
+        const strippedLen = tools_2.stripColors(base).length;
         const lines = msg.split('\n').filter((r) => r.length > 0);
         if (lines[lines.length - 1] === '\u001b[39m') {
             lines[lines.length - 2] += '\u001b[39m';
@@ -142,11 +149,11 @@ const _defaultLog = (parent, type, ...args) => {
     }
 };
 const stylesLog = {};
-Object.keys(styles).forEach((stl) => {
+Object.keys(styles_1.default).forEach((stl) => {
     stylesLog[stl] = function () {
-        return _defaultLog(arguments[0], styles[stl], ...Array.from(arguments).slice(1));
+        return _defaultLog(arguments[0], styles_1.default[stl], ...Array.from(arguments).slice(1));
     };
 });
 stylesLog.__normalLog__ = (parent, ...data) => console.log(data.join(' '));
-export default stylesLog;
+exports.default = stylesLog;
 //# sourceMappingURL=term.js.map

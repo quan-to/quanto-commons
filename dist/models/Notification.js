@@ -1,5 +1,10 @@
-import { GraphQLString, GraphQLEnumType, GraphQLInputObjectType, GraphQLObjectType, GraphQLNonNull, GraphQLFloat, GraphQLInt, } from 'graphql';
-export const NotificationType = {
+"use strict";
+/**
+ * Created by Lucas Teske on 31/08/18.
+ */
+Object.defineProperty(exports, "__esModule", { value: true });
+const graphql_1 = require("graphql");
+exports.NotificationType = {
     webhook: {
         value: 'webhook',
         description: 'Simple JSON POST',
@@ -9,69 +14,69 @@ export const NotificationType = {
         description: 'Simple JSON POST',
     },
 };
-export const NotificationTypeEnum = new GraphQLEnumType({
+exports.NotificationTypeEnum = new graphql_1.GraphQLEnumType({
     name: 'NotificationTypeEnum',
     description: 'Notification Type Enum',
-    values: NotificationType,
+    values: exports.NotificationType,
 });
-export const NotificationInput = new GraphQLInputObjectType({
+exports.NotificationInput = new graphql_1.GraphQLInputObjectType({
     name: 'NotificationDataInput',
     description: 'Data for registering a notification input',
     fields: {
         type: {
-            type: new GraphQLNonNull(NotificationTypeEnum),
+            type: new graphql_1.GraphQLNonNull(exports.NotificationTypeEnum),
             description: 'Notification Type',
         },
         url: {
-            type: GraphQLString,
+            type: graphql_1.GraphQLString,
             description: '(WebHook) URL to call',
         },
         notificationId: {
-            type: GraphQLString,
+            type: graphql_1.GraphQLString,
             description: '(Push) Notification Queue ID',
         },
         extra: {
-            type: GraphQLString,
+            type: graphql_1.GraphQLString,
             description: 'JSON string containing extra data that should be sent with the main payload',
         },
     },
 });
-export const WebhookCall = new GraphQLObjectType({
+exports.WebhookCall = new graphql_1.GraphQLObjectType({
     name: 'WebhookCall',
     description: 'Webhook Call Information',
     fields: () => ({
         timestamp: {
-            type: GraphQLFloat,
+            type: graphql_1.GraphQLFloat,
             description: 'UTC Unix Epoch Timestamp when the call happened',
         },
         statusCode: {
-            type: GraphQLInt,
+            type: graphql_1.GraphQLInt,
             description: 'HTTP Status Code',
         },
         response: {
-            type: GraphQLString,
+            type: graphql_1.GraphQLString,
             description: 'Response from the target server',
         },
     }),
 });
-export const Notification = new GraphQLObjectType({
+exports.Notification = new graphql_1.GraphQLObjectType({
     name: 'NotificationData',
     description: 'Notification Data',
     fields: () => ({
         type: {
-            type: new GraphQLNonNull(NotificationTypeEnum),
+            type: new graphql_1.GraphQLNonNull(exports.NotificationTypeEnum),
             description: 'Notification Type',
         },
         url: {
-            type: GraphQLString,
+            type: graphql_1.GraphQLString,
             description: '(WebHook) URL to call',
         },
         notificationId: {
-            type: GraphQLString,
+            type: graphql_1.GraphQLString,
             description: '(Push) Notification Queue ID',
         },
         extra: {
-            type: GraphQLString,
+            type: graphql_1.GraphQLString,
             description: 'JSON string containing extra data that should be sent with the main payload',
         },
     }),

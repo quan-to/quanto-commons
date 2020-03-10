@@ -1,4 +1,9 @@
-import * as figures from 'figures';
+"use strict";
+/**
+ * Created by Lucas Teske on 22/05/18.
+ */
+Object.defineProperty(exports, "__esModule", { value: true });
+const figures = require("figures");
 const styles = {
     error: {
         badge: figures.cross,
@@ -84,5 +89,5 @@ const styles = {
 Object.keys(styles).forEach((k) => {
     styles[k].name = k;
 });
-export default styles;
+exports.default = styles;
 //# sourceMappingURL=styles.js.map

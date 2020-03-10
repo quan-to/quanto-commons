@@ -1,6 +1,14 @@
-import * as moment from 'moment';
-export function isRunningInNodeJS() { return typeof module !== 'undefined' && module.exports; }
-export function normalizeXMLJSObjectProperties(obj) {
+"use strict";
+/* eslint-disable no-plusplus */
+/**
+ * Created by Lucas Teske on 20/04/17.
+ */
+Object.defineProperty(exports, "__esModule", { value: true });
+const moment = require("moment");
+// @ts-ignore
+function isRunningInNodeJS() { return typeof module !== 'undefined' && module.exports; }
+exports.isRunningInNodeJS = isRunningInNodeJS;
+function normalizeXMLJSObjectProperties(obj) {
     const keys = Object.keys(obj);
     const nObj = {};
     for (let i = 0; i < keys.length; i += 1) {
@@ -15,11 +23,13 @@ export function normalizeXMLJSObjectProperties(obj) {
     }
     return nObj;
 }
-export function validateEmail(email) {
+exports.normalizeXMLJSObjectProperties = normalizeXMLJSObjectProperties;
+function validateEmail(email) {
     const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     return re.test(email);
 }
-export function validateCPF(cpfO) {
+exports.validateEmail = validateEmail;
+function validateCPF(cpfO) {
     let sum = 0;
     let hash;
     if (cpfO === undefined || cpfO === null) {
@@ -42,6 +52,7 @@ export function validateCPF(cpfO) {
     if (hash !== parseInt(cpf.substring(9, 10), 10)) {
         return false;
     }
+    // Verification digit
     sum = 0;
     for (let i = 1; i <= 10; i++) {
         sum += parseInt(cpf.substring(i - 1, i), 10) * (12 - i);
@@ -52,7 +63,8 @@ export function validateCPF(cpfO) {
     }
     return hash === parseInt(cpf.substring(10, 11), 10);
 }
-export function validateCNPJ(cnpjO) {
+exports.validateCPF = validateCPF;
+function validateCNPJ(cnpjO) {
     if (cnpjO === undefined || cnpjO === null || cnpjO.length !== 14) {
         return false;
     }
@@ -100,46 +112,60 @@ export function validateCNPJ(cnpjO) {
     if (resultado !== parseInt(digits.charAt(1), 10)) {
         return false;
     }
+    // According to:
+    // - http://www.receita.fazenda.gov.br/publico/Legislacao/atos/AtosConjuntos/AnexoIADEConjuntoCoratCotec0012002.doc
+    // There are few edge cases.
+    // If the starting is 000.000.00, then all cases are valid, but if not:
+    // The branch number of the company cannot be higher than 0300.
     const branchNumber = parseInt(cnpj.substr(8, 4), 10);
     const baseNumber = parseInt(cnpj.substr(0, 8), 10);
-    if (branchNumber === 0) {
+    if (branchNumber === 0) { // The branch number starts with 1
         return false;
     }
-    if (baseNumber !== 0) {
+    if (baseNumber !== 0) { // Base Number != the branch Number cannot be higher than 300.
         return branchNumber <= 300;
     }
     return true;
 }
-export function undefinedOrNull(field) {
+exports.validateCNPJ = validateCNPJ;
+function undefinedOrNull(field) {
     return field === undefined || field === null;
 }
-export function validateField(fieldValue, validationFn) {
+exports.undefinedOrNull = undefinedOrNull;
+function validateField(fieldValue, validationFn) {
     return validationFn(fieldValue);
 }
-export function validateDateFormat(field, format) {
+exports.validateField = validateField;
+function validateDateFormat(field, format) {
     return moment(field, format, true).isValid();
 }
-export function validateStringLength(field, max, min) {
+exports.validateDateFormat = validateDateFormat;
+function validateStringLength(field, max, min) {
     return (field.length < max) && ((min !== undefined && field.length > min) || min === undefined);
 }
-export function calcDvMod11(data) {
+exports.validateStringLength = validateStringLength;
+function calcDvMod11(data) {
     let sum = 0;
     for (let i = 0; i < data.length; i++) {
         sum += (parseInt(data[i], 10) * ((data.length - i) + 1));
     }
     return sum % 11;
 }
-export function calcDvMod11Sub11(data) {
+exports.calcDvMod11 = calcDvMod11;
+function calcDvMod11Sub11(data) {
     const c = calcDvMod11(data);
     return c > 0 ? 11 - c : 0;
 }
-export function calcDvAgencia(branchNumber) {
+exports.calcDvMod11Sub11 = calcDvMod11Sub11;
+function calcDvAgencia(branchNumber) {
     return calcDvMod11Sub11(branchNumber.padLeft(4, '0'));
 }
-export function calcDvConta(accountNumber) {
+exports.calcDvAgencia = calcDvAgencia;
+function calcDvConta(accountNumber) {
     return calcDvMod11(accountNumber.toString()) % 10;
 }
-export function calcDvMod10(data) {
+exports.calcDvConta = calcDvConta;
+function calcDvMod10(data) {
     let sum = 0;
     for (let i = 0; i < data.length; i++) {
         let partial = (parseInt(data[i], 10) * ((i % 2) + 1));
@@ -152,7 +178,8 @@ export function calcDvMod10(data) {
     sum = sum !== 0 ? 10 - sum : sum;
     return sum;
 }
-export function cleanUndefinedMembers(obj) {
+exports.calcDvMod10 = calcDvMod10;
+function cleanUndefinedMembers(obj) {
     Object.keys(obj).forEach((key) => {
         if (obj[key] && typeof obj[key] === 'object') {
             cleanUndefinedMembers(obj[key]);
@@ -163,4 +190,5 @@ export function cleanUndefinedMembers(obj) {
     });
     return obj;
 }
+exports.cleanUndefinedMembers = cleanUndefinedMembers;
 //# sourceMappingURL=validation.js.map

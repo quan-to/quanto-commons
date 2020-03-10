@@ -1,6 +1,11 @@
-import { isRunningInNodeJS } from '../tools';
-import styles from './styles';
-import termStyles from './term';
+"use strict";
+/**
+ * Created by Lucas Teske on 22/05/18.
+ */
+Object.defineProperty(exports, "__esModule", { value: true });
+const tools_1 = require("../tools");
+const styles_1 = require("./styles");
+const term_1 = require("./term");
 class QLog {
     constructor() {
         this.__cache__ = {
@@ -18,21 +23,21 @@ class QLog {
             headPadding: null,
         };
         this.__disabledLogs__ = ['debug', 'warn'];
-        Object.keys(styles).forEach((stl) => {
-            const style = styles[stl];
+        Object.keys(styles_1.default).forEach((stl) => {
+            const style = styles_1.default[stl];
             parent.__cache__.longestLabel = Math.max(parent.__cache__.longestLabel, style.label ? style.label.length : 0);
         });
-        if (isRunningInNodeJS()) {
-            Object.keys(termStyles).forEach((k) => {
+        if (tools_1.isRunningInNodeJS()) {
+            Object.keys(term_1.default).forEach((k) => {
                 parent[k] = function () {
-                    return termStyles[k](parent, ...arguments);
-                };
+                    return term_1.default[k](parent, ...arguments);
+                }; // termStyles[k].bind(null, parent);
             });
         }
         else {
             console.log('Chrome version not implemented. Ignoring');
-            Object.keys(termStyles).forEach((k) => {
-                parent[k] = console.log;
+            Object.keys(term_1.default).forEach((k) => {
+                parent[k] = console.log; // Placeholder for non NodeJS
             });
         }
     }
@@ -128,5 +133,5 @@ class QLog {
         return this.__config__.showFilename;
     }
 }
-export default new QLog();
+exports.default = new QLog();
 //# sourceMappingURL=index.js.map

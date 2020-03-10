@@ -1,5 +1,11 @@
-import { GraphQLEnumType } from 'graphql';
-export const SupportedOperations = {
+"use strict";
+/**
+ * Created by Lucas Teske on 28/09/18.
+ */
+Object.defineProperty(exports, "__esModule", { value: true });
+const graphql_1 = require("graphql");
+exports.SupportedOperations = {
+    // region Read Operations
     getUserBoletos: {
         value: 'getUserBoletos',
         description: 'Read boletos created for the user (DDA)',
@@ -25,6 +31,8 @@ export const SupportedOperations = {
         value: 'getRequestStatus',
         description: 'Operation to check a request status',
     },
+    // endregion
+    // region Write Operations
     createEscrow: {
         value: 'createEscrow',
         description: 'Operation to create an escrow smart contract',
@@ -45,15 +53,18 @@ export const SupportedOperations = {
         value: 'createBoleto',
         description: 'Operation to create boletos',
     },
+    // @deprecated
     doPayment: {
         value: 'doPayment',
         description: 'Operation to make payments',
     },
+    // @deprecated
     transferMoneyInternal: {
         value: 'transferMoneyInternal',
         description: 'Operation to transfer money for the same bank',
         deprecationReason: 'Use transferFunds',
     },
+    // @deprecated
     transferMoneyExternal: {
         value: 'transferMoneyExternal',
         description: 'Operation to transfer money to other banks',
@@ -68,9 +79,9 @@ export const SupportedOperations = {
         description: 'Operation to pay bills',
     },
 };
-export const SupportedOperationsGraphQL = new GraphQLEnumType({
+exports.SupportedOperationsGraphQL = new graphql_1.GraphQLEnumType({
     name: 'SupportedOperations',
     description: 'Supported Bank Operations',
-    values: SupportedOperations,
+    values: exports.SupportedOperations,
 });
 //# sourceMappingURL=SupportedOperations.js.map

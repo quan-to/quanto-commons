@@ -1,3 +1,8 @@
+"use strict";
+/**
+ * Created by Lucas Teske on 18/05/18.
+ */
+Object.defineProperty(exports, "__esModule", { value: true });
 const codes = {
     reset: [0, 0],
     bold: [1, 22],
@@ -56,8 +61,10 @@ Object.keys(codes).forEach((k) => {
 const getColor = (name) => ansiColors[name] || {
     name: 'unknown', value: 'unknown', openTag: '', closeTag: '',
 };
+exports.getColor = getColor;
 const getColorsName = () => Object.keys(ansiColors);
+exports.getColorsName = getColorsName;
 const rainbowColors = ['red', 'yellow', 'green', 'blue', 'magenta'];
 const getRainbowColor = (n) => getColor(rainbowColors[n % rainbowColors.length]);
-export { getColor, getColorsName, getRainbowColor, };
+exports.getRainbowColor = getRainbowColor;
 //# sourceMappingURL=ansi.js.map

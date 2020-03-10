@@ -1,15 +1,20 @@
-import { GraphQLObjectType, GraphQLString } from 'graphql';
-import { ErrorCodes, ErrorCodeValueToKey } from './ErrorCodes';
-export default class ErrorObject extends Error {
+"use strict";
+/**
+ * Created by Lucas Teske on 02/05/17.
+ */
+Object.defineProperty(exports, "__esModule", { value: true });
+const graphql_1 = require("graphql");
+const ErrorCodes_1 = require("./ErrorCodes");
+class ErrorObject extends Error {
     constructor(data) {
         super(data.message);
         this.name = this.constructor.name;
         Error.captureStackTrace(this, ErrorObject);
-        this.errorCode = data.errorCode || ErrorCodes.InternalServerError;
+        this.errorCode = data.errorCode || ErrorCodes_1.ErrorCodes.InternalServerError;
         this.errorField = data.errorField || '';
         this.errorData = JSON.stringify(data.errorData) || '';
         this.message = data.message || this.stack || data.errorCode;
-        if (ErrorCodeValueToKey(data.errorCode) === null) {
+        if (ErrorCodes_1.ErrorCodeValueToKey(data.errorCode) === null) {
             console.log(`ErrorObject -- Warning: ErrorCode "${data.errorCode}" not in list of error codes!`);
         }
     }
@@ -27,28 +32,29 @@ export default class ErrorObject extends Error {
         return me;
     }
 }
-ErrorObject.GraphQL = new GraphQLObjectType({
+ErrorObject.GraphQL = new graphql_1.GraphQLObjectType({
     name: 'ErrorObject',
     description: 'An object containing the error data',
     fields: () => ({
         errorCode: {
-            type: GraphQLString,
+            type: graphql_1.GraphQLString,
         },
         stackTrace: {
-            type: GraphQLString,
+            type: graphql_1.GraphQLString,
             resolve(parent) {
                 return parent.stack;
             },
         },
         errorField: {
-            type: GraphQLString,
+            type: graphql_1.GraphQLString,
         },
         errorData: {
-            type: GraphQLString,
+            type: graphql_1.GraphQLString,
         },
         message: {
-            type: GraphQLString,
+            type: graphql_1.GraphQLString,
         },
     }),
 });
+exports.default = ErrorObject;
 //# sourceMappingURL=ErrorObject.js.map

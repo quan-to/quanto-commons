@@ -1,6 +1,13 @@
-import { undefinedOrNull, } from '../tools';
-import { stripColors, } from '../colors/tools';
+"use strict";
+/* eslint-disable no-plusplus */
+/**
+ * Created by Lucas Teske on 25/05/18.
+ */
+Object.defineProperty(exports, "__esModule", { value: true });
+const tools_1 = require("../tools");
+const tools_2 = require("../colors/tools");
 const FullSizeLUT = {
+    // region Numbers
     0: '０',
     1: '１',
     2: '２',
@@ -11,6 +18,8 @@ const FullSizeLUT = {
     7: '７',
     8: '８',
     9: '９',
+    // endregion
+    // region Upper Case
     A: 'Ａ',
     B: 'Ｂ',
     C: 'Ｃ',
@@ -37,6 +46,8 @@ const FullSizeLUT = {
     X: 'Ｘ',
     Y: 'Ｙ',
     Z: 'Ｚ',
+    // endregion
+    // region Lower Case
     a: 'ａ',
     b: 'ｂ',
     c: 'ｃ',
@@ -63,6 +74,8 @@ const FullSizeLUT = {
     x: 'ｘ',
     y: 'ｙ',
     z: 'ｚ',
+    // endregion
+    // region Meta
     ',': '，',
     '.': '．',
     ':': '：',
@@ -118,34 +131,34 @@ const BClipLut = [
     '                    ',
 ];
 const BClipEmpty = '                    ';
-export const toFullSize = (msg) => msg
+exports.toFullSize = (msg) => msg
     .split('')
-    .map(c => (!undefinedOrNull(FullSizeLUT[c]) ? FullSizeLUT[c] : c))
+    .map(c => (!tools_1.undefinedOrNull(FullSizeLUT[c]) ? FullSizeLUT[c] : c))
     .join('');
-export const boxMessage = (msg) => {
+exports.boxMessage = (msg) => {
     const lines = msg.split('\n');
     const outLines = [];
     const maxWidth = lines
-        .map(l => stripColors(l).length)
+        .map(l => tools_2.stripColors(l).length)
         .reduce((a, b) => (a > b ? a : b));
     outLines.push(` ${'╔'.white}${'═'.repeat(maxWidth + 2).white}${'╗'.white}`);
     lines
-        .map(l => ` ${'║'.white} ${l}${' '.repeat(maxWidth - stripColors(l).length)} ${'║'.white}`)
+        .map(l => ` ${'║'.white} ${l}${' '.repeat(maxWidth - tools_2.stripColors(l).length)} ${'║'.white}`)
         .forEach((l) => {
         outLines.push(l);
     });
     outLines.push(` ${'╚'.white}${'═'.repeat(maxWidth + 2).white}${'╝'.white}`);
     return outLines.join('\n');
 };
-export const bclipMessage = (title, msg) => {
+exports.bclipMessage = (title, msg) => {
     const lines = msg.split('\n');
-    const titleFull = title;
+    const titleFull = title; // toFullSize(title); :(( broken on box
     const outLines = [];
     let curClipLine = 0;
     const maxWidth = lines
-        .map(l => (stripColors(l).length + '    '.length))
+        .map(l => (tools_2.stripColors(l).length + '    '.length))
         .reduce((a, b) => (a > b ? a : b));
-    const titlePadding = (maxWidth - stripColors(titleFull).length) / 2;
+    const titlePadding = (maxWidth - tools_2.stripColors(titleFull).length) / 2;
     outLines.push(`${BClipLut[curClipLine++]}`);
     outLines.push(`${BClipLut[curClipLine++]}${' '.repeat(titlePadding)}${titleFull}${' '.repeat(titlePadding)}`);
     outLines.push(`${BClipLut[curClipLine++]}`);
@@ -160,8 +173,9 @@ export const bclipMessage = (title, msg) => {
     }
     return outLines.join('\n');
 };
-export const bclipError = (excpt) => {
+exports.bclipError = (excpt) => {
     const [name, ...rest] = (excpt.stack || '').split('\n');
+    // @ts-ignore
     const title = name.red.bold;
     const lines = rest;
     if (lines[lines.length - 1] === '\u001b[39m') {
@@ -174,7 +188,7 @@ export const bclipError = (excpt) => {
     outLines.push('');
     for (let i = 0; i < lines.length; i++) {
         const line = lines[i];
-        if (stripColors(line).length > 80) {
+        if (tools_2.stripColors(line).length > 80) {
             let curLine = line;
             outLines.push(`${curLine.substr(0, 80)}  `);
             curLine = curLine.substr(80);
@@ -187,6 +201,6 @@ export const bclipError = (excpt) => {
             outLines.push(line);
         }
     }
-    return bclipMessage(title, outLines.join('\n'));
+    return exports.bclipMessage(title, outLines.join('\n'));
 };
 //# sourceMappingURL=bclip.js.map

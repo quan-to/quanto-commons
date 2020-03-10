@@ -1,5 +1,10 @@
-import { GraphQLEnumType } from 'graphql';
-export const StatementHistoryCodeEnum = {
+"use strict";
+/**
+ * Created by Lucas Teske on 29/03/18.
+ */
+Object.defineProperty(exports, "__esModule", { value: true });
+const graphql_1 = require("graphql");
+exports.StatementHistoryCodeEnum = {
     Other: {
         value: 0,
         description: 'Others (see statement description)',
@@ -89,9 +94,9 @@ export const StatementHistoryCodeEnum = {
         description: 'Bank Investment Return',
     },
 };
-export const StatementHistoryCodeEnumGraphQL = new GraphQLEnumType({
+exports.StatementHistoryCodeEnumGraphQL = new graphql_1.GraphQLEnumType({
     name: 'tatementHistoryCodeEnum',
     description: 'Statement History Code Enum',
-    values: StatementHistoryCodeEnum,
+    values: exports.StatementHistoryCodeEnum,
 });
 //# sourceMappingURL=StatementHistoryCode.js.map

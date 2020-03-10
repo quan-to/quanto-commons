@@ -1,3 +1,16 @@
+"use strict";
+/**
+ * Created by Nemo on 13/02/19.
+ * Using code by Lucas Teske
+ *
+ * Fontes de documentacao sobre boletos:
+ * - http://download.itau.com.br/bankline/SISPAG_CNAB.pdf
+ * - https://www.bb.com.br/docs/pub/emp/empl/dwn/Doc5175Bloqueto.pdf
+ * - https://portal.febraban.org.br/pagina/3150/1094/pt-br/servicos-novo-plataforma-boletos
+ * Este código valida a representação numérica do código de barras. Note que os dados da linha digitável não
+ * se apresentam na mesma sequência do código de barras.
+ */
+Object.defineProperty(exports, "__esModule", { value: true });
 function calcDvMod11(data) {
     let sum = 0;
     for (let i = 0; i < data.length; i++) {
@@ -37,6 +50,7 @@ function defineDate(dateCode) {
     return new Date(boletoBaseDate.getTime() + days * 172800000);
 }
 function defineAmount(amountCode) {
+    // Todo pretty format "R$ 99,99"
     return amountCode.toString();
 }
 function parseBoleto(code, valueIsGreaterThan999999999 = false) {
@@ -47,6 +61,26 @@ function parseBoleto(code, valueIsGreaterThan999999999 = false) {
         code.padEnd(47, '0');
     }
     const boleto = {};
+    /** Estrutura do campo digitável:
+     *   AAABCCCCCX.DDDDDDDDDDY.EEEEEEEEEEZK.UUUUVVVVVVVVVV
+     * a) Campo 1: AAABC.CCCCX
+     *   A = Código do BB na COMPE ( 001)
+     *   B = Código da moeda ( 9) -Real
+     *   C = Posições 20 a 24 do código de barras
+     *   X = DV do Campo 1 (Módulo 10, cálculo conforme anexo 7)
+     * b) Campo 2: DDDDD.DDDDDY
+     *   D = Posições 25 a 34 do código de barras
+     *   Y = DV do Campo 2 (Módulo 10, cálculo conforme anexo 7)
+     * c) Campo 3: EEEEE.EEEEEZ
+     *   F = Posições 35 a 44 do código de barras
+     *   Z =DV do Campo 3 (Módulo 10, cálculo conforme anexo 7)
+     * Campo 4: K
+     *   K = DV do código de barras (Módulo 10, cálculo conforme anexo 107)
+     * Campo 5: UUUUVVVVVVVVVV
+     *   U = Fator de Vencimento (Módulo 10, cálculo conforme anexo 8)
+     *   V = Valor do título (com duas casas decimais, sem ponto e vírgula. Em
+     *   caso de moeda variável, informar zeros)
+     */
     if (valueIsGreaterThan999999999) {
         boleto.amount = defineAmount(code.substring(33, 47));
     }
