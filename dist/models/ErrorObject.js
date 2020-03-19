@@ -32,6 +32,7 @@ class ErrorObject extends Error {
         return me;
     }
 }
+exports.default = ErrorObject;
 ErrorObject.GraphQL = new graphql_1.GraphQLObjectType({
     name: 'ErrorObject',
     description: 'An object containing the error data',
@@ -56,5 +57,4 @@ ErrorObject.GraphQL = new graphql_1.GraphQLObjectType({
         },
     }),
 });
-exports.default = ErrorObject;
 //# sourceMappingURL=ErrorObject.js.map
