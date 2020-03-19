@@ -6,7 +6,8 @@ const ErrorCodes: { [id: string]: string } = {
   // region Public Use
   InternalServerError: 'INTERNAL_SERVER_ERROR',
   NotFound: 'NOT_FOUND',
-  // deprecated
+
+  // deprecated in favor of ErrorCode: INVALID_LOGIN_INFORMATION -> ErrorField: email -> Message: Email Already in Use
   EmailAlreadyInUse: 'EMAIL_ALREADY_IN_USE',
   NoDataAvailable: 'NO_DATA_AVAILABLE',
   InvalidLoginInformation: 'INVALID_LOGIN_INFORMATION',
@@ -19,10 +20,10 @@ const ErrorCodes: { [id: string]: string } = {
   AlreadyPaid: 'ALREADY_PAID',
   PaymentError: 'PAYMENT_ERROR',
   InsufficientFunds: 'INSUFFICIENT_FUNDS',
-  // deprecated
+  // deprecated in favor of ErrorCode: SYSTEM_UNAVAILABLE -> ErrorField: bank
   BankingSystemOffline: 'BANKING_SYSTEM_OFFLINE',
   OutdatedAPI: 'OUTDATED_API',
-  // deprecated
+  // deprecated in favor of ErrorCode: NOT_SUPPORTED -> ErrorField: bank
   BankNotSupported: 'BANK_NOT_SUPPORTED',
   // deprecated
   VaultSystemOffline: 'VAULT_SYSTEM_OFFLINE',
@@ -30,7 +31,7 @@ const ErrorCodes: { [id: string]: string } = {
   Revoked: 'REVOKED',
   AlreadySigned: 'ALREADY_SIGNED',
   Rejected: 'REJECTED',
-  // deprecated
+  // deprecated in favor of ErrorCode: NOT_SUPPORTED -> ErrorField: operation
   OperationNotSupported: 'OPERATION_NOT_SUPPORTED',
   GraphQLError: 'GRAPHQL_ERROR',
   OperationLimitExceeded: 'OPERATION_LIMIT_EXCEEDED',
@@ -40,7 +41,6 @@ const ErrorCodes: { [id: string]: string } = {
   NotImplemented: 'NOT_IMPLEMENTED',
   MaxOTPTriesExceeded: 'MAX_OTP_TRIES_EXCEEDED',
 
-  // deprecated
   AccountInUse: 'ACCOUNT_IN_USE',
   AccountLocked: 'ACCOUNT_LOCKED',
   NotSupported: 'NOT_SUPPORTED',
